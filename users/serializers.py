@@ -6,7 +6,6 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework.authtoken.models import Token
 
 
-
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
