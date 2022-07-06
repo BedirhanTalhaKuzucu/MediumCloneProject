@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined';
 
 
-function Trendtopic() {
+function Sidebar() {
   return (
     <>
     <Container  fluid className="border-1 border-bottom border-grey" style={{height:'34rem' }} >
@@ -102,4 +102,4 @@ function Trendtopic() {
   );
 }
 
-export default Trendtopic;
+export default Sidebar;
