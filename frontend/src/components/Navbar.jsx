@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 function ColorSchemesExample() {
   return (
     <>
-      <Navbar bg="warning" variant="light" fixed="top"  style={{height:'4.5rem' }} className="border-1 border-bottom border-dark ">
+      <Navbar bg="warning" variant="light"   style={{height:'4.5rem' }} className="border-1 border-bottom border-dark">
         <Container>
           <Navbar.Brand href="#home" > <img  src={logo} style={{'width' : '10rem' }} alt="logo" /> </Navbar.Brand>
           <Nav className="justify-content-end align-items-center "   >
