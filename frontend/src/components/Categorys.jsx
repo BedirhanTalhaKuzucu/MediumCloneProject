@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 
 function Categorys() {
   return (
-    <Container className="border-1 border-bottom border-grey mb-5"  >
+    <Container className="border-1 border-bottom border-grey mt-5"  >
         <h6 className= "mt-5 mb-3" style={{fontWeight:"bolder" }} >DISCOVER MORE OF WHAT MATTERS TO YOU </h6>
         <div className="d-flex flex-wrap gap-2 mb-4">
             <Button variant="outline-secondary">Self</Button>

@@ -12,9 +12,17 @@ function Home() {
     <>
     <Header/>
     <Sidebar/>
-    <Container>
-        <Categorys/>  
-        <Cards/>
+    <Container className="mt-5">
+        <Row>
+            <Col md={12} lg={{ span: 6,  order: 'last' }}>
+                <Categorys/>
+
+            </Col>
+            <Col md={12} lg={{ span: 6,  order: 'first' }}>
+                <Cards/>
+
+            </Col>
+      </Row>
     </Container>
  
     </>

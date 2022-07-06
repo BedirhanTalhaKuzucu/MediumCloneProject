@@ -7,7 +7,7 @@ import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined';
 function Sidebar() {
   return (
     <>
-    <Container  fluid className="border-1 border-bottom border-grey" style={{height:'34rem' }} >
+    <Container  fluid className="border-1 border-bottom border-grey" style={{maxHeight:'34rem' }} >
         <Container>
         <h6 className= "mt-5 mb-3" style={{fontWeight:"bolder" }} > <TrendingUpOutlinedIcon />  TRENDING ON MEDIUM</h6>
         <Row>
