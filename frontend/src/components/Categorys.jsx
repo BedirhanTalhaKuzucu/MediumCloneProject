@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 
 
 function Categorys() {
+
   return (
     <Container className="border-1 border-bottom border-grey mt-5"  >
         <h6 className= "mt-5 mb-3" style={{fontWeight:"bolder" }} >DISCOVER MORE OF WHAT MATTERS TO YOU </h6>
