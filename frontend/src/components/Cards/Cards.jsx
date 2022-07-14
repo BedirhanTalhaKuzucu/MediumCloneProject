@@ -5,8 +5,6 @@ import {StyledCard} from './Cards.styled.jsx'
 
 function Cards({blog}) {
 
-    console.log(blog)
-
   return (
     <Container  className="mt-5" >
         <StyledCard blog= {blog} />    

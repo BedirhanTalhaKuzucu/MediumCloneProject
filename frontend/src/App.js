@@ -1,14 +1,14 @@
-import Navbar from "./components/Navbar"
-import Home from "./pages/Home"
-import UserDashboard from "./pages/UserDashboard"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.scss';
+import AppRouter from "./AppRouter/AppRouter";
+import { AppStateProvider } from './contexts/AppContext';
 
 function App() {
   return (
     <div className="App">
-      <UserDashboard />
-      {/* < Home /> */}
+      <AppStateProvider>
+        < AppRouter />
+      </AppStateProvider>
     </div>
   );
 }
