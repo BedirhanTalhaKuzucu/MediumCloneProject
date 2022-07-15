@@ -1,25 +1,57 @@
 import React from "react";
-const topicList = ["FullStack", "Python", "Machine Learning", "Programming"];
+import {
+  ArticllesStyle,
+  FollowingImg,
+  FollowingList,
+  FollowingListStyle,
+  MainContainer,
+  MainHeader,
+  TopicsStyle,
+} from "./styles/UDMain.styles";
+import Following from "./Following";
+import Tooltip from "@mui/material/Tooltip";
+import MainFollowingTooltip from "./MainFollowingTooltip";
+
+const topicList = ["FullStack", "Python", "Machine Learning", "Programming",'React', 'Django'];
 
 const UDMain = () => {
   return (
-    <main className="w-100">
-      <header>
-    <h1>deneme</h1>
-        <nav className="topics d-flex">
-          <p className="mx-3">YOUR TOPICS</p>
-          <p className="d-flex overflow-auto w-50 scrollbar-near-moon">
+    <MainContainer>
+      <MainHeader>
+        <TopicsStyle>
+          <p>YOUR TOPICS</p>
+          <div className="scrollbar sc1">
             {topicList?.map((item) => {
               return (
-                <div key={item.id} className="text-nowrap mx-2 w-100">
-                  {item}
+                <div key={item.id}>
+                  <button>{item}</button>
                 </div>
               );
             })}
-          </p>
-        </nav>
-      </header>
-    </main>
+          </div>
+        </TopicsStyle>
+
+        <FollowingListStyle>
+          <Tooltip title={<MainFollowingTooltip />} arrow>
+            <FollowingImg />
+          </Tooltip>
+          <Tooltip title={<MainFollowingTooltip />} arrow>
+            <FollowingImg />
+          </Tooltip>
+          <Tooltip title={<MainFollowingTooltip />} arrow>
+            <FollowingImg />
+          </Tooltip>
+        </FollowingListStyle>
+      </MainHeader>
+
+      <ArticllesStyle>
+        <a href="/">Following</a>
+        <a href="/">Recommended</a>
+      </ArticllesStyle>
+
+      <Following />
+      {/* Link ve Outlet gelecek */}
+    </MainContainer>
   );
 };
 
