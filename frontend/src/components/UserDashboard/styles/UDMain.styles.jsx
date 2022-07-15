@@ -75,6 +75,8 @@ export const FollowingImg = styled.img`
 
 export const ArticllesStyle = styled.article`
   margin-top: 3rem;
+  border-bottom: 1px solid grey;
+  padding-bottom: 1rem;
   & > a {
     text-decoration: none;
     font-size: 14px;

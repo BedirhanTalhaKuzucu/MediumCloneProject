@@ -1,13 +1,14 @@
 import React from "react";
+import { Link, NavLink } from "react-router-dom";
 import {
   SearchInputStyle,
-  SlideBarContainerStyle,
+  SideBarContainerStyle,
   UnlimitedButtonStyle,
-} from "./styles/UDSlideBar.styles";
+} from "./styles/UDSideBar.styles";
 
 const UDSlideBar = () => {
   return (
-    <SlideBarContainerStyle>
+    <SideBarContainerStyle>
       <UnlimitedButtonStyle>Get unlimited access</UnlimitedButtonStyle>
 
       <form>
@@ -16,7 +17,7 @@ const UDSlideBar = () => {
 
       <ul>
         <li>
-          <a>What We're Reading Today</a>
+          <Link to='#'>What We're Reading Today</Link>
         </li>
       </ul>
 
@@ -31,7 +32,7 @@ const UDSlideBar = () => {
       <p>Lorem ipsum dolor sit amet.</p>
       <p>Lorem ipsum dolor sit amet.</p>
       <p>Lorem ipsum dolor sit amet.</p>
-    </SlideBarContainerStyle>
+    </SideBarContainerStyle>
   );
 };
 

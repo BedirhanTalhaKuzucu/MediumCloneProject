@@ -1,6 +1,4 @@
 import React from "react";
-import AccountMenu from "./NavbarUserMenu";
-import MainFollowingList from "./MainFollowingTooltip";
 
 const Following = () => {
   return (
