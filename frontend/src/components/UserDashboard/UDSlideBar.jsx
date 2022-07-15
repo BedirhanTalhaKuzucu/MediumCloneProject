@@ -1,31 +1,37 @@
 import React from "react";
+import {
+  SearchInputStyle,
+  SlideBarContainerStyle,
+  UnlimitedButtonStyle,
+} from "./styles/UDSlideBar.styles";
 
 const UDSlideBar = () => {
   return (
-    <div
-      className="d-flex flex-column flex-shrink-0  sticky-right border py-2 vh-100"
-      style={{ width: "20rem" }}
-    >
-      <button
-        type="button"
-        class="btn btn-dark m-3 p-1"
-        style={{ borderRadius: "2rem" }}
-      >
-        Get unlimited access
-      </button>
-      <form class="form">
-        <input
-          class="form-control "
-          type="search"
-          placeholder="Search"
-          // aria-label="Search"
-        />
+    <SlideBarContainerStyle>
+      <UnlimitedButtonStyle>Get unlimited access</UnlimitedButtonStyle>
+
+      <form>
+        <SearchInputStyle />
       </form>
 
-      <nav>
-        <img src="" alt="kullanıcı profili" />
-      </nav>
-    </div>
+      <ul>
+        <li>
+          <a>What We're Reading Today</a>
+        </li>
+      </ul>
+
+      <p>Lorem ipsum dolor sit amet.</p>
+      <p>Lorem ipsum dolor sit amet.</p>
+      <p>Lorem ipsum dolor sit amet.</p>
+      <p>Lorem ipsum dolor sit amet.</p>
+      <p>Lorem ipsum dolor sit amet.</p>
+      <p>Lorem ipsum dolor sit amet.</p>
+      <p>Lorem ipsum dolor sit amet.</p>
+      <p>Lorem ipsum dolor sit amet.</p>
+      <p>Lorem ipsum dolor sit amet.</p>
+      <p>Lorem ipsum dolor sit amet.</p>
+      <p>Lorem ipsum dolor sit amet.</p>
+    </SlideBarContainerStyle>
   );
 };
 
