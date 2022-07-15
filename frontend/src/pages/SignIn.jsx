@@ -3,51 +3,35 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useAppState } from "../contexts/AppContext";
-import * as yup from 'yup';
 import { useFormik } from 'formik';
+import {validationSchema} from "../helpers/formValidations";
+import { useState } from 'react';
+import {signUpFunction} from "../helpers/apiRequests"
 
 function SignIn() {
-
-    const validationSchema = yup.object({
-        email: yup
-          .string('Enter your email')
-          .email('Enter a valid email')
-          .required('Email is required'),
-        firstName: yup
-           .string('Enter your Firstname')
-          .max(20, 'Must be 15 characters or less')
-          .required('Required'),
-        lastName: yup
-           .string('Enter your Lastname')
-          .max(25, 'Must be 15 characters or less')
-          .required('Required'),
-        password: yup
-          .string('Enter your password')
-          .min(5, 'Password should be of minimum 5 characters length')
-          .required('Password is required'),
-        confirmPassword: yup
-          .string()
-          .oneOf([yup.ref('password'), null], 'Passwords must match')
-      });
-
+    const [signUpInfo, setSignUpInfo] = useState()
+    const [errorMesage, setErrorMesage] = useState("")
+    const { show, handleClose} = useAppState()
     const formik = useFormik({
         initialValues: {
+          email: '',
           firstName: "",
           lastName: "",
-          email: '',
           password:"",
-          confirmPassword: "",
+          password2: "",
         },
         validationSchema: validationSchema,
-        onSubmit: ((values, event ) => {
-                console.log(formik.touched.email)
-               
-                alert(JSON.stringify(values, null, 2));
+        onSubmit: ((values, { resetForm }) => {
+                setSignUpInfo(values)
+                console.log(signUpInfo)
+                signUpFunction(signUpInfo, resetForm, setErrorMesage)
+
         }),
-      });
+    });
 
-    const { show, handleClose} = useAppState()
+    // console.log(errorMesage );
 
+    
 
     return (
         <Modal show={show} onHide={handleClose}
@@ -93,7 +77,9 @@ function SignIn() {
                          isInvalid={formik.touched.email && Boolean(formik.errors.email)}
                         />
                         <Form.Control.Feedback type="invalid">
-                           {  formik.touched.email &&  formik.errors.email }
+                           <span> {  formik.touched.email &&  formik.errors.email } </span>
+                           <p> {  errorMesage &&  errorMesage.email[0] } </p>
+                           
                         </Form.Control.Feedback>
                         
                     </Form.Group>
@@ -109,16 +95,16 @@ function SignIn() {
                            { formik.touched.password &&  formik.errors.password }
                         </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className="mb-3" controlId="formBasicPassword2">
                         <Form.Label>Password Confirmation</Form.Label>
                         <Form.Control type="password" placeholder="Re-enter password"
-                        name="confirmPassword"
+                        name="password2"
                         onChange={formik.handleChange}
-                        value={formik.values.confirmPassword}
-                        isInvalid={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+                        value={formik.values.password2}
+                        isInvalid={formik.touched.password2 && Boolean(formik.errors.password2)}
                         />
                         <Form.Control.Feedback type="invalid">
-                           { formik.touched.confirmPassword &&  formik.errors.confirmPassword }
+                           { formik.touched.password2 &&  formik.errors.password2 }
                         </Form.Control.Feedback>
                     </Form.Group>
                     
