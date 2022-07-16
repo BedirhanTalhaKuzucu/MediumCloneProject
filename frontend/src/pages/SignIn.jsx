@@ -7,10 +7,25 @@ import { useFormik } from 'formik';
 import {validationSchema} from "../helpers/formValidations";
 import { useState } from 'react';
 import {signUpFunction} from "../helpers/apiRequests"
+import { useNavigate } from 'react-router-dom'
+
 
 function SignIn() {
-    const [signUpInfo, setSignUpInfo] = useState()
-    const [errorMesage, setErrorMesage] = useState("")
+
+  const {setUserInfo } = useAppState()
+
+
+    const navigate = useNavigate()
+    const errorMesageTemplate= {
+        email: '',
+        firstName: "",
+        lastName: "",
+        password:"",
+        password2: "",
+    }
+
+    const [errorMesage, setErrorMesage] = useState(errorMesageTemplate)
+    // console.log( Boolean(errorMesage.email ))
     const { show, handleClose} = useAppState()
     const formik = useFormik({
         initialValues: {
@@ -20,18 +35,17 @@ function SignIn() {
           password:"",
           password2: "",
         },
-        validationSchema: validationSchema,
+        validationSchema: validationSchema ,
         onSubmit: ((values, { resetForm }) => {
-                setSignUpInfo(values)
-                console.log(signUpInfo)
-                signUpFunction(signUpInfo, resetForm, setErrorMesage)
-
+                signUpFunction(values, resetForm, setErrorMesage, navigate, setUserInfo)
         }),
     });
 
-    // console.log(errorMesage );
+    const customHandleChange = (e) => {
+        setErrorMesage(errorMesageTemplate)
+        formik.handleChange(e);
+    }
 
-    
 
     return (
         <Modal show={show} onHide={handleClose}
@@ -72,14 +86,19 @@ function SignIn() {
                         <Form.Control type="email"
                          placeholder="Enter email"
                          name="email"
-                         onChange={formik.handleChange}
+                         onChange={(e) => {
+                            customHandleChange(e)
+                         }}
                          value={formik.values.email}
-                         isInvalid={formik.touched.email && Boolean(formik.errors.email)}
+                         isInvalid={formik.touched.email ?  Boolean(formik.errors.email) || Boolean(errorMesage.email) : false}
                         />
                         <Form.Control.Feedback type="invalid">
-                           <span> {  formik.touched.email &&  formik.errors.email } </span>
-                           <p> {  errorMesage &&  errorMesage.email[0] } </p>
-                           
+                           <p> {  formik.touched.email &&  formik.errors.email } </p>
+                           <p>
+                           {  errorMesage.email ?   
+                            errorMesage.email
+                           : "" }
+                           </p>
                         </Form.Control.Feedback>
                         
                     </Form.Group>
@@ -89,10 +108,15 @@ function SignIn() {
                         name="password"
                         onChange={formik.handleChange}
                         value={formik.values.password}
-                        isInvalid={formik.touched.password && Boolean(formik.errors.password)}
+                        isInvalid={formik.touched.password ?  Boolean(formik.errors.password) || Boolean(errorMesage.password) : false}
                         />
                         <Form.Control.Feedback type="invalid">
                            { formik.touched.password &&  formik.errors.password }
+                           <p>
+                           {  errorMesage.password ?   
+                           errorMesage.password
+                           : "" }
+                            </p> 
                         </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword2">

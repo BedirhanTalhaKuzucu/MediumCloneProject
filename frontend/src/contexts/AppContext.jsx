@@ -16,22 +16,7 @@ export function AppStateProvider({ children }) {
    const handleClose = () => setShow(false);
 
    const [data, setData] = useState("")
-//    const getData = () => {
-//     let requestOptions = {
-//         method: 'GET',
-//         redirect: 'follow'
-//     };
-//     fetch("http://127.0.0.1:8000/blog/posts/", requestOptions)
-//     .then(response => response.json())
-//     .then(result => {
-//         setData(result)
-//     })
-//     .catch(error => console.log('error', error));
-//     }
-
-  
-    
-  
+   const [userInfo, setUserInfo] = useState("")
   
     useEffect(() => {
         getData(setData)
@@ -42,6 +27,8 @@ export function AppStateProvider({ children }) {
         handleClose,
         show,
         data,
+        setUserInfo,
+        userInfo,
     };
   
     return <AppStateContext.Provider value={value}> {children} </ AppStateContext.Provider>;

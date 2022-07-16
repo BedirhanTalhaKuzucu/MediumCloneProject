@@ -10,8 +10,14 @@ import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import { useAppState } from "../../contexts/AppContext";
+
 
 export default function AccountMenu() {
+
+  const { userInfo } = useAppState()
+  console.log(userInfo)
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -72,7 +78,7 @@ export default function AccountMenu() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem>
-          <Avatar /> Profile
+          <Avatar /> {userInfo ? userInfo.first_name :  "Profile"}
         </MenuItem>
         <MenuItem>
           <Avatar /> My account

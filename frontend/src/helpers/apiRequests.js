@@ -1,15 +1,15 @@
 
-export const signUpFunction = (signUpInfo, resetForm, setErrorMesage) => {
+export const signUpFunction = (values, resetForm, setErrorMesage, navigate, setUserInfo) => {
 
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     let raw = JSON.stringify({
-        "email": signUpInfo.email,
-        "first_name": signUpInfo.firstName,
-        "last_name": signUpInfo.lastName,
-        "password": signUpInfo.password,
-        "password2": signUpInfo.password2
+        "email": values.email,
+        "first_name": values.firstName,
+        "last_name": values.lastName,
+        "password": values.password,
+        "password2": values.password2
     });
 
     let requestOptions = {
@@ -22,16 +22,17 @@ export const signUpFunction = (signUpInfo, resetForm, setErrorMesage) => {
     .then((response) =>{ 
         console.log(response);
         if (!response.ok) {
-            // const errorMesage = response.text()
             response.json().then(text=> {
                 console.log(text);
-                setErrorMesage(text);
-                if (text.email) {resetForm({ values: {email:""} })}
+                setErrorMesage(text)
+
             })
         }else{
             response.json().then((result) => {
-                console.log(result)
-                // resetForm({ values: "" })
+                setErrorMesage("")
+                setUserInfo(result)
+                resetForm({ values: "" })
+                navigate('home')
             })
         }
     })
@@ -54,4 +55,7 @@ export const getData = (setData) => {
         setData(result)
     })
     .catch(error => console.log('error', error));
-    }
+}
+
+
+

@@ -1,6 +1,18 @@
 import * as yup from 'yup';
 
 
+
+
+yup.addMethod(yup.mixed, 'length', function(length, msg) {
+  return this.test({
+   name: 'length',
+   message: msg,
+   test: value => value && value.toString().length === length
+  });
+});
+
+
+
 export const validationSchema = yup.object({
     email: yup
       .string('Enter your email')
@@ -11,7 +23,7 @@ export const validationSchema = yup.object({
       .max(20, 'Must be 15 characters or less')
       .required('Required'),
     lastName: yup
-       .string('Enter your Lastname')
+      .string('Enter your Lastname')
       .max(25, 'Must be 15 characters or less')
       .required('Required'),
     password: yup
