@@ -11,11 +11,6 @@ import { useNavigate } from 'react-router-dom'
 
 
 function SignIn() {
-
-  const {setUserInfo } = useAppState()
-
-
-    const navigate = useNavigate()
     const errorMesageTemplate= {
         email: '',
         firstName: "",
@@ -25,8 +20,9 @@ function SignIn() {
     }
 
     const [errorMesage, setErrorMesage] = useState(errorMesageTemplate)
-    // console.log( Boolean(errorMesage.email ))
+    const navigate = useNavigate()
     const { show, handleClose} = useAppState()
+    
     const formik = useFormik({
         initialValues: {
           email: '',
@@ -37,7 +33,7 @@ function SignIn() {
         },
         validationSchema: validationSchema ,
         onSubmit: ((values, { resetForm }) => {
-                signUpFunction(values, resetForm, setErrorMesage, navigate, setUserInfo)
+                signUpFunction(values, resetForm, setErrorMesage, navigate)
         }),
     });
 

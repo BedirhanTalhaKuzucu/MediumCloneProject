@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, {useEffect } from "react";
+
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
@@ -13,10 +14,15 @@ import Logout from '@mui/icons-material/Logout';
 import { useAppState } from "../../contexts/AppContext";
 
 
+
 export default function AccountMenu() {
 
-  const { userInfo } = useAppState()
-  console.log(userInfo)
+  const { userInfo, get_user_info } = useAppState()
+
+  useEffect(() => {
+    get_user_info()
+    console.log(userInfo)
+  }, []);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);

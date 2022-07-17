@@ -11,12 +11,24 @@ export function useAppState() {
 
 export function AppStateProvider({ children }) {
 
+    //for sigup page
    const [show, setShow] = useState(false);
    const handleShow = () => setShow(true);
    const handleClose = () => setShow(false);
 
+    //for sigup page
+    const [logInShow, setLogInShow] = useState(false);
+    
+
    const [data, setData] = useState("")
    const [userInfo, setUserInfo] = useState("")
+
+
+   const get_user_info = () => {
+    const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
+    setUserInfo(get_session_user_info)
+   }
+
   
     useEffect(() => {
         getData(setData)
@@ -27,8 +39,10 @@ export function AppStateProvider({ children }) {
         handleClose,
         show,
         data,
-        setUserInfo,
         userInfo,
+        get_user_info,
+        logInShow,
+        setLogInShow
     };
   
     return <AppStateContext.Provider value={value}> {children} </ AppStateContext.Provider>;

@@ -1,6 +1,5 @@
 
-export const signUpFunction = (values, resetForm, setErrorMesage, navigate, setUserInfo) => {
-
+export const signUpFunction = (values, resetForm, setErrorMesage, navigate) => {
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -28,9 +27,9 @@ export const signUpFunction = (values, resetForm, setErrorMesage, navigate, setU
 
             })
         }else{
-            response.json().then((result) => {
+            response.text().then((result) => {
                 setErrorMesage("")
-                setUserInfo(result)
+                sessionStorage.setItem("user_info", result);
                 resetForm({ values: "" })
                 navigate('home')
             })
@@ -39,7 +38,40 @@ export const signUpFunction = (values, resetForm, setErrorMesage, navigate, setU
     .catch(error => console.log(error));
 }
 
+export const logInFunction = (values, resetForm, handleErrorMesage, navigate, setErrorMesage) => { 
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    
+    let raw = JSON.stringify({
+      "email": values.email,
+      "password": values.password,
+    });
+    
+    let requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+    
+    fetch("http://127.0.0.1:8000/auth/login/", requestOptions).then((response) =>{ 
+        if (!response.ok) {
+            response.json().then(text=> {
+                console.log(text);
+                handleErrorMesage()
 
+            })
+        }else{
+            response.text().then((result) => {
+                setErrorMesage("")
+                sessionStorage.setItem("user_info", result);
+                resetForm({ values: "" })
+                navigate('home')
+            })
+        }
+    })
+    .catch(error => console.log(error));
+}
 
 
 
