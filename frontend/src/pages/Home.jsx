@@ -3,43 +3,27 @@ import Sidebar from "../components/Sidebar"
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Cards from "../components/Cards"
+import Cards from "../components/Cards/Cards"
 import Categorys from "../components/Categorys";
-import { useState, useEffect } from "react";
+import { useAppState } from "../contexts/AppContext";
+import SignIn from "./SignIn";
+import LogIn from "./LogIn";
 
 
-function Home() {    
+function Home() {
 
-  const [data, setData] = useState("")
-    
-    const getData = () => {
-        let requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-        };
-        fetch("http://127.0.0.1:8000/blog/posts/", requestOptions)
-        .then(response => response.json())
-        .then(result => {
-            setData(result)
-        })
-        .catch(error => console.log('error', error));
-    }
-
-    useEffect(() => {
-      getData()
-    }, [])
-
-
+  const {data } = useAppState()
 
   return (
     <>
-    <Header/>
+    <SignIn />
+    <LogIn />
+    <Header  />
     <Sidebar/>
     <Container className="mt-5">
         <Row>
             <Col md={12} lg={{ span: 5,  order: 'last' }}>
                 <Categorys/>
-                a
             </Col>
             <Col md={12} lg={{ span: 7,  order: 'first' }}>
                 { data ? 
