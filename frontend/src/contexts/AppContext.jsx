@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import * as yup from 'yup';
 import { useFormik } from 'formik';
+import {getData} from "../helpers/apiRequests"
 
 const AppStateContext = React.createContext();
 
@@ -10,30 +11,27 @@ export function useAppState() {
 
 export function AppStateProvider({ children }) {
 
-
+    //for sigup page
    const [show, setShow] = useState(false);
    const handleShow = () => setShow(true);
    const handleClose = () => setShow(false);
 
-   const [data, setData] = useState("")
-   const getData = () => {
-    let requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
-    };
-    fetch("http://127.0.0.1:8000/blog/posts/", requestOptions)
-    .then(response => response.json())
-    .then(result => {
-        setData(result)
-    })
-    .catch(error => console.log('error', error));
-    }
-  
+    //for sigup page
+    const [logInShow, setLogInShow] = useState(false);
     
-  
+
+   const [data, setData] = useState("")
+   const [userInfo, setUserInfo] = useState("")
+
+
+   const get_user_info = () => {
+    const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
+    setUserInfo(get_session_user_info)
+   }
+
   
     useEffect(() => {
-        getData()
+        getData(setData)
     }, []);
   
     const value = {
@@ -41,6 +39,10 @@ export function AppStateProvider({ children }) {
         handleClose,
         show,
         data,
+        userInfo,
+        get_user_info,
+        logInShow,
+        setLogInShow
     };
   
     return <AppStateContext.Provider value={value}> {children} </ AppStateContext.Provider>;

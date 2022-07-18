@@ -3,50 +3,44 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useAppState } from "../contexts/AppContext";
-import * as yup from 'yup';
 import { useFormik } from 'formik';
+import {validationSchema} from "../helpers/formValidations";
+import { useState } from 'react';
+import {signUpFunction} from "../helpers/apiRequests"
+import { useNavigate } from 'react-router-dom'
+
 
 function SignIn() {
+    const errorMesageTemplate= {
+        email: '',
+        firstName: "",
+        lastName: "",
+        password:"",
+        password2: "",
+    }
 
-    const validationSchema = yup.object({
-        email: yup
-          .string('Enter your email')
-          .email('Enter a valid email')
-          .required('Email is required'),
-        firstName: yup
-           .string('Enter your Firstname')
-          .max(20, 'Must be 15 characters or less')
-          .required('Required'),
-        lastName: yup
-           .string('Enter your Lastname')
-          .max(25, 'Must be 15 characters or less')
-          .required('Required'),
-        password: yup
-          .string('Enter your password')
-          .min(5, 'Password should be of minimum 5 characters length')
-          .required('Password is required'),
-        confirmPassword: yup
-          .string()
-          .oneOf([yup.ref('password'), null], 'Passwords must match')
-      });
-
+    const [errorMesage, setErrorMesage] = useState(errorMesageTemplate)
+    const navigate = useNavigate()
+    const { show, handleClose} = useAppState()
+    
     const formik = useFormik({
         initialValues: {
+          email: '',
           firstName: "",
           lastName: "",
-          email: '',
           password:"",
-          confirmPassword: "",
+          password2: "",
         },
-        validationSchema: validationSchema,
-        onSubmit: ((values, event ) => {
-                console.log(formik.touched.email)
-               
-                alert(JSON.stringify(values, null, 2));
+        validationSchema: validationSchema ,
+        onSubmit: ((values, { resetForm }) => {
+                signUpFunction(values, resetForm, setErrorMesage, navigate)
         }),
-      });
+    });
 
-    const { show, handleClose} = useAppState()
+    const customHandleChange = (e) => {
+        setErrorMesage(errorMesageTemplate)
+        formik.handleChange(e);
+    }
 
 
     return (
@@ -88,12 +82,19 @@ function SignIn() {
                         <Form.Control type="email"
                          placeholder="Enter email"
                          name="email"
-                         onChange={formik.handleChange}
+                         onChange={(e) => {
+                            customHandleChange(e)
+                         }}
                          value={formik.values.email}
-                         isInvalid={formik.touched.email && Boolean(formik.errors.email)}
+                         isInvalid={formik.touched.email ?  Boolean(formik.errors.email) || Boolean(errorMesage.email) : false}
                         />
                         <Form.Control.Feedback type="invalid">
-                           {  formik.touched.email &&  formik.errors.email }
+                           <p> {  formik.touched.email &&  formik.errors.email } </p>
+                           <p>
+                           {  errorMesage.email ?   
+                            errorMesage.email
+                           : "" }
+                           </p>
                         </Form.Control.Feedback>
                         
                     </Form.Group>
@@ -103,22 +104,27 @@ function SignIn() {
                         name="password"
                         onChange={formik.handleChange}
                         value={formik.values.password}
-                        isInvalid={formik.touched.password && Boolean(formik.errors.password)}
+                        isInvalid={formik.touched.password ?  Boolean(formik.errors.password) || Boolean(errorMesage.password) : false}
                         />
                         <Form.Control.Feedback type="invalid">
                            { formik.touched.password &&  formik.errors.password }
+                           <p>
+                           {  errorMesage.password ?   
+                           errorMesage.password
+                           : "" }
+                            </p> 
                         </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className="mb-3" controlId="formBasicPassword2">
                         <Form.Label>Password Confirmation</Form.Label>
                         <Form.Control type="password" placeholder="Re-enter password"
-                        name="confirmPassword"
+                        name="password2"
                         onChange={formik.handleChange}
-                        value={formik.values.confirmPassword}
-                        isInvalid={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+                        value={formik.values.password2}
+                        isInvalid={formik.touched.password2 && Boolean(formik.errors.password2)}
                         />
                         <Form.Control.Feedback type="invalid">
-                           { formik.touched.confirmPassword &&  formik.errors.confirmPassword }
+                           { formik.touched.password2 &&  formik.errors.password2 }
                         </Form.Control.Feedback>
                     </Form.Group>
                     

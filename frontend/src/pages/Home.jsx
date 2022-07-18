@@ -5,10 +5,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Cards from "../components/Cards/Cards"
 import Categorys from "../components/Categorys";
-import Button from 'react-bootstrap/Button';
 import { useAppState } from "../contexts/AppContext";
-import { useState, useEffect } from "react";
 import SignIn from "./SignIn";
+import LogIn from "./LogIn";
 
 
 function Home() {
@@ -18,6 +17,7 @@ function Home() {
   return (
     <>
     <SignIn />
+    <LogIn />
     <Header  />
     <Sidebar/>
     <Container className="mt-5">
