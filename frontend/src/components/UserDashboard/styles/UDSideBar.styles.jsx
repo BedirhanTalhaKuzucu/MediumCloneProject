@@ -13,13 +13,13 @@ export const SideBarContainerStyle = styled.main`
   width: 300px;
   border-left: 1px solid #e0deca;
 
-  ul{
+  ul {
     /* list-style: none; */
-    li{
-      a{
-      text-decoration: none;
-      color:black;
-      font-weight: bold;
+    li {
+      a {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
       }
     }
   }
