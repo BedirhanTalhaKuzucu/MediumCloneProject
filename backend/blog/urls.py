@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import PostList
+from .views import StoryList
 
 urlpatterns = [
-    path('posts/', PostList.as_view()),
+    path('stories/', StoryList.as_view()),
 ]
