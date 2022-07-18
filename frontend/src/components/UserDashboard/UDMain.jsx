@@ -2,7 +2,6 @@ import React from "react";
 import {
   ArticllesStyle,
   FollowingImg,
-  FollowingList,
   FollowingListStyle,
   MainContainer,
   MainHeader,
@@ -11,6 +10,7 @@ import {
 import Following from "./Following";
 import Tooltip from "@mui/material/Tooltip";
 import MainFollowingTooltip from "./MainFollowingTooltip";
+import { Link, NavLink, Outlet } from "react-router-dom";
 
 const topicList = ["FullStack", "Python", "Machine Learning", "Programming",'React', 'Django'];
 
@@ -45,12 +45,11 @@ const UDMain = () => {
       </MainHeader>
 
       <ArticllesStyle>
-        <a href="/">Following</a>
-        <a href="/">Recommended</a>
+        <NavLink to='following' style={({ isActive }) => ({ color: isActive && 'black'})}>Following</NavLink>
+        <Link to='recommended'>Recommended</Link>
       </ArticllesStyle>
+      <Outlet/>
 
-      <Following />
-      {/* Link ve Outlet gelecek */}
     </MainContainer>
   );
 };

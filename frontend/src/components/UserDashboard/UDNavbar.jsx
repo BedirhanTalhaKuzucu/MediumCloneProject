@@ -11,6 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 
 import Images from "../../assets/Images";
 import AccountMenu from "./NavbarUserMenu";
+import { Link } from "react-router-dom";
 
 const UDNavbar = () => {
   return (
@@ -21,38 +22,38 @@ const UDNavbar = () => {
 
       <IconsStyle>
         <Tooltip title="Home" arrow placement="right">
-          <a href="/">
+          <Link to="/">
             <IconStyle
               src={Images.home}
               alt="home"
               style={{ filter: "sepia(13%)" }}
             />
-          </a>
+          </Link>
         </Tooltip>
         <Tooltip title="Notifications" arrow placement="right">
-          <a href="/">
+          <Link to="/">
             <IconStyle src={Images.alarm} alt="logo" />
-          </a>
+          </Link>
         </Tooltip>
 
         <Tooltip title="Lists" arrow placement="right">
-          <a href="/">
+          <Link to="/">
             <IconStyle src={Images.bookmark} alt="Lists Icon" />
-          </a>
+          </Link>
         </Tooltip>
         <Tooltip title="Stories" arrow placement="right">
-          <a
-            href=""
+          <Link
+            to=""
             style={{ borderBottom: "1px solid grey", paddingBottom: "2rem" }}
           >
             <IconStyle src={Images.script} alt="Stories Icon" />
-          </a>
+          </Link>
         </Tooltip>
 
         <Tooltip title="Edit" arrow placement="right">
-          <a href="/">
+          <Link to="/">
             <IconStyle src={Images.edit} alt="edit icon" />
-          </a>
+          </Link>
         </Tooltip>
         <hr />
       </IconsStyle>
