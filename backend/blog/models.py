@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 
+from requests import post
 
 class Tag(models.Model):
     
@@ -10,7 +11,8 @@ class Tag(models.Model):
     def __str__(self):
         return self.tag_name
 
-class Story(models.Model):
+
+class Post(models.Model):
     STATUS = (
         ("Published", "Published"),
         ("Draft", "Draft"),
@@ -52,16 +54,16 @@ class TagFollower(models.Model):
     def __str__(self):
         return f'{self.tag}-{self.user.username}'
 
-class StoryTag(models.Model):
+class PostTag(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
     tag=models.ForeignKey(Tag,on_delete=models.CASCADE,related_name='tags')
-    story=models.ForeignKey(Story,on_delete=models.CASCADE,related_name='story')
+    post=models.ForeignKey(Post,on_delete=models.CASCADE,related_name='post')
     timeStamp = models.DateTimeField(auto_now_add=True)
 
 class Comment(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    story = models.ForeignKey(Story, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     content = models.TextField(max_length=300)
     created_date = models.DateTimeField(auto_now_add=True)
     last_update =models.DateTimeField(auto_now=True)
@@ -69,12 +71,12 @@ class Comment(models.Model):
     # claps
 
     def __str__(self):
-        return f'{self.story.title}======={self.user.username}'
+        return f'{self.post.title}======={self.user.username}'
 
-class StoryClap(models.Model):
+class PostClap(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='story_clap_user')
-    story = models.ForeignKey( Story, on_delete=models.CASCADE, related_name='clap_story',blank=True,null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='post_clap_user')
+    post = models.ForeignKey( Post, on_delete=models.CASCADE, related_name='clap_post',blank=True,null=True)
     timeStamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -92,7 +94,7 @@ class CommentClap(models.Model):
 class StorieView(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
     timeStamp = models.DateTimeField(auto_now_add=True)
-    story = models.ForeignKey(Story, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
@@ -107,7 +109,7 @@ class StorieShare(models.Model):
     )
     id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
     timeStamp = models.DateTimeField(auto_now_add=True)
-    story = models.ForeignKey(Story, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     share=models.CharField(max_length=10, choices =SHARE)
 
