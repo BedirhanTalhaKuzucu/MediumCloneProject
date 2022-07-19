@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   SearchInputStyle,
   SideBarContainerStyle,
@@ -16,22 +16,17 @@ const UDSlideBar = () => {
       </form>
 
       <ul>
-        <li>
+        <li className="readingToday">
           <Link to='#'>What We're Reading Today</Link>
         </li>
       </ul>
 
-      <p>Lorem ipsum dolor sit amet.</p>
-      <p>Lorem ipsum dolor sit amet.</p>
-      <p>Lorem ipsum dolor sit amet.</p>
-      <p>Lorem ipsum dolor sit amet.</p>
-      <p>Lorem ipsum dolor sit amet.</p>
-      <p>Lorem ipsum dolor sit amet.</p>
-      <p>Lorem ipsum dolor sit amet.</p>
-      <p>Lorem ipsum dolor sit amet.</p>
-      <p>Lorem ipsum dolor sit amet.</p>
-      <p>Lorem ipsum dolor sit amet.</p>
-      <p>Lorem ipsum dolor sit amet.</p>
+      <div>Recommended topics</div>
+
+      
+
+
+
     </SideBarContainerStyle>
   );
 };

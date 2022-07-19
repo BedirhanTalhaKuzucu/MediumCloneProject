@@ -7,6 +7,10 @@ const Images = {
   Icongif: require("./Icongif.png"),
   alarm: require("./alarm.png"),
   bookmark: require("./bookmark.png"),
+  bookmarks: require("./bookmarks.png"),
+  noentry: require("./noentry.png"),
+  more: require("./more.png"),
+
 };
 
 export default Images;
