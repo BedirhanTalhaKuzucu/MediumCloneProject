@@ -81,7 +81,7 @@ export const getData = (setData) => {
         method: 'GET',
         redirect: 'follow'
     };
-    fetch("http://127.0.0.1:8000/blog/posts/", requestOptions)
+    fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
     .then(response => response.json())
     .then(result => {
         setData(result)
