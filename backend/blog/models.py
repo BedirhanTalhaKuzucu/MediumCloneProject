@@ -4,7 +4,12 @@ import uuid
 
 from requests import post
 
-
+class Tag(models.Model):
+    
+    id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
+    tag_name = models.CharField(max_length=15, default= 'BackEnd' )
+    def __str__(self):
+        return self.tag_name
 
 
 class Post(models.Model):
@@ -20,14 +25,16 @@ class Post(models.Model):
     publish_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
     status = models.CharField(choices = STATUS, max_length=10, default='Draft')
+    tags=models.ManyToManyField(Tag, through='StoryTag',through_fields=('story','tag'))
     # !serializerda
     #  tag
     # claps
     # comment
     
     def __str__(self):
-        return f'{self.title}------------ {self.user.username}'
-        
+        return f'{self.title}------------ {self.user.username} {self.tags}'
+    class Meta:
+        verbose_name_plural = "Stories"    
 
     # def comment_count(self):
     #     return self.comment_set.all().count()
@@ -37,12 +44,7 @@ class Post(models.Model):
 
 
 
-class Tag(models.Model):
-    
-    id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
-    tag_name = models.CharField(max_length=15, default= 'BackEnd' )
-    def __str__(self):
-        return self.tag_name 
+ 
 
 class TagFollower(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
@@ -110,3 +112,6 @@ class StorieShare(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     share=models.CharField(max_length=10, choices =SHARE)
+
+    class Meta:
+        verbose_name_plural = "Story Share"
