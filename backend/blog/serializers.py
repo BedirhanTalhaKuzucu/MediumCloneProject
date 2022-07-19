@@ -1,22 +1,26 @@
 
 from rest_framework import serializers
-from .models import Post
+from .models import Story
 
 
-class PostSerializer(serializers.ModelSerializer):
-    creatorInfo = serializers.SerializerMethodField()
-
+class StorySerializer(serializers.ModelSerializer):
+    creatorInfo = serializers.SerializerMethodField('get_creatorInfo')
+    tags=serializers.SerializerMethodField('get_tags')
     class Meta:
-        model = Post
+        model = Story
         fields = (
             "id",
             "creatorInfo",
             "title",
             "content",
             "image",
+            "tags",
             "publish_date",
         )
     
+    def get_tags(self,obj):
+        return obj.tags.all().values('id','tag_name')
+
     def get_creatorInfo(self, obj):
         context = {
             "first_name" : obj.user.first_name,
@@ -24,4 +28,7 @@ class PostSerializer(serializers.ModelSerializer):
             "email": obj.user.email,
         }
         return  context
+    def comments(self):
+        return self.comment_set.all()
+    
     
