@@ -1,6 +1,7 @@
 from importlib.metadata import requires
 from rest_framework import serializers, validators
 from django.contrib.auth.models import User
+from .models import UserProfile
 from django.contrib.auth.password_validation import validate_password
 # from dj_rest_auth.serializers import TokenSerializer, LoginSerializer, JWTSerializer
 from rest_framework.authtoken.models import Token
@@ -57,15 +58,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             )
         return data
 
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields =(
-            "username",
-        )
-
-
 class CustomTokenSerializer(serializers.ModelSerializer):
     userInfo = serializers.SerializerMethodField()
     # user = serializers.StringRelatedField() 
@@ -85,6 +77,27 @@ class CustomTokenSerializer(serializers.ModelSerializer):
         }
         return  context
 
+class UserSerializer(serializers.ModelSerializer):
+    user=serializers.SerializerMethodField('get_user')
+    class Meta:
+        model = UserProfile
+        fields =(
+            'user',
+            'short_bio',
+            'profile_photo',
+            'about_text',
+            'about_photo',
+        )
+
+    def get_user(self,obj):
+        # ! bu yontemle user create edemiyorum 
+        context = {
+            "username" : obj.user.username,
+            "first_name" : obj.user.first_name,
+            "last_name": obj.user.last_name,
+            "email": obj.user.email,
+        }
+        return  context
 
 
 
