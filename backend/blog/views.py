@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .serializers import PostSerializer
-from .models import Post
+from .serializers import StorySerializer
+from .models import Story
 
 
 
-class PostList(generics.ListAPIView):
-    serializer_class = PostSerializer
-    queryset = Post.objects.all()
+class StoryList(generics.ListAPIView):
+    serializer_class = StorySerializer
+    queryset = Story.objects.all()
 
 
 
