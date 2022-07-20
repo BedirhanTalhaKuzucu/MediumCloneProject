@@ -12,16 +12,30 @@ export const LeftSideBar = styled.nav`
   height: 100vh;
   width: 5.2rem;
   border-right: 1px solid #f1eee9;
+
+  @media (max-width: 768px) {
+    /* background-color: red; */
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 5rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    z-index: 1;
+  }
 `;
 
 export const LogoStyle = styled.a`
   & > img {
-    width: 100%;
-    height: 100%;
+    width: 50px;
+    height: 50px;
   }
   position: sticky;
   top: 0;
   margin-top: 2rem;
+  @media (max-width: 768px) {
+   margin: 0 2rem;
+  }
 `;
 
 export const IconsStyle = styled.div`
@@ -32,7 +46,10 @@ export const IconsStyle = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: 3rem;
-  & > a {
+
+  @media (max-width: 768px) {
+    display:none; /* remove the element from page and DOM. */
+visibility:hidden;
   }
 `;
 
