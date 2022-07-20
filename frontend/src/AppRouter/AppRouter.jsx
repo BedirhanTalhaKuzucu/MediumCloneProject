@@ -12,6 +12,7 @@ import Following from "../components/UserDashboard/Following";
 import Recommended from "../components/UserDashboard/Recommended";
 import Home from "../pages/Home";
 import UserDashboard from "../pages/UserDashboard";
+import Write from "../pages/Write" 
 
 function AppRouter() {
   return (
@@ -23,6 +24,8 @@ function AppRouter() {
           <Route path="following" element={<Following />} />
           <Route path="recommended" element={<Recommended />} />
         </Route>
+        <Route path="/write" element={<Write />} />
+
       </Routes>
     </BrowserRouter>
   );
