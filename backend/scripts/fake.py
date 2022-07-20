@@ -44,7 +44,7 @@ def set_user():
     user_profile=UserProfile(
         user=user,
         short_bio=short_bio,
-        profile_photo=profile_photo,
+        # profile_photo=profile_photo,
         about_text=about_text,
         about_photo=about_photo,
     )
