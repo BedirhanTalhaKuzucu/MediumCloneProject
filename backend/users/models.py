@@ -7,9 +7,9 @@ class UserProfile(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='user')
     short_bio=models.CharField(max_length=160 )
-    profile_photo=models.ImageField(upload_to='media/profile_photo',blank=True)
+    profile_photo=models.URLField(blank=True)
     about_text=models.TextField()
-    about_photo=models.ImageField(upload_to='media/about_photo',blank=True)
+    about_photo=models.URLField(blank=True)
     last_update=models.DateTimeField(auto_now=True)
     
     def __str__(self):

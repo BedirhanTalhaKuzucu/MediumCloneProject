@@ -78,7 +78,20 @@ class CustomTokenSerializer(serializers.ModelSerializer):
         return  context
 
 class UserSerializer(serializers.ModelSerializer):
-    user=serializers.SerializerMethodField('get_user')
+    class Meta:
+        model=User
+        fields=(
+            "username",
+            "first_name" ,
+            "last_name",
+            "email",
+        )
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    
+    user=UserSerializer(required=False)
+
     class Meta:
         model = UserProfile
         fields =(
@@ -88,17 +101,20 @@ class UserSerializer(serializers.ModelSerializer):
             'about_text',
             'about_photo',
         )
+    def create(self,validated_data):
+        user_data=validated_data.pop('user')
+        print(user_data)
 
-    def get_user(self,obj):
-        # ! bu yontemle user create edemiyorum 
-        context = {
-            "username" : obj.user.username,
-            "first_name" : obj.user.first_name,
-            "last_name": obj.user.last_name,
-            "email": obj.user.email,
-        }
-        return  context
+        userProfile=UserProfile.objects.create(**validated_data)
+        user=User.objects.create(**user_data[0])
+        user.save()
+        userProfile.user=user.id
+        userProfile.save()
+        return userProfile
 
+
+    
+    
 
 
 
