@@ -6,7 +6,7 @@ import uuid
 
 class UserProfile(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
-    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='user')
+    user= models.OneToOneField(User, on_delete=models.CASCADE,related_name='user')
     short_bio=models.CharField(max_length=160 )
     profile_photo=models.ImageField(upload_to='profile_photo',blank=True, default= 'default/default.jpg')
     about_text=models.TextField()

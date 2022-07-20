@@ -25,7 +25,7 @@ export const CardContainer = styled.div`
     display: flex;
     justify-content: space-between;
     .part1 {
-      .title{
+      .title {
         font-weight: bold;
         font-size: 1.3rem;
         margin-bottom: 1rem;
@@ -76,6 +76,37 @@ export const CardContainer = styled.div`
       img {
         width: 110px;
         height: 110px;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .articlePart {
+      display: none;
+      visibility: hidden;
+    }
+    .articleInf {
+      .part1 {
+        .title {
+          font-size: 1rem;
+        }
+
+        .desc {
+          background-color: red;
+          /* display: none; */
+          visibility: hidden;
+        }
+        .tag,
+        .readTime{
+          font-size: 0.8rem;
+          white-space: nowrap;
+          padding-top: 1rem;
+        }
+      }
+      .part2 {
+        img {
+          width: 56px;
+          height: 56px;
+        }
       }
     }
   }

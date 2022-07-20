@@ -19,7 +19,7 @@ class Story(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.TextField()
     content = models.TextField()
-    image = models.ImageField(upload_to='media/storie_image',blank=True,default='media/storie_image/media1.png')
+    image = models.ImageField(upload_to='storie_image',blank=True,default='default/mediaDefaultImage.jpg')
     publish_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
     status = models.CharField(choices = STATUS, max_length=10, default='Draft')
@@ -30,7 +30,7 @@ class Story(models.Model):
     # comment
     
     def __str__(self):
-        return f'{self.title}------------ {self.user.username} {self.tags}'
+        return f'{self.title}------------ {self.user} {self.tags}'
     class Meta:
         verbose_name_plural = "Stories"    
 
