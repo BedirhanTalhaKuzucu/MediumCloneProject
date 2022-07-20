@@ -6,12 +6,14 @@ import UDSideBar from "../components/UserDashboard/UDSideBar";
 
 const UserDashboard = () => {
   return (
+
     <DashboardContainer>
       <UDNavbar />
       <UDMain />
       <UDSideBar />
     </DashboardContainer>
-  );
-};
+  )
+}
+
 
 export default UserDashboard;
