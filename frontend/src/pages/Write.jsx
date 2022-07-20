@@ -33,7 +33,7 @@ function Write() {
                     <Container style={{width:'50rem', height:'10rem' }} >
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>Title</Form.Label>
-                            <Form.Control type="email" placeholder="Title" />
+                            <Form.Control type="text" placeholder="Title" />
                         </Form.Group>
                     </Container>
 
