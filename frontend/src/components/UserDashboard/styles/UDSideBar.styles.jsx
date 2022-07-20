@@ -14,7 +14,6 @@ export const SideBarContainerStyle = styled.main`
   border-left: 1px solid #e0deca;
 
   ul {
-    /* list-style: none; */
     li {
       a {
         text-decoration: none;

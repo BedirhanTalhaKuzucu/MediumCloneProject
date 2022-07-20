@@ -73,7 +73,7 @@ export const FollowingImg = styled.img`
   cursor: pointer;
 `;
 
-export const ArticllesStyle = styled.article`
+export const ArticlesStyle = styled.article`
   margin-top: 3rem;
   border-bottom: 1px solid grey;
   padding-bottom: 1rem;
