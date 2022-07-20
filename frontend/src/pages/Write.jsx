@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-// import logo from "../assets/Images/";
 import Images from "../assets/Images";
-
-import Button from 'react-bootstrap/Button';
 import { Link, NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import { Editor } from 'react-bootstrap-editor';
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 function Write() {
+
     return (
         <div>
             <Navbar bg="" variant="light" style={{ height: '4.5rem' }} className="border-1 border-bottom border-dark">
@@ -23,59 +22,29 @@ function Write() {
 
                     </Nav>
 
-
                     <Nav className="justify-content-end align-items-center "   >
                         <Nav.Link as={NavLink} to="home" className="text-dark me-1">Publish</Nav.Link>
                         <Nav.Link as={NavLink} to="home" className="text-dark me-1">Profil</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>
-            <div>
-                <div className="postEditorContainer">
-                    <form action="" enctype="multipart/form-data">
-                        <div className="input-grup">
-                            <label className="profileUpdateLabel" htmlFor="">
-                                {" "}
-                                Title{" "}
-                            </label>
-                            <input
-                                className="postEditorInput"
-                                type="text"
-                                name="title"
-                            />
-                        </div>
-                        <div className="input-grup">
-                            <label
-                                className="profileUpdateLabel"
-                                htmlFor="file-input"
-                                style={{ cursor: "pointer" }}
-                            >
-                                Image
-                            </label>
+            <Container>
+                <Form>
+                    <Container style={{width:'50rem', height:'10rem' }} >
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control type="email" placeholder="Title" />
+                        </Form.Group>
+                    </Container>
 
-                            <input
-                                id="file-input"
-                                accept="image/*"
-                                type="file"
-                            />
-                            <label className="profileUpdateLabel">
-                                Select Topics:
-                                
-                            </label>
-                        </div>
-                        <CKEditor
-                            editor={ClassicEditor}
-                            name="content"
-                           
-                        />
-                        <button className="addBtn" >
-                            {" "}
-                            Add{" "}
-                        </button>
-                    </form>
-                    
-                </div>
-            </div>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                        <Form.Label>Story</Form.Label>
+                        <Editor value="" onChange={console.log} placeholder="Title"  />
+                    </Form.Group>
+                </Form>
+            </Container>
+
+
         </div>
 
     )
