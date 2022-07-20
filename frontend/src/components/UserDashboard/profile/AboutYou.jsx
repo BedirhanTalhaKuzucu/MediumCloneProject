@@ -1,7 +1,20 @@
 import React from "react";
+import { useState } from "react";
 import { AboutContainer, Buttons } from "../styles/profile/AboutYou.styles";
 
 const AboutYou = () => {
+  const [edit, setEdit] = useState({
+    firstname: false,
+    shortBio: false,
+  });
+
+  function changeState(e) {
+    console.log(e.target.className);
+    if (e.target.className === "fullname") {
+      setEdit({ ...edit, firstname: true });
+    }
+  }
+
   return (
     <AboutContainer>
       <h3>About You</h3>
@@ -15,9 +28,20 @@ const AboutYou = () => {
           </p>
         </div>
         <Buttons>
-          <button>Edit</button>
-          {/* <button>Save</button>
-          <button>Cancel</button> */}
+          {edit.firstname ? (
+            <button onClick={changeState} id="edit" className="fullname">
+              Edit
+            </button>
+          ) : (
+            <>
+              <button onClick={changeState} className="fullname">
+                Save
+              </button>
+              <button onClick={changeState} className="fullname">
+                Cancel
+              </button>
+            </>
+          )}
         </Buttons>
       </nav>
       <nav>
@@ -30,9 +54,20 @@ const AboutYou = () => {
           </p>
         </div>
         <Buttons>
-          <button>Edit</button>
-          {/* <button>Save</button>
-          <button>Cancel</button> */}
+          {edit ? (
+            <button onClick={changeState} className="bio">
+              Edit
+            </button>
+          ) : (
+            <>
+              <button onClick={changeState} className="bio">
+                Save
+              </button>
+              <button onClick={changeState} className="bio">
+                Cancel
+              </button>
+            </>
+          )}
         </Buttons>
       </nav>
       <nav>
@@ -54,9 +89,14 @@ const AboutYou = () => {
           </div>
         </div>
         <Buttons>
-          <button>Edit</button>
-          {/* <button>Save</button>
-          <button>Cancel</button> */}
+          {edit ? (
+            <button onClick={changeState}>Edit</button>
+          ) : (
+            <>
+              <button onClick={changeState}>Save</button>
+              <button onClick={changeState}>Cancel</button>
+            </>
+          )}
         </Buttons>
       </nav>
       <nav>
@@ -74,9 +114,14 @@ const AboutYou = () => {
           </div>
         </div>
         <Buttons>
-          <button>Edit</button>
-          {/* <button>Save</button>
-          <button>Cancel</button> */}
+          {edit ? (
+            <button onClick={changeState}>Edit</button>
+          ) : (
+            <>
+              <button onClick={changeState}>Save</button>
+              <button onClick={changeState}>Cancel</button>
+            </>
+          )}
         </Buttons>
       </nav>
     </AboutContainer>
