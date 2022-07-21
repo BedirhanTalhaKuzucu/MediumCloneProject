@@ -90,5 +90,33 @@ export const getData = (setData) => {
     .catch(error => console.log('error', error));
 }
 
+export const createStory = (formData, values) => {
+
+    console.log(formData);
+    console.log(values)
+
+    let myHeaders = new Headers();
+    
+    
+    let formdata = new FormData();
+    formdata.append("title", formData.title);
+    formdata.append("content", formData.story);
+    formdata.append("image", values.image);
+    formdata.append("tag_name", values.tag_name);
+    formdata.append("user_id", "1");
+    formdata.append("status", values.status);
+    
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+    
+    fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+}
 
 
