@@ -38,14 +38,18 @@ const UDMain = () => {
         </TopicsStyle>
 
         <FollowingListStyle>
-          <Tooltip title={<MainFollowingTooltip />} arrow>
-            <FollowingImg />
-          </Tooltip>
-          <Tooltip title={<MainFollowingTooltip />} arrow>
-            <FollowingImg />
-          </Tooltip>
-          <Tooltip title={<MainFollowingTooltip />} arrow>
-            <FollowingImg />
+          <Tooltip
+            title={<MainFollowingTooltip />}
+            arrow
+            componentsProps={{
+              tooltip: {
+                sx: {
+                  backgroundColor: "white",
+                },
+              },
+            }}
+          >
+            <FollowingImg src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"/>
           </Tooltip>
         </FollowingListStyle>
       </MainHeader>

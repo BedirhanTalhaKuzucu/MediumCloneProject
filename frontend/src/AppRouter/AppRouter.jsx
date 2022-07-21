@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter,
-  Navigate,
-  Outlet,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom";
-import Navbar from "../components/Navbar/Navbar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Following from "../components/UserDashboard/Following";
 import Recommended from "../components/UserDashboard/Recommended";
 import AboutYou from "../components/UserDashboard/profile/AboutYou";
@@ -16,6 +8,7 @@ import Stories from "../components/UserDashboard/profile/Stories";
 import Home from "../pages/Home";
 import Profile from "../pages/Profile";
 import UserDashboard from "../pages/UserDashboard";
+import NotFound from "../pages/NotFound";
 
 function AppRouter() {
   return (
@@ -33,6 +26,8 @@ function AppRouter() {
           <Route path="stories" element={<Stories />} />
           <Route path="security" element={<Security />} />
         </Route>
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
