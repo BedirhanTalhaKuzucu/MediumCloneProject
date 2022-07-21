@@ -9,7 +9,7 @@ import Home from "../pages/Home";
 import Profile from "../pages/Profile";
 import UserDashboard from "../pages/UserDashboard";
 import NotFound from "../pages/NotFound";
-
+import Write from "../pages/Write" 
 function AppRouter() {
   return (
     <BrowserRouter>
@@ -20,6 +20,7 @@ function AppRouter() {
           <Route path="following" element={<Following />} />
           <Route path="recommended" element={<Recommended />} />
         </Route>
+
         <Route path="home/profile" element={<Profile />}>
           <Route index element={<AboutYou />} />
           <Route path="about" element={<AboutYou />} />
@@ -28,6 +29,7 @@ function AppRouter() {
         </Route>
 
         <Route path="*" element={<NotFound />} />
+        <Route path="/write" element={<Write />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,5 +1,5 @@
 import Header from "../components/Header"
-import Sidebar from "../components/Sidebar"
+import Sidebar from "../components/Sidebar/Sidebar"
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -19,7 +19,7 @@ function Home() {
     <SignIn />
     <LogIn />
     <Header  />
-    <Sidebar/>
+    <Sidebar storyData = {data} />
     <Container className="mt-5">
         <Row>
             <Col md={12} lg={{ span: 5,  order: 'last' }}>

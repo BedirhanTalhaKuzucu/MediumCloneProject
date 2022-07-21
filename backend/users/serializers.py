@@ -77,6 +77,7 @@ class CustomTokenSerializer(serializers.ModelSerializer):
         }
         return  context
 
+
 class UserSerializer(serializers.ModelSerializer):
     user=serializers.SerializerMethodField('get_user')
     class Meta:
