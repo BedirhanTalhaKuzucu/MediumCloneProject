@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'dj_rest_auth',
     "corsheaders",
+    'django_extensions',
+    
 
     #apps
     'users',

@@ -1,13 +1,21 @@
 
+from numpy import require
 from rest_framework import serializers
-from .models import Story
+from .models import Story, Tag
 from users.models import UserProfile
-import pandas as pd
+from django.contrib.auth.models import User
+
+
+
 
 
 class StorySerializer(serializers.ModelSerializer):
     creatorInfo = serializers.SerializerMethodField('get_creatorInfo')
     tags=serializers.SerializerMethodField('get_tags')
+    tag_name = serializers.CharField(write_only=True)
+    user_id = serializers.IntegerField(write_only=True)
+    # image_upload = serializers.ImageField(
+    #     write_only=True, use_url=True, allow_null =False, allow_empty_file= False, required=False)
     class Meta:
         model = Story
         fields = (
@@ -18,6 +26,10 @@ class StorySerializer(serializers.ModelSerializer):
             "image",
             "tags",
             "publish_date",
+            "tag_name",
+            "user_id",
+            "status",
+            # "image_upload"
         )
     
     def get_tags(self,obj):
@@ -39,7 +51,26 @@ class StorySerializer(serializers.ModelSerializer):
         return  context
 
 
-    def comments(self):
-        return self.comment_set.all()
+    def create(self, validated_data):
+        tag_name = validated_data.pop("tag_name")
+        user_id = validated_data.pop("user_id")
+        
+        createrUser = User.objects.get(id=user_id)
+        print(createrUser)
+
+
+        if Tag.objects.filter(tag_name__iexact=tag_name).exists():
+            categoryOfStory=Tag.objects.get(tag_name__iexact = tag_name)
+        else:
+            categoryOfStory=Tag.objects.create(tag_name = tag_name)
+        
+
+        validated_data["user_id"] = createrUser.id
+        story = Story.objects.create(**validated_data)
+        
+        story.tags.add(categoryOfStory)
+
+        story.save()
+        return story
     
     

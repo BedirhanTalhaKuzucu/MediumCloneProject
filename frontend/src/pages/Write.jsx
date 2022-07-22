@@ -3,12 +3,49 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Images from "../assets/Images";
 import { Link, NavLink } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Editor } from 'react-bootstrap-editor';
-// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { useFormik } from 'formik';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import {createStory} from "../helpers/apiRequests"
+import WriteModal from '../components/WriteModal/WriteModal';
+
+
 
 function Write() {
+    const [formData, setformData] = useState("")
+
+    const [editor, seteditor] = useState("")
+    const [show, setShow] = useState(false);
+
+    const formik1 = useFormik({
+        initialValues: {
+            title: '',
+            story: "",
+        },
+        onSubmit: ((values, { resetForm }) => {
+            values.story = editor
+            console.log(values)
+            setformData(values)
+        }),
+    });
+
+    const editorHandle = (e) => {
+        seteditor(e);
+        formik1.handleSubmit();
+    }
+
+   
+
+    const handleSubmit = () => {
+        formik1.handleSubmit();
+        setShow(true);
+    }
+
+  
 
     return (
         <div>
@@ -19,31 +56,43 @@ function Write() {
                             <img src={Images.logo} style={{ 'width': '10rem' }} alt="logo" />
                         </Navbar.Brand>
                         <small> Draft in  FirstName LastName </small>
-
                     </Nav>
 
                     <Nav className="justify-content-end align-items-center "   >
-                        <Nav.Link as={NavLink} to="home" className="text-dark me-1">Publish</Nav.Link>
+                        <Button variant="success" type="submit" onClick={handleSubmit} size="sm" >Publish</Button>
                         <Nav.Link as={NavLink} to="home" className="text-dark me-1">Profil</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>
-            <Container>
-                <Form>
-                    <Container style={{width:'50rem', height:'10rem' }} >
+            <Container className="my-5">
+                <Form onSubmit={formik1.handleSubmit} >
+                    <Container style={{ width: '30rem', height: '10rem' }} >
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>Title</Form.Label>
-                            <Form.Control type="text" placeholder="Title" />
+                            <Form.Control type="text" placeholder="Title"
+                                name="title"
+                                onChange={formik1.handleChange}
+                                value={formik1.values.title} />
                         </Form.Group>
                     </Container>
 
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea12">
                         <Form.Label>Story</Form.Label>
-                        <Editor value="" onChange={console.log} placeholder="Title"  />
+                        <Editor placeholder="Title"
+                            name="story"
+                            onChange={(e)=> {
+                                editorHandle(e)
+                            }}
+                            value={formik1.values.story}
+                        />
                     </Form.Group>
+                    {/* <Button variant="warning" type="submit"  >
+                        Submit
+                    </Button> */}
                 </Form>
             </Container>
-
+            <WriteModal show ={show} setShow= {setShow} formik1={formik1} 
+            formData= {formData} seteditor = {seteditor} />
 
         </div>
 

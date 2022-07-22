@@ -3,8 +3,18 @@ import { Link } from "react-router-dom";
 import {
   SearchInputStyle,
   SideBarContainerStyle,
+  TopicListStyle,
   UnlimitedButtonStyle,
 } from "./styles/UDSideBar.styles";
+
+const topicList = [
+  "FullStack",
+  "Python",
+  "Machine Learning",
+  "Programming",
+  "React",
+  "Django",
+];
 
 const UDSlideBar = () => {
   return (
@@ -15,18 +25,20 @@ const UDSlideBar = () => {
         <SearchInputStyle />
       </form>
 
-      <ul>
-        <li className="readingToday">
-          <Link to='#'>What We're Reading Today</Link>
-        </li>
-      </ul>
+      <Link to="#" className="readingToday">
+        <span></span> What We're Reading Today
+      </Link>
 
-      <div>Recommended topics</div>
-
-      
-
-
-
+      <TopicListStyle>
+        <h5>Recommended topics</h5>
+        {topicList?.map((item) => {
+          return (
+            <div key={item.id} className="topicItem">
+              <button>{item}</button>
+            </div>
+          );
+        })}
+      </TopicListStyle>
     </SideBarContainerStyle>
   );
 };

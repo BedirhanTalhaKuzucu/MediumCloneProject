@@ -3,23 +3,27 @@ import styled from "styled-components";
 export const SideBarContainerStyle = styled.main`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   flex-shrink: 0;
   position: sticky;
   top: 0;
   left: 0;
   height: 100%;
-  padding: 1rem;
-  width: 300px;
+  padding: 1.5rem;
+  width: 350px;
   border-left: 1px solid #e0deca;
 
-  ul {
-    li {
-      a {
-        text-decoration: none;
-        color: black;
-        font-weight: bold;
-      }
+  .readingToday {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    span {
+      display: inline-block;
+      background-color: green;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
     }
   }
 `;
@@ -46,5 +50,35 @@ export const SearchInputStyle = styled.input.attrs({
   margin: 1rem;
   &:focus {
     outline: none;
+  }
+`;
+
+export const TopicListStyle = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  h5 {
+    display: block;
+    margin: 1rem 2rem;
+    margin-left: 10px;
+  }
+  .topicItem {
+    white-space: nowrap;
+    /* width: 100%; */
+    margin: 5px;
+    background-color: #e6e6e6;
+    padding: 5px 10px;
+    border-radius: 1rem;
+    font-weight: lighter;
+    font-size: small;
+    button {
+      border: none;
+      background-color: #e6e6e6;
+      &:hover {
+        background-color: #dfdfdf;
+      }
+    }
+    &:hover {
+      background-color: #dfdfdf;
+    }
   }
 `;

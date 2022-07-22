@@ -10,6 +10,7 @@ class Tag(models.Model):
     def __str__(self):
         return self.tag_name
 
+
 class Story(models.Model):
     STATUS = (
         ("Published", "Published"),
@@ -113,3 +114,4 @@ class StorieShare(models.Model):
 
     class Meta:
         verbose_name_plural = "Story Share"
+
