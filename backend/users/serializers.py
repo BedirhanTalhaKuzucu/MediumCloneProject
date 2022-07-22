@@ -101,18 +101,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'about_text',
             'about_photo',
         )
-    def create(self,validated_data):
-        user_data=validated_data.pop('user')
-        print(user_data)
-
-        userProfile=UserProfile.objects.create(**validated_data)
-        user=User.objects.create(**user_data[0])
-        user.save()
-        userProfile.user=user.id
-        userProfile.save()
-        return userProfile
-
-
+    
     
     
 
