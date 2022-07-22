@@ -92,36 +92,36 @@ export const getData = (setData) => {
 
 export const createStory = (formData, values, resetForm ) => {
 
-    console.log(formData);
-    console.log(values)
+    // console.log(formData);
+    // console.log(values)
     
-    resetForm({values:""})
+    // resetForm({values:""})
 
-    // let myHeaders = new Headers();
+    let myHeaders = new Headers();
     
     
-    // let formdata = new FormData();
-    // formdata.append("title", formData.title);
-    // formdata.append("content", formData.story);
-    // formdata.append("image", values.image);
-    // formdata.append("tag_name", values.tag_name);
-    // formdata.append("user_id", "1");
-    // formdata.append("status", values.status);
+    let formdata = new FormData();
+    formdata.append("title", formData.title);
+    formdata.append("content", formData.story);
+    formdata.append("image", values.image);
+    formdata.append("tag_name", values.tag_name);
+    formdata.append("user_id", "1");
+    formdata.append("status", values.status);
     
-    // var requestOptions = {
-    //   method: 'POST',
-    //   headers: myHeaders,
-    //   body: formdata,
-    //   redirect: 'follow'
-    // };
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
     
-    // fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
-    //   .then(response => response.text())
-    //   .then((result) => {
-    //     resetForm({values:""})
-    //     setformData("")
-    //     console.log(result)})
-    //   .catch(error => console.log('error', error));
+    fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
+      .then(response => response.text())
+      .then((result) => {
+        resetForm({values:""})
+        // setformData("")
+        console.log(result)})
+      .catch(error => console.log('error', error));
 }
 
 
