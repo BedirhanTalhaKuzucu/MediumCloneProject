@@ -5,7 +5,7 @@ from rest_framework.generics import CreateAPIView,ListCreateAPIView
 from django.contrib.auth.models import User
 
 from .models import UserProfile
-from.serializers import RegisterSerializer, UserSerializer
+from.serializers import RegisterSerializer, UserProfileSerializer
 from rest_framework.authtoken.models import Token
 
 
@@ -26,4 +26,4 @@ class RegisterView(CreateAPIView):
 
 class UserView(ListCreateAPIView):
     queryset=UserProfile.objects.all()
-    serializer_class=UserSerializer
+    serializer_class=UserProfileSerializer
