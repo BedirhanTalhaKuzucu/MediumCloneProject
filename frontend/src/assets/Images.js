@@ -12,6 +12,7 @@ const Images = {
   more: require("./more.png"),
   largeicon: require("./largeicon.png"),
   search: require("./search.png"),
+  404: require("./404.png"),
 
 };
 
