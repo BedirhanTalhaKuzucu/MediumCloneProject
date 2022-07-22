@@ -9,3 +9,4 @@ from .models import UserProfile
 def create_UserProfil(sender, instance=None, created=False, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
+        print("hello")

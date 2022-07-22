@@ -42,7 +42,10 @@ const Following = () => {
             </div>
           </nav>
           <nav className="part2">
-            <img src="https://miro.medium.com/fit/c/176/176/0*yIJHqQwuaQkWYN84" alt="" />
+            <img
+              src="https://miro.medium.com/fit/c/176/176/0*yIJHqQwuaQkWYN84"
+              alt=""
+            />
           </nav>
         </section>
       </CardContainer>
@@ -82,7 +85,10 @@ const Following = () => {
             </div>
           </nav>
           <nav className="part2">
-            <img src="https://miro.medium.com/fit/c/176/176/0*yIJHqQwuaQkWYN84" alt="" />
+            <img
+              src="https://miro.medium.com/fit/c/176/176/0*yIJHqQwuaQkWYN84"
+              alt=""
+            />
           </nav>
         </section>
       </CardContainer>
@@ -122,7 +128,10 @@ const Following = () => {
             </div>
           </nav>
           <nav className="part2">
-            <img src="https://miro.medium.com/fit/c/176/176/0*yIJHqQwuaQkWYN84" alt="" />
+            <img
+              src="https://miro.medium.com/fit/c/176/176/0*yIJHqQwuaQkWYN84"
+              alt=""
+            />
           </nav>
         </section>
       </CardContainer>
@@ -162,11 +171,13 @@ const Following = () => {
             </div>
           </nav>
           <nav className="part2">
-            <img src="https://miro.medium.com/fit/c/176/176/0*yIJHqQwuaQkWYN84" alt="" />
+            <img
+              src="https://miro.medium.com/fit/c/176/176/0*yIJHqQwuaQkWYN84"
+              alt=""
+            />
           </nav>
         </section>
       </CardContainer>
-   
     </div>
   );
 };

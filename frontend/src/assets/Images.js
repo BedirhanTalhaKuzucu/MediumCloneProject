@@ -10,6 +10,8 @@ const Images = {
   bookmarks: require("./bookmarks.png"),
   noentry: require("./noentry.png"),
   more: require("./more.png"),
+  largeicon: require("./largeicon.png"),
+  search: require("./search.png"),
 
 };
 

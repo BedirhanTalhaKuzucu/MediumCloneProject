@@ -3,6 +3,13 @@ import styled from "styled-components";
 export const MainContainer = styled.main`
   width: 100vw;
   margin: 3rem 7rem;
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 0;
+    padding: 3rem;
+   /* background-color: red; */
+   z-index: -1;
+  }
 `;
 
 export const MainHeader = styled.header`
@@ -73,7 +80,7 @@ export const FollowingImg = styled.img`
   cursor: pointer;
 `;
 
-export const ArticllesStyle = styled.article`
+export const ArticlesStyle = styled.article`
   margin-top: 3rem;
   border-bottom: 1px solid grey;
   padding-bottom: 1rem;
