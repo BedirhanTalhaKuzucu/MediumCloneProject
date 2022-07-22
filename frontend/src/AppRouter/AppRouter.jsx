@@ -35,7 +35,7 @@ function AppRouter() {
           <Route path="stories" element={<Stories />} />
           <Route path="security" element={<Security />} />
         </Route>
-        <Route path="/write" element={<Write />} />
+        <Route path="home/write" element={<Write />} />
 
 
       </Routes>
