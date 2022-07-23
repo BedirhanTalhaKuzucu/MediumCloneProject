@@ -1,15 +1,15 @@
-import pdb
 from telnetlib import STATUS
 from django.shortcuts import render
 from requests import Response
 from rest_framework import generics
 from .serializers import StorySerializer
 from .models import Story
+from rest_framework import  viewsets
 from rest_framework.parsers import FileUploadParser
 
 
 
-class StoryList(generics.ListCreateAPIView):
+class StoryList(viewsets.ModelViewSet):
     serializer_class = StorySerializer
     queryset = Story.objects.all()
     # parser_classes=(FileUploadParser,)

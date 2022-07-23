@@ -1,15 +1,23 @@
 
 from numpy import require
 from rest_framework import serializers
-from .models import Story, Tag
+from .models import Story, Tag, StoryClap
 from users.models import UserProfile
 from django.contrib.auth.models import User
 
 
+class StoryClapSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StoryClap
+        fields = (
+            "user",
+            "story",
+        )
 
 
 
 class StorySerializer(serializers.ModelSerializer):
+    clap_story = StoryClapSerializer(many = True)
     creatorInfo = serializers.SerializerMethodField('get_creatorInfo')
     tags=serializers.SerializerMethodField('get_tags')
     tag_name = serializers.CharField(write_only=True)
@@ -29,6 +37,7 @@ class StorySerializer(serializers.ModelSerializer):
             "tag_name",
             "user_id",
             "status",
+            "clap_story"
             # "image_upload"
         )
     
@@ -37,6 +46,7 @@ class StorySerializer(serializers.ModelSerializer):
 
     def get_creatorInfo(self, obj):
         user_img =  UserProfile.objects.filter(user= obj.user).first()
+        short_bio = user_img.short_bio
         request = self.context.get('request')
         user_img = user_img.profile_photo.url
         user_img = request.build_absolute_uri(user_img)
@@ -47,6 +57,7 @@ class StorySerializer(serializers.ModelSerializer):
             "last_name": obj.user.last_name,
             "email": obj.user.email,
             "user_img": user_img,
+            "short_bio":short_bio,
         }
         return  context
 

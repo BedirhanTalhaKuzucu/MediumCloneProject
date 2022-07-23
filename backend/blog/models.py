@@ -79,7 +79,8 @@ class StoryClap(models.Model):
     timeStamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user}" 
+        return f"{self.user} => {self.story}" 
+
 
 class CommentClap(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
