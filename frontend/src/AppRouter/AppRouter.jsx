@@ -9,7 +9,8 @@ import Home from "../pages/Home";
 import Profile from "../pages/Profile";
 import UserDashboard from "../pages/UserDashboard";
 import NotFound from "../pages/NotFound";
-import Write from "../pages/Write" 
+import Write from "../pages/Write";
+import StoryDetail from "../pages/StoryDetail";
 function AppRouter() {
   return (
     <BrowserRouter>
@@ -21,6 +22,8 @@ function AppRouter() {
           <Route path="recommended" element={<Recommended />} />
         </Route>
 
+        <Route path="story" element={<StoryDetail />} />
+
         <Route path="home/profile" element={<Profile />}>
           <Route index element={<AboutYou />} />
           <Route path="about" element={<AboutYou />} />
@@ -30,7 +33,6 @@ function AppRouter() {
 
         <Route path="write" element={<Write />} />
         <Route path="*" element={<NotFound />} />
-
       </Routes>
     </BrowserRouter>
   );
