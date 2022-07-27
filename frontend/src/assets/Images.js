@@ -12,6 +12,10 @@ const Images = {
   more: require("./more.png"),
   largeicon: require("./largeicon.png"),
   search: require("./search.png"),
+  copylink: require("./copylink.png"),
+  email: require("./email.png"),
+  clap: require("./clap.png"),
+  chat: require("./chat.png"),
   404: require("./404.png"),
 
 };

@@ -8,18 +8,23 @@ import Categorys from "../components/Categorys";
 import { useAppState } from "../contexts/AppContext";
 import SignIn from "./SignIn";
 import LogIn from "./LogIn";
+import { useEffect } from "react";
 
 
 function Home() {
 
-  const {data } = useAppState()
+  const {data, trendList } = useAppState()
+  
+
+  
+
 
   return (
     <>
     <SignIn />
     <LogIn />
     <Header  />
-    <Sidebar storyData = {data} />
+    <Sidebar trendList = {trendList} />
     <Container className="mt-5">
         <Row>
             <Col md={12} lg={{ span: 5,  order: 'last' }}>

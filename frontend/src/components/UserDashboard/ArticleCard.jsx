@@ -1,6 +1,7 @@
 import React from "react";
-import { CardContainer } from './styles/Following.styles';
+import { CardContainer } from "./styles/Following.styles";
 import Images from "../../assets/Images";
+import { Link } from "react-router-dom";
 
 const ArticleCard = () => {
   return (
@@ -17,7 +18,9 @@ const ArticleCard = () => {
 
       <section className="articleInf">
         <nav className="part1">
-          <div className="title">Best Projects for Your Portfolio</div>
+          <Link to="/story" className="title">
+            Best Projects for Your Portfolio
+          </Link>
           <div className="articlePart">
             You can build these projects within a week. — Software engineering
             is often intimidating, especially when there is a lot to learn and

@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const CardContainer = styled.div`
   margin-top: 2rem;
   border-bottom: 1px solid lightgray;
+  .title{
+    text-decoration: none;
+    color: black;
+  }
   .authorInf {
     display: flex;
     margin-bottom: 1rem;
