@@ -109,11 +109,11 @@ export const getData = (setData, setTrendList) => {
     
     fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
     .then(response => response.json())
-    .then(result => {
-        console.log(result)
-        const trendList = getTrending(result)
+    .then(data => {
+        console.log(data)
+        const trendList = getTrending(data.results)
         setTrendList(trendList)
-        setData(result)
+        setData(data.results)
     })
     .catch(error => console.log('error', error));
 }

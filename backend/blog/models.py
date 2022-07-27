@@ -59,7 +59,7 @@ class StoryTag(models.Model):
 class Comment(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    story = models.ForeignKey(Story, on_delete=models.CASCADE)
+    story = models.ForeignKey(Story, on_delete=models.CASCADE, related_name='comments')
     content = models.TextField(max_length=300)
     created_date = models.DateTimeField(auto_now_add=True)
     last_update =models.DateTimeField(auto_now=True)
@@ -113,3 +113,13 @@ class StorieShare(models.Model):
     class Meta:
         verbose_name_plural = "Story Share"
 
+
+class SavedStories(models.Model):
+    id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE  )
+    story = models.ForeignKey(Story, on_delete=models.CASCADE )
+    timeStamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user} => {self.story}" 
+        
