@@ -10,12 +10,17 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.exceptions import ValidationError
 from rest_framework import permissions
 from .permissions import IsAuthorOrReadOnly
+from rest_framework.filters import SearchFilter
+from rest_framework.filters import OrderingFilter
 
 
 class StoryList(generics.ListCreateAPIView):
     serializer_class = StorySerializer
     queryset = Story.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    filter_backends = (SearchFilter,OrderingFilter)
+    search_fields = ('status', 'title',)
+    ordering_fields = '__all__'
     # parser_classes=(FileUploadParser,)
 
     # def post(self, request):
@@ -28,7 +33,7 @@ class StoryList(generics.ListCreateAPIView):
 
 
 class StoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Story.objects.all()
+    queryset = Story.objects.all().order_by('publish_date')
     serializer_class = StorySerializer
     permission_classes = (IsAuthorOrReadOnly,)
     # slug_field = "title"
