@@ -8,9 +8,18 @@ from django.contrib.auth.models import User
 
 
 class CommentsSerializer(serializers.ModelSerializer):
+    #! yorum sahibi ekleme işini view da yapacağımız için read_only dedik.
+    user = serializers.StringRelatedField(read_only=True)
     class Meta:
         model = Comment
-        fields = '__all__'
+        # exclude = ('story', 'user',)
+        fields = ('content', 'user',)
+
+# class StorySerializer(serializers.ModelSerializer):
+#     comments = CommentsSerializer(many=True, read_only=True)
+#     class Meta:
+#         model = Story
+#         fields = '__all__'
 
 
 class StorySerializer(serializers.ModelSerializer):
@@ -35,6 +44,7 @@ class StorySerializer(serializers.ModelSerializer):
             "tag_name",
             "user_id",
             "status",
+            "comments",
             # "image_upload"
         )
 
