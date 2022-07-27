@@ -1,9 +1,9 @@
 import React from "react";
 import { ClapsRespond, Header, Main } from "./styles/StoryDetailMain.styles";
-import Images from "../../../assets/Images";
+import Images from "../../assets/Images";
 import { Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import MainFollowingTooltip from "../MainFollowingTooltip";
+import MainFollowingTooltip from "../UserDashboard/MainFollowingTooltip";
 // import { useSpeechSynthesis } from "react-speech-kit";
 
 const StoryDetailMain = () => {
