@@ -11,18 +11,19 @@ import Tooltip from "@mui/material/Tooltip";
 
 import Images from "../../assets/Images";
 import AccountMenu from "./NavbarUserMenu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UDNavbar = () => {
+  const navigate = useNavigate();
   return (
     <LeftSideBar>
-      <LogoStyle href="/">
+      <LogoStyle onClick={()=> navigate('/')}>
         <img src={Images.medium} alt="logo" />
       </LogoStyle>
 
       <IconsStyle>
         <Tooltip title="Home" arrow placement="right">
-          <Link to="/">
+          <Link to="/home">
             <IconStyle
               src={Images.home}
               alt="home"

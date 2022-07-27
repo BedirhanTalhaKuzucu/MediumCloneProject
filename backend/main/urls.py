@@ -32,5 +32,7 @@ urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
     path('auth/', include('users.urls')),
     path('blog/', include('blog.urls')),
+    #! browsable api de login-logout olabilmek için : 
+    path('api-auth/', include('rest_framework.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

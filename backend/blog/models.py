@@ -42,9 +42,6 @@ class Story(models.Model):
     #     return self.comment_set.all()
 
 
-
- 
-
 class TagFollower(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
     tag=models.ForeignKey(Tag,on_delete=models.CASCADE)

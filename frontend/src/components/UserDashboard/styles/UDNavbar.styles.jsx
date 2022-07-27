@@ -26,6 +26,7 @@ export const LeftSideBar = styled.nav`
 `;
 
 export const LogoStyle = styled.a`
+  cursor: pointer;
   & > img {
     width: 50px;
     height: 50px;
@@ -34,7 +35,7 @@ export const LogoStyle = styled.a`
   top: 0;
   margin-top: 2rem;
   @media (max-width: 768px) {
-   margin: 0 2rem;
+    margin: 0 2rem;
   }
 `;
 
@@ -48,8 +49,8 @@ export const IconsStyle = styled.div`
   margin-top: 3rem;
 
   @media (max-width: 768px) {
-    display:none; /* remove the element from page and DOM. */
-visibility:hidden;
+    display: none; /* remove the element from page and DOM. */
+    visibility: hidden;
   }
 `;
 
