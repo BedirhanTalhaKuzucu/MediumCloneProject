@@ -13,6 +13,7 @@ from rest_framework import permissions
 from .permissions import IsAuthorOrReadOnly
 from rest_framework.filters import SearchFilter
 from rest_framework.filters import OrderingFilter
+from users.models import Following
 
 
 
@@ -34,7 +35,24 @@ class StoryList(viewsets.ModelViewSet):
     #         return Response({"message": "File is missing"}, status=400)
 
 
+class FollowingStoriesList(generics.ListAPIView):
+    serializer_class = StorySerializer
 
+
+    def get_queryset(self):
+
+        """
+        This view should return a list of all the purchases
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        followed_list = Following.objects.filter( follower = user )
+
+        q = Story.objects.filter( user = followed_list[0].followed)
+        for followedId in followed_list[1:]:
+            q = q | Story.objects.filter( user = followedId.followed)
+            
+        return q
 
 
 class CommentCreate(generics.CreateAPIView):
