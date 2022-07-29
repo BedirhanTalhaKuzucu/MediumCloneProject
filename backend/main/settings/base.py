@@ -136,7 +136,7 @@ REST_FRAMEWORK = {
 
 REST_AUTH_SERIALIZERS = {
     'TOKEN_SERIALIZER': 'users.serializers.CustomTokenSerializer',
-    'REST_USE_JWT': 'True',
+    # 'REST_USE_JWT': 'True',
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
