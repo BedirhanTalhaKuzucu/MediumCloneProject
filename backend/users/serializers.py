@@ -1,7 +1,8 @@
 from importlib.metadata import requires
+from os import read
 from rest_framework import serializers, validators
 from django.contrib.auth.models import User
-from .models import UserProfile
+from .models import UserProfile, Following
 from django.contrib.auth.password_validation import validate_password
 # from dj_rest_auth.serializers import TokenSerializer, LoginSerializer, JWTSerializer
 from rest_framework.authtoken.models import Token
@@ -77,32 +78,61 @@ class CustomTokenSerializer(serializers.ModelSerializer):
         }
         return  context
 
+class FollowingSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model= Following
+        fields=(
+            "id",
+            "followed"
+        )
+
 
 class UserSerializer(serializers.ModelSerializer):
+
+    followed_user = FollowingSerializer(many=True, read_only=True )
     class Meta:
         model=User
         fields=(
+            'id',
             "username",
             "first_name" ,
             "last_name",
             "email",
+            "followed_user",
         )
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
     
-    user=UserSerializer(required=False)
-
+    user=UserSerializer()
     class Meta:
         model = UserProfile
         fields =(
             'user',
+            'id',
+            'name',
             'short_bio',
             'profile_photo',
             'about_text',
             'about_photo',
         )
+
+       
+class AboutYouSerializer(serializers.ModelSerializer):
     
+    class Meta:
+        model = UserProfile
+        fields =(
+            'id',
+            'user',
+            'name',
+            'short_bio',
+            'profile_photo',
+            'about_text',
+            'about_photo',
+        )
+           
     
     
 
