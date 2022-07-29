@@ -94,7 +94,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
         fields=(
-            "id",
+            'id',
             "username",
             "first_name" ,
             "last_name",
@@ -105,18 +105,34 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     
-    user=UserSerializer(required=False)
-
+    user=UserSerializer()
     class Meta:
         model = UserProfile
         fields =(
             'user',
+            'id',
+            'name',
             'short_bio',
             'profile_photo',
             'about_text',
             'about_photo',
         )
+
+       
+class AboutYouSerializer(serializers.ModelSerializer):
     
+    class Meta:
+        model = UserProfile
+        fields =(
+            'id',
+            'user',
+            'name',
+            'short_bio',
+            'profile_photo',
+            'about_text',
+            'about_photo',
+        )
+           
     
     
 
