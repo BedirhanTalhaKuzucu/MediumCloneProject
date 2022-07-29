@@ -62,4 +62,4 @@ def set_user():
 
 
 
-from scripts.fake import set_user
+# from scripts.fake import set_user

@@ -1,9 +1,12 @@
-from django.urls import path
-from .views import CommentsDetail, StoryDetail, StoryList,CommentCreate
+from django.urls import path, include
+from .views import CommentsDetail, StoryList,CommentCreate
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register('stories', StoryList )
 
 urlpatterns = [
-    path('stories/', StoryList.as_view()),
-    path('stories/<uuid:pk>/', StoryDetail.as_view(), name = 'story-info'),
+    # path('stories/', StoryList.as_view()),
+    path('', include(router.urls)),
     path('stories/<uuid:story_pk>/comment-create', CommentCreate.as_view(), name='comment-create'),
-    path('comments/<uuid:pk>', CommentsDetail.as_view(), name="comments"),
 ]

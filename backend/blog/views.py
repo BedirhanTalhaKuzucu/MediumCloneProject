@@ -1,8 +1,9 @@
-import pdb
 from telnetlib import STATUS
 from django.shortcuts import render
 # from requests import Response
 from rest_framework import generics
+from rest_framework import  viewsets
+from rest_framework.parsers import FileUploadParser
 from .serializers import CommentsSerializer, StorySerializer
 from .models import Comment, Story
 # from rest_framework.parsers import FileUploadParser
@@ -14,7 +15,8 @@ from rest_framework.filters import SearchFilter
 from rest_framework.filters import OrderingFilter
 
 
-class StoryList(generics.ListCreateAPIView):
+
+class StoryList(viewsets.ModelViewSet):
     serializer_class = StorySerializer
     queryset = Story.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
@@ -32,11 +34,7 @@ class StoryList(generics.ListCreateAPIView):
     #         return Response({"message": "File is missing"}, status=400)
 
 
-class StoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Story.objects.all().order_by('publish_date')
-    serializer_class = StorySerializer
-    permission_classes = (IsAuthorOrReadOnly,)
-    # slug_field = "title"
+
 
 
 class CommentCreate(generics.CreateAPIView):
@@ -62,3 +60,4 @@ class CommentsDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentsSerializer
     permission_classes = (IsAuthorOrReadOnly,)
+

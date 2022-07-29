@@ -21,6 +21,7 @@ export function AppStateProvider({ children }) {
     
 
    const [data, setData] = useState("")
+   const [trendList, setTrendList] = useState("")
    const [userInfo, setUserInfo] = useState("")
 
 
@@ -31,7 +32,7 @@ export function AppStateProvider({ children }) {
 
   
     useEffect(() => {
-        getData(setData)
+        getData(setData, setTrendList)
     }, []);
   
     const value = {
@@ -39,10 +40,11 @@ export function AppStateProvider({ children }) {
         handleClose,
         show,
         data,
+        trendList,
         userInfo,
         get_user_info,
         logInShow,
-        setLogInShow
+        setLogInShow,
     };
   
     return <AppStateContext.Provider value={value}> {children} </ AppStateContext.Provider>;

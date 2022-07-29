@@ -1,11 +1,18 @@
 
 # from numpy import require
 from rest_framework import serializers
-from .models import Comment, Story, Tag
+from .models import Story, Tag, StoryClap, Comment
 from users.models import UserProfile
 from django.contrib.auth.models import User
 
 
+class StoryClapSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StoryClap
+        fields = (
+            "user",
+            "story",
+        )
 
 class CommentsSerializer(serializers.ModelSerializer):
     #! yorum sahibi ekleme işini view da yapacağımız için read_only dedik.
@@ -13,7 +20,7 @@ class CommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         # exclude = ('story', 'user',)
-        fields = ('content', 'user',)
+        fields = ('content', 'user', 'id')
 
 # class StorySerializer(serializers.ModelSerializer):
 #     comments = CommentsSerializer(many=True, read_only=True)
@@ -23,6 +30,8 @@ class CommentsSerializer(serializers.ModelSerializer):
 
 
 class StorySerializer(serializers.ModelSerializer):
+
+    clap_story = StoryClapSerializer(many = True)
     comments = CommentsSerializer(many=True, read_only=True)
     creatorInfo = serializers.SerializerMethodField('get_creatorInfo')
     tags = serializers.SerializerMethodField('get_tags')
@@ -44,15 +53,19 @@ class StorySerializer(serializers.ModelSerializer):
             "tag_name",
             "user_id",
             "status",
+            "clap_story",
             "comments",
-            # "image_upload"
+            # "image_upload",
         )
 
     def get_tags(self, obj):
         return obj.tags.all().values('tag_name')
 
     def get_creatorInfo(self, obj):
-        user_img = UserProfile.objects.filter(user=obj.user).first()
+
+        user_img =  UserProfile.objects.filter(user= obj.user).first()
+        short_bio = user_img.short_bio
+
         request = self.context.get('request')
         user_img = user_img.profile_photo.url
         user_img = request.build_absolute_uri(user_img)
@@ -63,6 +76,7 @@ class StorySerializer(serializers.ModelSerializer):
             "last_name": obj.user.last_name,
             "email": obj.user.email,
             "user_img": user_img,
+            "short_bio":short_bio,
         }
         return context
 
