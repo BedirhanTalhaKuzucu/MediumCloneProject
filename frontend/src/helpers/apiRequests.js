@@ -73,21 +73,83 @@ export const logInFunction = (values, resetForm, handleErrorMesage, navigate, se
     .catch(error => console.log(error));
 }
 
+function getTrending(list) {
+    const numberOfClapsList = [];
+    const trendingStory = [];
+
+    list.map((item)=> {
+        const numberofClap = item.clap_story.length 
+        const storyId = item.id
+        const obj = { id : storyId,  numberofClap : numberofClap }
+      //   Object.assign(numberOfClapsList, obj);
+        numberOfClapsList.push(obj)
+    })
+
+    numberOfClapsList.sort(function(a, b) {
+          return b.numberofClap - a.numberofClap;
+      });
+
+      for (let index = 0; index < 6; index++) {
+          list.map((item) => {
+              if (item.id === numberOfClapsList[index].id ) {
+                  trendingStory.push(item)
+              }
+          })            
+    }
+
+    return trendingStory
+}
 
 
-
-export const getData = (setData) => {
+export const getData = (setData, setTrendList) => {
     let requestOptions = {
         method: 'GET',
         redirect: 'follow'
     };
-    fetch("http://127.0.0.1:8000/blog/posts/", requestOptions)
+    
+    fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
     .then(response => response.json())
-    .then(result => {
-        setData(result)
+    .then(data => {
+        console.log(data)
+        const trendList = getTrending(data.results)
+        setTrendList(trendList)
+        setData(data.results)
     })
     .catch(error => console.log('error', error));
 }
 
+export const createStory = (formData, values, resetForm ) => {
+
+    // console.log(formData);
+    // console.log(values)
+    
+    // resetForm({values:""})
+
+    let myHeaders = new Headers();
+    
+    
+    let formdata = new FormData();
+    formdata.append("title", formData.title);
+    formdata.append("content", formData.story);
+    formdata.append("image", values.image);
+    formdata.append("tag_name", values.tag_name);
+    formdata.append("user_id", "1");
+    formdata.append("status", values.status);
+    
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+    
+    fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
+      .then(response => response.text())
+      .then((result) => {
+        resetForm({values:""})
+        // setformData("")
+        console.log(result)})
+      .catch(error => console.log('error', error));
+}
 
 

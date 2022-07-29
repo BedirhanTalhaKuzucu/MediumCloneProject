@@ -10,6 +10,7 @@ class Tag(models.Model):
     def __str__(self):
         return self.tag_name
 
+
 class Story(models.Model):
     STATUS = (
         ("Published", "Published"),
@@ -19,7 +20,7 @@ class Story(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.TextField()
     content = models.TextField()
-    image = models.ImageField(upload_to='media/storie_image',blank=True,default='media/storie_image/media1.png')
+    image = models.ImageField(upload_to='storie_image',blank=True,default='default/mediaDefaultImage.jpg')
     publish_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
     status = models.CharField(choices = STATUS, max_length=10, default='Draft')
@@ -30,7 +31,7 @@ class Story(models.Model):
     # comment
     
     def __str__(self):
-        return f'{self.title}------------ {self.user.username} {self.tags}'
+        return f'{self.title}------------ {self.user} {self.tags}'
     class Meta:
         verbose_name_plural = "Stories"    
 
@@ -40,9 +41,6 @@ class Story(models.Model):
     # def comments(self):
     #     return self.comment_set.all()
 
-
-
- 
 
 class TagFollower(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
@@ -61,7 +59,7 @@ class StoryTag(models.Model):
 class Comment(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    story = models.ForeignKey(Story, on_delete=models.CASCADE)
+    story = models.ForeignKey(Story, on_delete=models.CASCADE, related_name='comments')
     content = models.TextField(max_length=300)
     created_date = models.DateTimeField(auto_now_add=True)
     last_update =models.DateTimeField(auto_now=True)
@@ -78,7 +76,8 @@ class StoryClap(models.Model):
     timeStamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user}" 
+        return f"{self.user} => {self.story}" 
+
 
 class CommentClap(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
@@ -113,3 +112,14 @@ class StorieShare(models.Model):
 
     class Meta:
         verbose_name_plural = "Story Share"
+
+
+class SavedStories(models.Model):
+    id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE  )
+    story = models.ForeignKey(Story, on_delete=models.CASCADE )
+    timeStamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user} => {self.story}" 
+        

@@ -1,5 +1,5 @@
 import Header from "../components/Header"
-import Sidebar from "../components/Sidebar"
+import Sidebar from "../components/Sidebar/Sidebar"
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -8,18 +8,23 @@ import Categorys from "../components/Categorys";
 import { useAppState } from "../contexts/AppContext";
 import SignIn from "./SignIn";
 import LogIn from "./LogIn";
+import { useEffect } from "react";
 
 
 function Home() {
 
-  const {data } = useAppState()
+  const {data, trendList } = useAppState()
+  
+
+  
+
 
   return (
     <>
     <SignIn />
     <LogIn />
     <Header  />
-    <Sidebar/>
+    <Sidebar trendList = {trendList} />
     <Container className="mt-5">
         <Row>
             <Col md={12} lg={{ span: 5,  order: 'last' }}>
