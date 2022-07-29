@@ -1,4 +1,6 @@
 from importlib.metadata import requires
+from unittest.util import _MAX_LENGTH
+from django.forms import CharField
 from rest_framework import serializers, validators
 from django.contrib.auth.models import User
 from .models import UserProfile
@@ -82,6 +84,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
         fields=(
+            'id',
             "username",
             "first_name" ,
             "last_name",
@@ -91,18 +94,34 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     
-    user=UserSerializer(required=False)
-
+    user=UserSerializer()
     class Meta:
         model = UserProfile
         fields =(
             'user',
+            'id',
+            'name',
             'short_bio',
             'profile_photo',
             'about_text',
             'about_photo',
         )
+
+       
+class AboutYouSerializer(serializers.ModelSerializer):
     
+    class Meta:
+        model = UserProfile
+        fields =(
+            'id',
+            'user',
+            'name',
+            'short_bio',
+            'profile_photo',
+            'about_text',
+            'about_photo',
+        )
+           
     
     
 

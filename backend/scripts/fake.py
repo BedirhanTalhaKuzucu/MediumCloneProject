@@ -40,22 +40,24 @@ def set_user():
     user.save()
     users.append(user)
 
+# def user_profile():   
+#     fake=Faker(['en_US']) 
     
-    short_bio=fake.sentence(nb_words=10)
-    about_text=fake.paragraph(nb_sentences=5)
-    about_photo=fake.image_url()
-    print(user,short_bio)
+#     user=secrets.choice(users)
+#     short_bio=fake.sentence(nb_words=10)
+#     about_text=fake.paragraph(nb_sentences=5)
+#     about_photo=fake.image_url()
+#     print(user,short_bio)
 
-    user_profile=UserProfile(
-        user=user,
-        short_bio=short_bio,
-        about_text=about_text,
-        about_photo=about_photo,
-    )
-    user_profile.save()
+#     user_profile=UserProfile(
+#         user=user,
+#         short_bio=short_bio,
+#         about_text=about_text,
+#         about_photo=about_photo,
+#     )
+#     user_profile.save()
 
-stories=[]
-def set_story():
+def set_tag():
     fake=Faker(['en_US']) 
 
     tag_name=fake.random_element(elements=(
@@ -71,6 +73,11 @@ def set_story():
         tag_name=tag_name
     )
     tag.save()
+stories=[]
+def set_story():
+    fake=Faker(['en_US']) 
+
+    
     
     user=secrets.choice(users)
     title=fake.sentence(nb_words=3, variable_nb_words=False)
@@ -125,6 +132,9 @@ def set_clap():
 def recording_data():
     for _ in range(1,20):
         set_user() 
+        # user_profile()
+    for _ in range(1,8):
+        set_tag() 
     for _ in range(0,50):
         set_story()  
     for _ in  range(0,150):
@@ -144,4 +154,4 @@ def recording_data():
 
 
 
-# from scripts.fake import set_user,set_story,set_comment,set_clap,recording_data
+# from scripts.fake import set_user,user_profile,set_story,set_comment,set_clap,recording_data
