@@ -1,8 +1,7 @@
-from telnetlib import STATUS
-from django.shortcuts import render
 # from requests import Response
 from rest_framework import generics
 from rest_framework import  viewsets
+from rest_framework.response import Response
 from rest_framework.parsers import FileUploadParser
 from .serializers import CommentsSerializer, StorySerializer
 from .models import Comment, Story
@@ -37,7 +36,7 @@ class StoryList(viewsets.ModelViewSet):
 
 class FollowingStoriesList(generics.ListAPIView):
     serializer_class = StorySerializer
-
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
 
@@ -46,13 +45,17 @@ class FollowingStoriesList(generics.ListAPIView):
         for the currently authenticated user.
         """
         user = self.request.user
+        print(user) 
         followed_list = Following.objects.filter( follower = user )
-
-        q = Story.objects.filter( user = followed_list[0].followed)
-        for followedId in followed_list[1:]:
-            q = q | Story.objects.filter( user = followedId.followed)
+        
+        if followed_list:
+            q = Story.objects.filter( user = followed_list[0].followed)
+            for followedId in followed_list[1:]:
+                q = q | Story.objects.filter( user = followedId.followed)
+            return q
+        else:
+            return followed_list
             
-        return q
 
 
 class CommentCreate(generics.CreateAPIView):
