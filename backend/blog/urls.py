@@ -1,6 +1,6 @@
-from django.urls import path, include
-from .views import CommentsDetail, StoryList, CommentCreate, FollowingStoriesList, StorySaveListView
 from rest_framework import routers
+from .views import StoryList, CommentCreate, FollowingStoriesList, StorySaveListView
+from django.urls import path, include
 
 router = routers.DefaultRouter()
 router.register('stories', StoryList)

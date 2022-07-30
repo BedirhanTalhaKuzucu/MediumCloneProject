@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework.parsers import FileUploadParser
 from .serializers import CommentsSerializer, StorySaveSerializer, StorySerializer
 from .models import Comment, SavedStories, Story
+
+
 # from rest_framework.parsers import FileUploadParser
 from rest_framework.generics import get_object_or_404
 from rest_framework.exceptions import ValidationError
@@ -43,6 +45,7 @@ class FollowingStoriesList(generics.ListAPIView):
         for the currently authenticated user.
         """
         user = self.request.user
+
         print(user)
         followed_list = Following.objects.filter(follower=user)
 

@@ -91,8 +91,17 @@ class FollowingSerializer(serializers.ModelSerializer):
         )
 
 
-class UserSerializer(serializers.ModelSerializer):
+class FollowingSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Following
+        fields = (
+            "id",
+            "followed"
+        )
+
+
+class UserSerializer(serializers.ModelSerializer):
     followed_user = FollowingSerializer(many=True, read_only=True)
 
     class Meta:
@@ -116,6 +125,21 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = (
             'user',
             'id',
+            'name',
+            'short_bio',
+            'profile_photo',
+            'about_text',
+            'about_photo',
+        )
+
+
+class AboutYouSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserProfile
+        fields = (
+            'id',
+            'user',
             'name',
             'short_bio',
             'profile_photo',

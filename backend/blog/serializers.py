@@ -2,6 +2,7 @@
 # from numpy import require
 from rest_framework import serializers
 from .models import SavedStories, Story, Tag, StoryClap, Comment
+
 from users.models import UserProfile
 from django.contrib.auth.models import User
 
@@ -34,6 +35,7 @@ class CommentsSerializer(serializers.ModelSerializer):
 class StorySerializer(serializers.ModelSerializer):
 
     clap_story = StoryClapSerializer(many=True)
+
     comments = CommentsSerializer(many=True, read_only=True)
     creatorInfo = serializers.SerializerMethodField('get_creatorInfo')
     tags = serializers.SerializerMethodField('get_tags')
@@ -78,7 +80,9 @@ class StorySerializer(serializers.ModelSerializer):
             "last_name": obj.user.last_name,
             "email": obj.user.email,
             "user_img": user_img,
+
             "short_bio": short_bio,
+
         }
         return context
 

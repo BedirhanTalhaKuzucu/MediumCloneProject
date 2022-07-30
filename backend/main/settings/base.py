@@ -24,8 +24,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -35,16 +33,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #third-party packet
+    # third-party packet
     'rest_framework',
     'rest_framework.authtoken',
     'drf_yasg',
     'dj_rest_auth',
     "corsheaders",
     'django_extensions',
-    
 
-    #apps
+
+    # apps
     'users',
     'blog',
 ]
@@ -79,8 +77,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'main.wsgi.application'
-
-
 
 
 # Password validation
@@ -136,13 +132,13 @@ REST_FRAMEWORK = {
 
 REST_AUTH_SERIALIZERS = {
     'TOKEN_SERIALIZER': 'users.serializers.CustomTokenSerializer',
-    'REST_USE_JWT': 'True',
+    # 'REST_USE_JWT': 'True',
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_EXPOSE_HEADERS = (
-  'Access-Control-Allow-Origin: *',
+    'Access-Control-Allow-Origin: *',
 )
 CORS_ALLOW_METHODS = [
     "DELETE",
@@ -161,7 +157,7 @@ CORS_ALLOW_METHODS = [
 # }
 
 
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+#     'PAGE_SIZE': 10
+# }
