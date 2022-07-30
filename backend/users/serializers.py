@@ -1,5 +1,4 @@
 from importlib.metadata import requires
-
 from os import read
 from rest_framework import serializers, validators
 from django.contrib.auth.models import User
