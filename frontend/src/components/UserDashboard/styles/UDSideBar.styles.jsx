@@ -43,6 +43,7 @@ export const UnlimitedButtonStyle = styled.button`
 export const SearchInputStyle = styled.input.attrs({
   type: "search",
   placeholder: "Search",
+  
 })`
   border-radius: 2rem;
   padding: 5px 20px;

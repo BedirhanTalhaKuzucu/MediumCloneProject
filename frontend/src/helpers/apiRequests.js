@@ -138,7 +138,7 @@ export const createStory = (formData, values, resetForm) => {
   formdata.append("user_id", "1");
   formdata.append("status", values.status);
 
-  var requestOptions = {
+  let requestOptions = {
     method: "POST",
     headers: myHeaders,
     body: formdata,
@@ -161,10 +161,10 @@ export const followedUserStories = (setFollowingStories) => {
     "Authorization",
     "Token 199b7f0caab715642e5314fcc68fcdb6135fbb98"
   );
-    //   myHeaders.append(
-    //     "Cookie",
-    //     "csrftoken=ELiWUgqxhTQmVoViigupeVDooY7d90qARaohIkvQSS5ZqJy4p26tjhCzRzyCXJRJ"
-    //   );
+  //   myHeaders.append(
+  //     "Cookie",
+  //     "csrftoken=ELiWUgqxhTQmVoViigupeVDooY7d90qARaohIkvQSS5ZqJy4p26tjhCzRzyCXJRJ"
+  //   );
 
   let requestOptions = {
     method: "GET",
@@ -175,8 +175,33 @@ export const followedUserStories = (setFollowingStories) => {
   fetch("http://127.0.0.1:8000/blog/stories/following", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-        console.log(result)
-        setFollowingStories(result.results)
+      console.log(result);
+      setFollowingStories(result.results);
+    })
+    .catch((error) => console.log("error", error));
+};
+
+export const searchBar = (values, setSearching) => {
+
+  let myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "Token 199b7f0caab715642e5314fcc68fcdb6135fbb98"
+  );
+  
+
+  let requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  let url =`http://127.0.0.1:8000/blog/stories/search?search=${values.search}`
+  fetch(url, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result)
+      setSearching(result.results)
     })
     .catch((error) => console.log("error", error));
 };

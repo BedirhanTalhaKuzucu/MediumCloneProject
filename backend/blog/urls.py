@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import CommentsDetail, StoryList,CommentCreate, FollowingStoriesList
+from .views import CommentsDetail, StoryList,CommentCreate, FollowingStoriesList, SearchBarView
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -10,4 +10,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('stories/<uuid:story_pk>/comment-create', CommentCreate.as_view(), name='comment-create'),
     path('stories/following', FollowingStoriesList.as_view(), name='following'),
+    path('stories/search', SearchBarView.as_view() ),
+
 ]

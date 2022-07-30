@@ -1,11 +1,9 @@
-# from requests import Response
 from rest_framework import generics
 from rest_framework import  viewsets
 from rest_framework.response import Response
-from rest_framework.parsers import FileUploadParser
-from .serializers import CommentsSerializer, StorySerializer
-from .models import Comment, Story
-# from rest_framework.parsers import FileUploadParser
+from .pagination import SearchBarLimitPagination
+from .serializers import CommentsSerializer, StorySerializer,SearchBarStorySerializer, SearchBarTagSerializer, SearchBarUserSerializer
+from .models import Comment, Story, Tag
 from rest_framework.generics import get_object_or_404
 from rest_framework.exceptions import ValidationError
 from rest_framework import permissions
@@ -13,6 +11,8 @@ from .permissions import IsAuthorOrReadOnly
 from rest_framework.filters import SearchFilter
 from rest_framework.filters import OrderingFilter
 from users.models import Following
+from drf_multiple_model.views import ObjectMultipleModelAPIView
+from django.contrib.auth.models import User
 
 
 
@@ -81,4 +81,22 @@ class CommentsDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentsSerializer
     permission_classes = (IsAuthorOrReadOnly,)
+
+
+
+
+class SearchBarView(ObjectMultipleModelAPIView):
+
+    pagination_class = SearchBarLimitPagination
+
+    def get_querylist(self):
+        search = self.request.query_params['search'].replace('-',' ')
+        
+        querylist = [
+            {'queryset': Story.objects.filter(title__icontains=search), 'serializer_class': SearchBarStorySerializer },
+            {'queryset': Tag.objects.filter( tag_name__icontains=search), 'serializer_class': SearchBarTagSerializer},
+            {'queryset': User.objects.filter( first_name__icontains=search), 'serializer_class': SearchBarUserSerializer},            
+        ]
+
+        return querylist
 

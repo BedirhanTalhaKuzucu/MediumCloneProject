@@ -37,8 +37,6 @@ class StorySerializer(serializers.ModelSerializer):
     tags = serializers.SerializerMethodField('get_tags')
     tag_name = serializers.CharField(write_only=True)
     user_id = serializers.IntegerField(write_only=True)
-    # image_upload = serializers.ImageField(
-    #     write_only=True, use_url=True, allow_null =False, allow_empty_file= False, required=False)
 
     class Meta:
         model = Story
@@ -55,7 +53,6 @@ class StorySerializer(serializers.ModelSerializer):
             "status",
             "clap_story",
             "comments",
-            # "image_upload",
         )
 
     def get_tags(self, obj):
@@ -100,3 +97,23 @@ class StorySerializer(serializers.ModelSerializer):
         story.save()
         return story
 
+
+
+
+class SearchBarStorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Story
+        fields = ('title', 'id', 'image')
+
+class SearchBarTagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tag
+        fields = ( 'id', 'tag_name')
+
+class SearchBarUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ( 'id', 'first_name')
