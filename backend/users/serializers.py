@@ -91,7 +91,9 @@ class FollowingSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
 
+    # followed_user=serializers.SerializerMethodField('get_followed_user')
     followed_user = FollowingSerializer(many=True, read_only=True )
+
     class Meta:
         model=User
         fields=(
@@ -102,16 +104,18 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "followed_user",
         )
-
+    # def get_followed_user(self, obj):
+    #     return obj.followed_user.all().values('id',"followed")
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    
+    user_detail=serializers.HyperlinkedIdentityField(view_name='user-detail')
     user=UserSerializer()
     class Meta:
         model = UserProfile
         fields =(
+            'user_detail',
             'user',
-            'id',
+            # 'id',
             'name',
             'short_bio',
             'profile_photo',
@@ -121,7 +125,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
        
 class AboutYouSerializer(serializers.ModelSerializer):
-    
     class Meta:
         model = UserProfile
         fields =(

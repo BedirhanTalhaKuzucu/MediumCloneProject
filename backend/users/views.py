@@ -1,7 +1,7 @@
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView,ListCreateAPIView,ListAPIView,UpdateAPIView,RetrieveUpdateAPIView
+from rest_framework.generics import CreateAPIView,ListCreateAPIView,ListAPIView,RetrieveAPIView,RetrieveUpdateAPIView
 from django.contrib.auth.models import User
 
 from .models import UserProfile
@@ -23,8 +23,12 @@ class RegisterView(CreateAPIView):
         data['token'] = token.key
         headers = self.get_success_headers(serializer.data)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
-
+        
 class UserView(ListAPIView):
+    queryset=UserProfile.objects.all()
+    serializer_class=UserProfileSerializer
+
+class UserDetailView(RetrieveAPIView):
     queryset=UserProfile.objects.all()
     serializer_class=UserProfileSerializer
 

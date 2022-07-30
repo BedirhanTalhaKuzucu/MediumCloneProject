@@ -7,7 +7,7 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'main.settings.base'
 import django
 django.setup()
 import secrets
-from users.models import UserProfile
+from users.models import UserProfile,Following
 from blog.models import Story,Tag,Comment,StoryClap,CommentClap
 from django.contrib.auth.models import User
 from faker import Faker
@@ -109,6 +109,18 @@ def set_comment():
     comment.save()
     comments.append(comment)
 
+def set_following():
+    fake=Faker(['en_US']) 
+
+    follower=secrets.choice(users)
+    followed=secrets.choice(users)
+    
+    following=Following(
+        follower=follower,
+        followed=followed
+    )
+    following.save()
+
 def set_clap():
     fake=Faker(['en_US']) 
 
@@ -141,6 +153,8 @@ def recording_data():
         set_comment()  
     for _ in range(1,100):
         set_clap() 
+    for _ in range(1,100):
+        set_following() 
 
 
 
@@ -154,4 +168,4 @@ def recording_data():
 
 
 
-# from scripts.fake import set_user,user_profile,set_story,set_comment,set_clap,recording_data
+# from scripts.fake import set_user,set_following,set_story,set_comment,set_clap,recording_data
