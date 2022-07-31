@@ -5,7 +5,7 @@ const Stories = () => {
   return (
     <div>
       <h3>Stories</h3>
-      <ArticleCard />
+      {/* <ArticleCard /> */}
     </div>
   );
 };
