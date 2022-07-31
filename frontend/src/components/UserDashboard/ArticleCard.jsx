@@ -3,35 +3,32 @@ import { CardContainer } from "./styles/Following.styles";
 import Images from "../../assets/Images";
 import { Link } from "react-router-dom";
 
-const ArticleCard = () => {
+const ArticleCard = ({data}) => {
   return (
     <CardContainer>
       <section className="authorInf">
         <img
-          src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg"
+          src={data.creatorInfo.user_img}
           alt=""
           className="pic"
         />
-        <div className="fullName">Full Name</div>
-        <div className="createdDate">Jun 6</div>
+        <div className="fullName"> {data.creatorInfo.first_name} {data.creatorInfo.last_name} </div>
+        <div className="createdDate">{data.publish_date.split('T')[0]} </div>
       </section>
 
       <section className="articleInf">
         <nav className="part1">
           <Link to="/story" className="title">
-            Best Projects for Your Portfolio
+            {data.title}
           </Link>
           <div className="articlePart">
-            You can build these projects within a week. — Software engineering
-            is often intimidating, especially when there is a lot to learn and
-            projects to develop. What’s virtually impossible is when you’re just
-            starting and there...
+            {data.content}
           </div>
           <div className="specialDetail">
             <div>
               <div className="tag">Portfolio</div>
               <div className="readTime">4 min read</div>
-              <div className="desc">Based on your reading history</div>
+              <div className="desc">Based on your following</div>
             </div>
             <div className="icons">
               <img src={Images.bookmarks} alt="icon" />
@@ -44,7 +41,7 @@ const ArticleCard = () => {
         </nav>
         <nav className="part2">
           <img
-            src="https://miro.medium.com/fit/c/176/176/0*yIJHqQwuaQkWYN84"
+            src={data.image}
             alt=""
           />
         </nav>
