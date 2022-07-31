@@ -112,8 +112,12 @@ class SearchBarTagSerializer(serializers.ModelSerializer):
         model = Tag
         fields = ( 'id', 'tag_name')
 
+       
+
 class SearchBarUserSerializer(serializers.ModelSerializer):
+
+    # userfor = SearchBarUserProfilSerializer(many=True)
 
     class Meta:
         model = User
-        fields = ( 'id', 'first_name')
+        fields = ( 'id', 'first_name' )
