@@ -41,3 +41,5 @@ class AboutYouUpdateView(UpdateAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = AboutYouSerializer
     permission_classes = (IsUserOrReadOnly, )
+        
+
