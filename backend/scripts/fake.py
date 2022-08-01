@@ -36,26 +36,11 @@ def set_user():
         email=email,
         is_staff=is_staff
     )
-    print(user)
+    user.set_password('testing321..')
     user.save()
     users.append(user)
+    print(user)
 
-# def user_profile():   
-#     fake=Faker(['en_US']) 
-    
-#     user=secrets.choice(users)
-#     short_bio=fake.sentence(nb_words=10)
-#     about_text=fake.paragraph(nb_sentences=5)
-#     about_photo=fake.image_url()
-#     print(user,short_bio)
-
-#     user_profile=UserProfile(
-#         user=user,
-#         short_bio=short_bio,
-#         about_text=about_text,
-#         about_photo=about_photo,
-#     )
-#     user_profile.save()
 
 def set_tag():
     fake=Faker(['en_US']) 
@@ -73,6 +58,7 @@ def set_tag():
         tag_name=tag_name
     )
     tag.save()
+
 stories=[]
 def set_story():
     fake=Faker(['en_US']) 
@@ -156,10 +142,27 @@ def recording_data():
     for _ in range(1,100):
         set_following() 
 
+# from scripts.fake import set_user,set_following,set_story,set_comment,set_clap,recording_data
 
 
         
    
+# def user_profile():   
+#     fake=Faker(['en_US']) 
+    
+#     user=secrets.choice(users)
+#     short_bio=fake.sentence(nb_words=10)
+#     about_text=fake.paragraph(nb_sentences=5)
+#     about_photo=fake.image_url()
+#     print(user,short_bio)
+
+#     user_profile=UserProfile(
+#         user=user,
+#         short_bio=short_bio,
+#         about_text=about_text,
+#         about_photo=about_photo,
+#     )
+#     user_profile.save()
 
 
 
@@ -168,6 +171,4 @@ def recording_data():
 
 
 
-
-# from scripts.fake import set_user,set_following,set_story,set_comment,set_clap,recording_data
 
