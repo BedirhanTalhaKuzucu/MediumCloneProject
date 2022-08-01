@@ -1,13 +1,26 @@
 import React from "react";
-// import { CardContainer } from "./styles/Following.styles";
-
-// import Images from "../../assets/Images";
 import ArticleCard from "./ArticleCard";
+import {followedUserStories} from "../../helpers/apiRequests"
+import { useEffect, useState } from "react";
 
 const Following = () => {
+
+  const [followingStories, setFollowingStories] = useState()
+
+  useEffect(() => {
+    followedUserStories(setFollowingStories)
+  }, [])
+  
+
   return (
     <div>
-     <ArticleCard/>
+      { followingStories ?
+      followingStories.map((item, key) => (
+        <ArticleCard key={key} data ={item} />
+        )) 
+      :
+      <h4>LOADİNG</h4>
+      }
     </div>
   );
 };

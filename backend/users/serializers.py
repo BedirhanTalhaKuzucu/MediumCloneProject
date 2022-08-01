@@ -28,7 +28,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     # username = serializers.CharField(
     #     required=False,
     #     # unique=False,
-        
+
     # )
     # username = serializers.IntegerField(source="id", required=False)
 
@@ -59,9 +59,11 @@ class RegisterSerializer(serializers.ModelSerializer):
             )
         return data
 
+
 class CustomTokenSerializer(serializers.ModelSerializer):
     userInfo = serializers.SerializerMethodField()
-    # user = serializers.StringRelatedField() 
+    # user = serializers.StringRelatedField()
+
     class Meta:
         model = Token
         fields = (
@@ -72,33 +74,41 @@ class CustomTokenSerializer(serializers.ModelSerializer):
 
     def get_userInfo(self, obj):
         context = {
-            "first_name" : obj.user.first_name,
+            "first_name": obj.user.first_name,
             "last_name": obj.user.last_name,
             "email": obj.user.email,
         }
-        return  context
+        return context
+
 
 class FollowingSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model= Following
-        fields=(
+        model = Following
+        fields = (
+            "id",
+            "followed"
+        )
+
+
+class FollowingSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Following
+        fields = (
             "id",
             "followed"
         )
 
 
 class UserSerializer(serializers.ModelSerializer):
-
-    # followed_user=serializers.SerializerMethodField('get_followed_user')
-    followed_user = FollowingSerializer(many=True, read_only=True )
-
+    followed_user = FollowingSerializer(many=True, read_only=True)
     class Meta:
-        model=User
-        fields=(
+        model = User
+        fields = (
             'id',
             "username",
-            "first_name" ,
+            "first_name",
             "last_name",
             "email",
             "followed_user",
@@ -107,6 +117,7 @@ class UserSerializer(serializers.ModelSerializer):
     #     return obj.followed_user.all().values('id',"followed")
 
 class UserProfileSerializer(serializers.ModelSerializer):
+
     user_detail=serializers.HyperlinkedIdentityField(view_name='user-detail')
     user=UserSerializer()
     class Meta:
@@ -122,11 +133,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'about_photo',
         )
 
-       
+
 class AboutYouSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = UserProfile
-        fields =(
+        fields = (
             'id',
             'user',
             'name',
@@ -135,9 +147,18 @@ class AboutYouSerializer(serializers.ModelSerializer):
             'about_text',
             'about_photo',
         )
-           
-    
-    
 
 
+class AboutYouSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = UserProfile
+        fields = (
+            'id',
+            'user',
+            'name',
+            'short_bio',
+            'profile_photo',
+            'about_text',
+            'about_photo',
+        )

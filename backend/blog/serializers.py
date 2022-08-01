@@ -1,7 +1,8 @@
 
 # from numpy import require
 from rest_framework import serializers
-from .models import Story, Tag, StoryClap, Comment
+from .models import SavedStories, Story, Tag, StoryClap, Comment
+
 from users.models import UserProfile
 from django.contrib.auth.models import User
 
@@ -14,9 +15,11 @@ class StoryClapSerializer(serializers.ModelSerializer):
             "story",
         )
 
+
 class CommentsSerializer(serializers.ModelSerializer):
     #! yorum sahibi ekleme işini view da yapacağımız için read_only dedik.
     user = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model = Comment
         # exclude = ('story', 'user',)
@@ -31,14 +34,13 @@ class CommentsSerializer(serializers.ModelSerializer):
 
 class StorySerializer(serializers.ModelSerializer):
 
-    clap_story = StoryClapSerializer(many = True)
+    clap_story = StoryClapSerializer(many=True)
+
     comments = CommentsSerializer(many=True, read_only=True)
     creatorInfo = serializers.SerializerMethodField('get_creatorInfo')
     tags = serializers.SerializerMethodField('get_tags')
     tag_name = serializers.CharField(write_only=True)
     user_id = serializers.IntegerField(write_only=True)
-    # image_upload = serializers.ImageField(
-    #     write_only=True, use_url=True, allow_null =False, allow_empty_file= False, required=False)
 
     class Meta:
         model = Story
@@ -55,7 +57,6 @@ class StorySerializer(serializers.ModelSerializer):
             "status",
             "clap_story",
             "comments",
-            # "image_upload",
         )
 
     def get_tags(self, obj):
@@ -63,7 +64,7 @@ class StorySerializer(serializers.ModelSerializer):
 
     def get_creatorInfo(self, obj):
 
-        user_img =  UserProfile.objects.filter(user= obj.user).first()
+        user_img = UserProfile.objects.filter(user=obj.user).first()
         short_bio = user_img.short_bio
 
         request = self.context.get('request')
@@ -76,7 +77,9 @@ class StorySerializer(serializers.ModelSerializer):
             "last_name": obj.user.last_name,
             "email": obj.user.email,
             "user_img": user_img,
-            "short_bio":short_bio,
+
+            "short_bio": short_bio,
+
         }
         return context
 
@@ -99,4 +102,31 @@ class StorySerializer(serializers.ModelSerializer):
 
         story.save()
         return story
+
+class SearchBarStorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Story
+        fields = ('title', 'id', 'image')
+
+class SearchBarTagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tag
+        fields = ( 'id', 'tag_name')
+
+       
+
+class SearchBarUserSerializer(serializers.ModelSerializer):
+
+    # userfor = SearchBarUserProfilSerializer(many=True)
+
+    class Meta:
+        model = User
+        fields = ( 'id', 'first_name' )
+
+class StorySaveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SavedStories
+        fields = '__all__'
 
