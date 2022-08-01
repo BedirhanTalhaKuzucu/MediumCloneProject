@@ -1,5 +1,6 @@
 from importlib.metadata import requires
 from os import read
+from pprint import pprint
 from rest_framework import serializers, validators
 from django.contrib.auth.models import User
 from .models import UserProfile, Following
@@ -74,6 +75,7 @@ class CustomTokenSerializer(serializers.ModelSerializer):
 
     def get_userInfo(self, obj):
         context = {
+            "id": obj.user.id,
             "first_name": obj.user.first_name,
             "last_name": obj.user.last_name,
             "email": obj.user.email,
@@ -103,6 +105,7 @@ class FollowingSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     followed_user = FollowingSerializer(many=True, read_only=True)
+
     class Meta:
         model = User
         fields = (
@@ -116,36 +119,24 @@ class UserSerializer(serializers.ModelSerializer):
     # def get_followed_user(self, obj):
     #     return obj.followed_user.all().values('id',"followed")
 
+
 class UserProfileSerializer(serializers.ModelSerializer):
-
-    user_detail=serializers.HyperlinkedIdentityField(view_name='user-detail')
-    user=UserSerializer()
-    class Meta:
-        model = UserProfile
-        fields =(
-            'user_detail',
-            'user',
-            # 'id',
-            'name',
-            'short_bio',
-            'profile_photo',
-            'about_text',
-            'about_photo',
-        )
-
-
-class AboutYouSerializer(serializers.ModelSerializer):
+    # user_detail = serializers.HyperlinkedIdentityField(view_name='user-detail')
+    # user = UserSerializer(read_only=True, source="user-detail")
+    user = UserSerializer()
 
     class Meta:
         model = UserProfile
         fields = (
+            # 'user_detail',
             'id',
-            'user',
             'name',
             'short_bio',
             'profile_photo',
             'about_text',
             'about_photo',
+            'user',
+            # 'user-detail',
         )
 
 
