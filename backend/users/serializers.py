@@ -150,29 +150,16 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = (
-            # 'user_detail',
+
+        fields =(
+            'user_detail',
+            'user',
             'id',
             'name',
             'short_bio',
             'profile_photo',
             'about_text',
             'about_photo',
-            'user',
-            # 'user-detail',
-        )
+            )
 
-
-class AboutYouSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = UserProfile
-        fields = (
-            'id',
-            'user',
-            'name',
-            'short_bio',
-            'profile_photo',
-            'about_text',
-            'about_photo',
-        )
+            
