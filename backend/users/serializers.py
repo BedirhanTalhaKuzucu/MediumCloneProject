@@ -144,7 +144,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    # user_detail = serializers.HyperlinkedIdentityField(view_name='user-detail')
+    user_detail = serializers.HyperlinkedIdentityField(view_name='user-detail')
     # user = UserSerializer(read_only=True, source="user-detail")
     user = UserSerializer()
 
