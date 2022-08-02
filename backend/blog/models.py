@@ -136,8 +136,10 @@ class StorieShare(models.Model):
 
 class SavedStories(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    story = models.ForeignKey(Story, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='saved_stories')
+    story = models.ForeignKey(
+        Story, on_delete=models.CASCADE, related_name='saved_users')
     timeStamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

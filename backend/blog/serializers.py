@@ -49,6 +49,12 @@ class StoryViewSerializer(serializers.ModelSerializer):
         fields = ('user',)
 
 
+class StorySaveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SavedStories
+        fields = ('user',)
+
+
 class StorySerializer(serializers.ModelSerializer):
 
     clap_story = StoryClapSerializer(many=True)
@@ -63,6 +69,8 @@ class StorySerializer(serializers.ModelSerializer):
         source='comments.count', read_only=True)
     views = StoryViewSerializer(many=True, read_only=True)
     views_count = serializers.ReadOnlyField(source='views.count')
+    saved_users = StorySaveSerializer(many=True, read_only=True)
+    saved_users_count = serializers.ReadOnlyField(source='saved_users.count')
 
     class Meta:
         model = Story
@@ -83,6 +91,8 @@ class StorySerializer(serializers.ModelSerializer):
             "comments",
             'views',
             'views_count',
+            'saved_users',
+            'saved_users_count',
         )
 
     def get_tags(self, obj):
@@ -151,9 +161,3 @@ class SearchBarUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'first_name')
-
-
-class StorySaveSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SavedStories
-        fields = '__all__'

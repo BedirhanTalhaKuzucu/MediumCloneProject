@@ -3,6 +3,7 @@ from os import read
 from pprint import pprint
 from rest_framework import serializers, validators
 from django.contrib.auth.models import User
+from blog.serializers import StorySaveSerializer
 from blog.serializers import StorySerializer
 from blog.models import TagFollower
 
@@ -118,6 +119,9 @@ class UserSerializer(serializers.ModelSerializer):
     followed_topics = FollowedTopicsSerializer(many=True, read_only=True)
     user_stories = StorySerializer(many=True, read_only=True)
     user_stories_count = serializers.ReadOnlyField(source='user_stories.count')
+    saved_stories = StorySaveSerializer(many=True, read_only=True)
+    saved_stories_count = serializers.ReadOnlyField(
+        source='saved_stories.count')
 
     class Meta:
         model = User
@@ -131,6 +135,8 @@ class UserSerializer(serializers.ModelSerializer):
             'followed_topics',
             'user_stories',
             'user_stories_count',
+            'saved_stories_count',
+            'saved_stories',
         )
     # def get_followed_user(self, obj):
     #     return obj.followed_user.all().values('id',"followed")
