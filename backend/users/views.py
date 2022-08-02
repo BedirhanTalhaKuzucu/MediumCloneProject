@@ -30,5 +30,5 @@ class UserView(ListAPIView):
 class AboutYouUpdateDeleteView(RetrieveUpdateDestroyAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
-    # permission_classes = (IsUserOrReadOnly, )
+    # permission_classes = (, )
         
