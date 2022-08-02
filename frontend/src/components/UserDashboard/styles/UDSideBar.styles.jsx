@@ -83,3 +83,20 @@ export const TopicListStyle = styled.div`
     }
   }
 `;
+
+const ProfilImage = ({ className, image }) => {
+  return (
+      <div className={className}>
+          <img src={ image} alt="ass"  className=" " />
+      </div>
+  );
+};
+
+export const StyledProfilImage = styled(ProfilImage)`
+  display:inline;
+  img{
+      width : 2rem;
+      border-radius: 50px;
+  }
+  padding-right:10px;
+`;

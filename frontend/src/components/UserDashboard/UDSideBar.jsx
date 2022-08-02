@@ -5,13 +5,14 @@ import {
   SideBarContainerStyle,
   TopicListStyle,
   UnlimitedButtonStyle,
+  StyledProfilImage, 
 } from "./styles/UDSideBar.styles";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useFormik } from 'formik';
 import { useState } from "react";
 import { searchBar } from "../../helpers/apiRequests"
 import { CardContainer } from "./styles/Following.styles";
-
+import { ImPriceTag } from "react-icons/im";
 
 const topicList = [
   "FullStack",
@@ -68,7 +69,10 @@ const UDSlideBar = () => {
             </> : ""}
           {searching.User.length ?
             searching.User.map((item, key) => (
-              <Dropdown.Item eventKey="1" key={key} > {item.first_name} </Dropdown.Item>
+              <Dropdown.Item eventKey="1" key={key} >
+                < StyledProfilImage image={item.userImage} />
+                {item.first_name}  {item.last_name}
+              </Dropdown.Item>
             )
             ) : ""}
 
@@ -81,16 +85,9 @@ const UDSlideBar = () => {
           {searching.Story.length ?
             searching.Story.map((item, key) => (
               <Dropdown.Item eventKey="1" key={key}>
-                {/* <CardContainer>
-                <section className="authorInf border-bottom-0"> 
-                  <img src={item.image} alt="" className="pic"/>
-                  <div className="fullName"> {item.title} </div>
-                </section>
-                </CardContainer> */}
-                <Dropdown.Item eventKey="1" key={key} > {item.title} </Dropdown.Item>
-
-
-                 </Dropdown.Item>
+                  < StyledProfilImage image={item.image} />
+                  {item.title}
+              </Dropdown.Item>
             )
             ) : ""}
 
@@ -103,7 +100,10 @@ const UDSlideBar = () => {
             </> : ""}
           {searching.Tag.length ?
             searching.Tag.map((item, key) => (
-              <Dropdown.Item eventKey="1" key={key}> {item.tag_name} </Dropdown.Item>
+              <Dropdown.Item eventKey="1" key={key}> 
+                <ImPriceTag className="mx-2" />
+                {item.tag_name} 
+              </Dropdown.Item>
             )
             ) : ""}
 

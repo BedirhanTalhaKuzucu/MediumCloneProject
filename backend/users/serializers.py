@@ -74,6 +74,7 @@ class CustomTokenSerializer(serializers.ModelSerializer):
 
     def get_userInfo(self, obj):
         context = {
+            "userId": obj.user.first_name.id,
             "first_name": obj.user.first_name,
             "last_name": obj.user.last_name,
             "email": obj.user.email,

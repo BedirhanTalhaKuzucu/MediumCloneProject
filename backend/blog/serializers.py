@@ -120,10 +120,25 @@ class SearchBarTagSerializer(serializers.ModelSerializer):
 class SearchBarUserSerializer(serializers.ModelSerializer):
 
     # userfor = SearchBarUserProfilSerializer(many=True)
+    userImage = serializers.SerializerMethodField('get_userImage')
+
 
     class Meta:
         model = User
-        fields = ( 'id', 'first_name' )
+        fields = ( 'id', 'first_name', 'last_name', 'userImage', )
+
+    def get_userImage(self, obj):
+
+        user_img = UserProfile.objects.filter(user=obj.id).first()
+
+        request = self.context.get('request')
+        user_img = user_img.profile_photo.url
+        user_img = request.build_absolute_uri(user_img)
+        print(user_img)
+        # context = {
+        #     "user_img": user_img,
+        # }
+        return user_img
 
 class StorySaveSerializer(serializers.ModelSerializer):
     class Meta:
