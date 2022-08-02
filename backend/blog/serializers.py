@@ -1,7 +1,7 @@
 
 # from numpy import require
 from rest_framework import serializers
-from .models import CommentClap, SavedStories, Story, Tag, StoryClap, Comment
+from .models import CommentClap, SavedStories, StorieView, Story, Tag, StoryClap, Comment
 
 from users.models import UserProfile
 from django.contrib.auth.models import User
@@ -43,6 +43,12 @@ class CommentsSerializer(serializers.ModelSerializer):
 #         fields = '__all__'
 
 
+class StoryViewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StorieView
+        fields = ('user',)
+
+
 class StorySerializer(serializers.ModelSerializer):
 
     clap_story = StoryClapSerializer(many=True)
@@ -53,6 +59,10 @@ class StorySerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField(write_only=True)
     clap_count = serializers.IntegerField(
         source='clap_story.count', read_only=True)
+    comment_count = serializers.IntegerField(
+        source='comments.count', read_only=True)
+    views = StoryViewSerializer(many=True, read_only=True)
+    views_count = serializers.ReadOnlyField(source='views.count')
 
     class Meta:
         model = Story
@@ -69,7 +79,10 @@ class StorySerializer(serializers.ModelSerializer):
             "status",
             'clap_count',
             "clap_story",
+            'comment_count',
             "comments",
+            'views',
+            'views_count',
         )
 
     def get_tags(self, obj):
