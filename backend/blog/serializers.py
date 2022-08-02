@@ -2,6 +2,7 @@
 # from numpy import require
 from rest_framework import serializers
 from .models import SavedStories, Story, Tag, StoryClap, Comment
+from django.utils.timezone import now 
 
 from users.models import UserProfile
 from django.contrib.auth.models import User
@@ -19,17 +20,16 @@ class StoryClapSerializer(serializers.ModelSerializer):
 class CommentsSerializer(serializers.ModelSerializer):
     #! yorum sahibi ekleme işini view da yapacağımız için read_only dedik.
     user = serializers.StringRelatedField(read_only=True)
+    days_since_joined = serializers.SerializerMethodField() 
 
     class Meta:
         model = Comment
         # exclude = ('story', 'user',)
-        fields = ('content', 'user', 'id')
+        fields = ('days_since_joined','content', 'user', 'id')
+    def get_days_since_joined(self, obj): 
+        return (now() - obj.created_date).days
+        # return (now() - obj.created_date).seconds #dakika olarak gostermek istersen   
 
-# class StorySerializer(serializers.ModelSerializer):
-#     comments = CommentsSerializer(many=True, read_only=True)
-#     class Meta:
-#         model = Story
-#         fields = '__all__'
 
 
 class StorySerializer(serializers.ModelSerializer):
