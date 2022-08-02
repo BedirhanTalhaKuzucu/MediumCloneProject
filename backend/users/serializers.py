@@ -134,31 +134,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         )
 
 
-class AboutYouSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = UserProfile
-        fields = (
-            'id',
-            'user',
-            'name',
-            'short_bio',
-            'profile_photo',
-            'about_text',
-            'about_photo',
-        )
 
 
-class AboutYouSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = UserProfile
-        fields = (
-            'id',
-            'user',
-            'name',
-            'short_bio',
-            'profile_photo',
-            'about_text',
-            'about_photo',
-        )
+

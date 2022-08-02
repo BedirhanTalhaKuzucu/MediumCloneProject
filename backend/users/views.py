@@ -1,14 +1,14 @@
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView, ListCreateAPIView, ListAPIView, UpdateAPIView, RetrieveUpdateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import CreateAPIView,ListAPIView,RetrieveUpdateDestroyAPIView
 from django.contrib.auth.models import User
 
 from .permissions import IsUserOrReadOnly
 from rest_framework.permissions import IsAdminUser
 
 from .models import UserProfile
-from.serializers import RegisterSerializer, UserProfileSerializer, AboutYouSerializer
+from.serializers import RegisterSerializer, UserProfileSerializer
 
 
 class RegisterView(CreateAPIView):
@@ -25,21 +25,13 @@ class RegisterView(CreateAPIView):
         headers = self.get_success_headers(serializer.data)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
-
 class UserView(ListAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
-
-class UserDeleteView(DestroyAPIView):
+class AboutYouUpdateDeleteView(RetrieveUpdateDestroyAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
-    permission_classes = (IsUserOrReadOnly, )
-
-
-class AboutYouUpdateView(UpdateAPIView):
-    queryset = UserProfile.objects.all()
-    serializer_class = AboutYouSerializer
-    permission_classes = (IsUserOrReadOnly, )
+    # permission_classes = (IsUserOrReadOnly, )
         
 
