@@ -1,7 +1,7 @@
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView, ListCreateAPIView, ListAPIView, UpdateAPIView, RetrieveUpdateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import CreateAPIView, ListCreateAPIView, ListAPIView, UpdateAPIView, RetrieveUpdateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
 from django.contrib.auth.models import User
 
 from .permissions import IsUserOrReadOnly
@@ -37,9 +37,7 @@ class UserDeleteView(DestroyAPIView):
     permission_classes = (IsUserOrReadOnly, )
 
 
-class AboutYouUpdateView(UpdateAPIView):
+class AboutYouUpdateView(RetrieveUpdateDestroyAPIView):
     queryset = UserProfile.objects.all()
-    serializer_class = AboutYouSerializer
+    serializer_class = UserProfileSerializer
     permission_classes = (IsUserOrReadOnly, )
-        
-

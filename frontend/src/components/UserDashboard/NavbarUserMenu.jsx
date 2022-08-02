@@ -30,7 +30,37 @@ export default function AccountMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
+  const LogOutFunction = () => {
+    get_user_info({
+      key: "",
+      userInfo: {
+        first_name: "",
+        last_name: "",
+        email: "",
+      },
+    });
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = "";
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://127.0.0.1:8000/auth/logout/", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+
+    navigate("/");
+  };
+
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -42,7 +72,8 @@ export default function AccountMenu() {
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
-          >{/* Username baş harfi gelecek */}
+          >
+            {/* Username baş harfi gelecek */}
             <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
           </IconButton>
         </Tooltip>
@@ -84,24 +115,25 @@ export default function AccountMenu() {
       >
         <MenuItem onClick={() => navigate("/home/profile")}>
           <Avatar /> {userInfo ? userInfo.first_name : "Profile"}
+          Profile / Settings
         </MenuItem>
-        <MenuItem>
+        {/* <MenuItem>
           <Avatar /> My account
-        </MenuItem>
+        </MenuItem> */}
         <Divider />
-        <MenuItem>
+        {/* <MenuItem>
           <ListItemIcon>
             <PersonAdd fontSize="small" />
           </ListItemIcon>
           Add another account
-        </MenuItem>
-        <MenuItem>
+        </MenuItem> */}
+        {/* <MenuItem>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
           Settings
-        </MenuItem>
-        <MenuItem>
+        </MenuItem> */}
+        <MenuItem onClick={() => LogOutFunction()}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
