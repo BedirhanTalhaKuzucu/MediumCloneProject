@@ -1,7 +1,13 @@
 from importlib.metadata import requires
 from os import read
+from pprint import pprint
 from rest_framework import serializers, validators
 from django.contrib.auth.models import User
+from blog.serializers import StorySaveSerializer
+from blog.serializers import StorySerializer
+from blog.models import TagFollower
+
+from blog.models import Tag
 from .models import UserProfile, Following
 from django.contrib.auth.password_validation import validate_password
 # from dj_rest_auth.serializers import TokenSerializer, LoginSerializer, JWTSerializer
@@ -103,8 +109,21 @@ class FollowingSerializer(serializers.ModelSerializer):
         )
 
 
+class FollowedTopicsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TagFollower
+        fields = '__all__'
+
+
 class UserSerializer(serializers.ModelSerializer):
     followed_user = FollowingSerializer(many=True, read_only=True)
+    followed_topics = FollowedTopicsSerializer(many=True, read_only=True)
+    user_stories = StorySerializer(many=True, read_only=True)
+    user_stories_count = serializers.ReadOnlyField(source='user_stories.count')
+    saved_stories = StorySaveSerializer(many=True, read_only=True)
+    saved_stories_count = serializers.ReadOnlyField(
+        source='saved_stories.count')
+
     class Meta:
         model = User
         fields = (
@@ -114,40 +133,33 @@ class UserSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "followed_user",
+            'followed_topics',
+            'user_stories',
+            'user_stories_count',
+            'saved_stories_count',
+            'saved_stories',
         )
     # def get_followed_user(self, obj):
     #     return obj.followed_user.all().values('id',"followed")
 
+
 class UserProfileSerializer(serializers.ModelSerializer):
-
-    user_detail=serializers.HyperlinkedIdentityField(view_name='user-detail')
-    user=UserSerializer()
-    class Meta:
-        model = UserProfile
-        fields =(
-            'user_detail',
-            'user',
-            # 'id',
-            'name',
-            'short_bio',
-            'profile_photo',
-            'about_text',
-            'about_photo',
-        )
-
-
-class AboutYouSerializer(serializers.ModelSerializer):
+    # user_detail = serializers.HyperlinkedIdentityField(view_name='user-detail')
+    # user = UserSerializer(read_only=True, source="user-detail")
+    user = UserSerializer()
 
     class Meta:
         model = UserProfile
         fields = (
+            # 'user_detail',
             'id',
-            'user',
             'name',
             'short_bio',
             'profile_photo',
             'about_text',
             'about_photo',
+            'user',
+            # 'user-detail',
         )
 
 

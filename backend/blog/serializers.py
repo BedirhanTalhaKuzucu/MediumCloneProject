@@ -1,7 +1,7 @@
 
 # from numpy import require
 from rest_framework import serializers
-from .models import SavedStories, Story, Tag, StoryClap, Comment
+from .models import CommentClap, SavedStories, StorieView, Story, Tag, StoryClap, Comment
 
 from users.models import UserProfile
 from django.contrib.auth.models import User
@@ -16,14 +16,25 @@ class StoryClapSerializer(serializers.ModelSerializer):
         )
 
 
+class CommentClapSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CommentClap
+        fields = '__all__'
+
+
 class CommentsSerializer(serializers.ModelSerializer):
     #! yorum sahibi ekleme işini view da yapacağımız için read_only dedik.
     user = serializers.StringRelatedField(read_only=True)
+    clap_comment = CommentClapSerializer(many=True)
+    clap_comment_count = serializers.IntegerField(
+        source='clap_comment.count', read_only=True)
 
     class Meta:
         model = Comment
         # exclude = ('story', 'user',)
-        fields = ('content', 'user', 'id')
+        fields = ('content', 'user', 'id',
+                  'clap_comment_count', 'clap_comment',)
 
 # class StorySerializer(serializers.ModelSerializer):
 #     comments = CommentsSerializer(many=True, read_only=True)
@@ -32,15 +43,35 @@ class CommentsSerializer(serializers.ModelSerializer):
 #         fields = '__all__'
 
 
+class StoryViewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StorieView
+        fields = ('user',)
+
+
+class StorySaveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SavedStories
+        fields = ('user',)
+
+
+
 class StorySerializer(serializers.ModelSerializer):
 
     clap_story = StoryClapSerializer(many=True)
-
     comments = CommentsSerializer(many=True, read_only=True)
     creatorInfo = serializers.SerializerMethodField('get_creatorInfo')
     tags = serializers.SerializerMethodField('get_tags')
     tag_name = serializers.CharField(write_only=True)
     user_id = serializers.IntegerField(write_only=True)
+    clap_count = serializers.IntegerField(
+        source='clap_story.count', read_only=True)
+    comment_count = serializers.IntegerField(
+        source='comments.count', read_only=True)
+    views = StoryViewSerializer(many=True, read_only=True)
+    views_count = serializers.ReadOnlyField(source='views.count')
+    saved_users = StorySaveSerializer(many=True, read_only=True)
+    saved_users_count = serializers.ReadOnlyField(source='saved_users.count')
 
     class Meta:
         model = Story
@@ -55,8 +86,14 @@ class StorySerializer(serializers.ModelSerializer):
             "tag_name",
             "user_id",
             "status",
+            'clap_count',
             "clap_story",
+            'comment_count',
             "comments",
+            'views',
+            'views_count',
+            'saved_users',
+            'saved_users_count',
         )
 
     def get_tags(self, obj):
@@ -103,19 +140,20 @@ class StorySerializer(serializers.ModelSerializer):
         story.save()
         return story
 
+
 class SearchBarStorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Story
         fields = ('title', 'id', 'image')
 
+
 class SearchBarTagSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tag
-        fields = ( 'id', 'tag_name')
+        fields = ('id', 'tag_name')
 
-       
 
 class SearchBarUserSerializer(serializers.ModelSerializer):
 
@@ -140,8 +178,4 @@ class SearchBarUserSerializer(serializers.ModelSerializer):
         # }
         return user_img
 
-class StorySaveSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SavedStories
-        fields = '__all__'
 
