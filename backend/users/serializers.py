@@ -73,8 +73,9 @@ class CustomTokenSerializer(serializers.ModelSerializer):
         )
 
     def get_userInfo(self, obj):
+        profileInfo = UserProfile.objects.filter(user=obj.user).first()
         context = {
-            "userId": obj.user.first_name.id,
+            "profileInfoId": profileInfo.id,
             "first_name": obj.user.first_name,
             "last_name": obj.user.last_name,
             "email": obj.user.email,

@@ -13,6 +13,7 @@ import { useState } from "react";
 import { searchBar } from "../../helpers/apiRequests"
 import { CardContainer } from "./styles/Following.styles";
 import { ImPriceTag } from "react-icons/im";
+import SearchBar from "../SearchBar/SearchBar";
 
 const topicList = [
   "FullStack",
@@ -25,35 +26,12 @@ const topicList = [
 
 const UDSlideBar = () => {
 
-  const [searching, setSearching] = useState({
-    Story: [],
-    Tag: [],
-    User: [],
-  })
-  const [openSearchBar, setopenSearchBar] = useState(false)
-
-  const formik = useFormik({
-    initialValues: {
-      search: '',
-    },
-    onSubmit: ((values, { resetForm }) => {
-      if (values.search !== "") {
-        setopenSearchBar(true)
-        console.log(values);
-        searchBar(values, setSearching)
-        console.log(Boolean(searching.Tag))
-      } else {
-        setopenSearchBar(false)
-      }
-    }),
-  });
-
-
   return (
     <SideBarContainerStyle>
       <UnlimitedButtonStyle>Get unlimited access</UnlimitedButtonStyle>
 
-      <form onChange={formik.handleSubmit} >
+      <SearchBar/>
+      {/* <form onChange={formik.handleSubmit} >
         <SearchInputStyle
           name="search"
           onChange={formik.handleChange}
@@ -108,7 +86,7 @@ const UDSlideBar = () => {
             ) : ""}
 
         </Dropdown.Menu>
-      </form>
+      </form> */}
 
 
       <Link to="#" className="readingToday">
