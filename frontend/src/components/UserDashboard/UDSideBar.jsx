@@ -15,6 +15,7 @@ import { CardContainer } from "./styles/Following.styles";
 import { ImPriceTag } from "react-icons/im";
 import SearchBar from "../SearchBar/SearchBar";
 import ReadingToday from "./UDSideBarParts/ReadingToday";
+import TagUsersInfo from "./UDSideBarParts/TagUsersInfo";
 
 const topicList = [
   "FullStack",
@@ -92,7 +93,8 @@ const UDSlideBar = () => {
         <span></span> What We're Reading Today
       </Link>
 
-      <ReadingToday />
+      {/* <ReadingToday /> */}
+      <TagUsersInfo />
 
       <TopicListStyle>
         <h5>Recommended topics</h5>
