@@ -2,13 +2,14 @@ import styled from "styled-components";
 
 export const MainContainer = styled.main`
   width: 100vw;
+  height: 100%;
   margin: 3rem 5rem;
   @media (max-width: 768px) {
     width: 100%;
     margin: 0;
     padding: 3rem;
-   /* background-color: red; */
-   z-index: -1;
+    /* background-color: red; */
+    z-index: -1;
   }
 `;
 

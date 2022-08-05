@@ -5,15 +5,16 @@ import {
   SideBarContainerStyle,
   TopicListStyle,
   UnlimitedButtonStyle,
-  StyledProfilImage, 
+  StyledProfilImage,
 } from "./styles/UDSideBar.styles";
-import Dropdown from 'react-bootstrap/Dropdown';
-import { useFormik } from 'formik';
+import Dropdown from "react-bootstrap/Dropdown";
+import { useFormik } from "formik";
 import { useState } from "react";
-import { searchBar } from "../../helpers/apiRequests"
+import { searchBar } from "../../helpers/apiRequests";
 import { CardContainer } from "./styles/Following.styles";
 import { ImPriceTag } from "react-icons/im";
 import SearchBar from "../SearchBar/SearchBar";
+import ReadingToday from "./UDSideBarParts/ReadingToday";
 
 const topicList = [
   "FullStack",
@@ -25,12 +26,11 @@ const topicList = [
 ];
 
 const UDSlideBar = () => {
-
   return (
     <SideBarContainerStyle>
       <UnlimitedButtonStyle>Get unlimited access</UnlimitedButtonStyle>
 
-      <SearchBar/>
+      <SearchBar />
       {/* <form onChange={formik.handleSubmit} >
         <SearchInputStyle
           name="search"
@@ -88,10 +88,11 @@ const UDSlideBar = () => {
         </Dropdown.Menu>
       </form> */}
 
-
       <Link to="#" className="readingToday">
         <span></span> What We're Reading Today
       </Link>
+
+      <ReadingToday />
 
       <TopicListStyle>
         <h5>Recommended topics</h5>
