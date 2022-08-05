@@ -112,12 +112,13 @@ class FollowingSerializer(serializers.ModelSerializer):
 class FollowedTopicsSerializer(serializers.ModelSerializer):
     class Meta:
         model = TagFollower
-        fields = '__all__'
+        fields = ('tag' , 'user',)
 
 
 class UserSerializer(serializers.ModelSerializer):
     followed_user = FollowingSerializer(many=True, read_only=True)
-    followed_topics = FollowedTopicsSerializer(many=True, read_only=True)
+    # followed_topics = FollowedTopicsSerializer(many=True, read_only=True)
+    followed_topics = serializers.StringRelatedField(many=True)
     user_stories = StorySerializer(many=True, read_only=True)
     user_stories_count = serializers.ReadOnlyField(source='user_stories.count')
     saved_stories = StorySaveSerializer(many=True, read_only=True)
@@ -144,35 +145,22 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    # user_detail = serializers.HyperlinkedIdentityField(view_name='user-detail')
+    user_detail = serializers.HyperlinkedIdentityField(view_name='user-detail')
     # user = UserSerializer(read_only=True, source="user-detail")
     user = UserSerializer()
 
     class Meta:
         model = UserProfile
-        fields = (
-            # 'user_detail',
+
+        fields =(
+            'user_detail',
+            'user',
             'id',
             'name',
             'short_bio',
             'profile_photo',
             'about_text',
             'about_photo',
-            'user',
-            # 'user-detail',
-        )
+            )
 
-
-class AboutYouSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = UserProfile
-        fields = (
-            'id',
-            'user',
-            'name',
-            'short_bio',
-            'profile_photo',
-            'about_text',
-            'about_photo',
-        )
+            

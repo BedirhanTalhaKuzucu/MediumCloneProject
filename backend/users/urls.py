@@ -1,12 +1,10 @@
 from django.urls import path, include
-from .views import RegisterView, UserView, AboutYouUpdateView, UserDeleteView
+from .views import RegisterView, UserView, AboutYouUpdateDeleteView
 
 
 urlpatterns = [
     path('', include('dj_rest_auth.urls')),
     path("register/", RegisterView.as_view()),
     path("users/", UserView.as_view()),
-    # path("users/<uuid:pk>/", AboutYouView.as_view(), name='about'),
-    path("users/<uuid:pk>/", AboutYouUpdateView.as_view(), name='update'),
-    path("users/<uuid:pk>/delete", UserDeleteView.as_view(), name='delete'),
-]
+    path("users/<uuid:pk>/", AboutYouUpdateDeleteView.as_view(), name='user-detail'),
+    ]

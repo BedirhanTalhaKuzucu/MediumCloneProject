@@ -2,7 +2,7 @@
 # from numpy import require
 from rest_framework import serializers
 from .models import CommentClap, SavedStories, StorieView, Story, Tag, StoryClap, Comment
-
+from django.utils.timezone import now 
 from users.models import UserProfile
 from django.contrib.auth.models import User
 
@@ -29,20 +29,16 @@ class CommentsSerializer(serializers.ModelSerializer):
     clap_comment = CommentClapSerializer(many=True)
     clap_comment_count = serializers.IntegerField(
         source='clap_comment.count', read_only=True)
+    days_since_joined = serializers.SerializerMethodField() 
 
     class Meta:
         model = Comment
         # exclude = ('story', 'user',)
-        fields = ('content', 'user', 'id',
-                  'clap_comment_count', 'clap_comment',)
+        fields = ('content', 'user', 'id', 'clap_comment_count', 'clap_comment', 'days_since_joined')
 
-# class StorySerializer(serializers.ModelSerializer):
-#     comments = CommentsSerializer(many=True, read_only=True)
-#     class Meta:
-#         model = Story
-#         fields = '__all__'
-
-
+    def get_days_since_joined(self, obj): 
+        return (now() - obj.created_date).days
+        # return (now() - obj.created_date).seconds #dakika olarak gostermek istersen  
 class StoryViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = StorieView
@@ -179,3 +175,8 @@ class SearchBarUserSerializer(serializers.ModelSerializer):
         return user_img
 
 
+class AddStoryClapSerializer(serializers.ModelSerializer):
+
+     class Meta:
+        model = StoryClap
+        fields = ('user', 'story', )

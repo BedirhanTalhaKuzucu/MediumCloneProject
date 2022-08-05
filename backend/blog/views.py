@@ -2,12 +2,13 @@ from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .pagination import SearchBarLimitPagination
-from .serializers import CommentsSerializer, StorySerializer,SearchBarStorySerializer, SearchBarTagSerializer, SearchBarUserSerializer, StorySaveSerializer
+from .serializers import CommentsSerializer, StorySerializer,SearchBarStorySerializer, SearchBarTagSerializer, SearchBarUserSerializer, StorySaveSerializer, AddStoryClapSerializer
 from .models import Comment, Story, Tag, SavedStories
 from rest_framework.generics import get_object_or_404
 from rest_framework.exceptions import ValidationError
 from rest_framework import permissions
 from .permissions import IsAuthorOrReadOnly
+from rest_framework.permissions import  IsAuthenticated
 from rest_framework.filters import SearchFilter
 from rest_framework.filters import OrderingFilter
 from users.models import Following
@@ -103,3 +104,10 @@ class StorySaveListView(generics.ListAPIView):
     queryset = SavedStories.objects.all()
     serializer_class = StorySaveSerializer
     permission_classes = (IsAuthorOrReadOnly,)
+
+
+
+class AddClapStoryView(generics.CreateAPIView):
+    queryset = SavedStories.objects.all()
+    serializer_class = AddStoryClapSerializer
+    # permission_classes = (IsAuthenticated,)

@@ -42,7 +42,7 @@ export const logInFunction = (
   resetForm,
   handleErrorMesage,
   navigate,
-  setErrorMesage
+  setErrorMesage,
 ) => {
   let myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -155,7 +155,7 @@ export const createStory = (formData, values, resetForm) => {
     .catch((error) => console.log("error", error));
 };
 
-export const followedUserStories = (setFollowingStories) => {
+export const followedUserStories = (setfollowingStory) => {
   let myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
@@ -176,7 +176,7 @@ export const followedUserStories = (setFollowingStories) => {
     .then((response) => response.json())
     .then((result) => {
       console.log(result);
-      setFollowingStories(result.results);
+      setfollowingStory(result.results)
     })
     .catch((error) => console.log("error", error));
 };
@@ -204,4 +204,23 @@ export const searchBar = (values, setSearching) => {
       setSearching(result.results)
     })
     .catch((error) => console.log("error", error));
+};
+
+export const userDetails = (setFollowingTag, setFollowingUser) => {
+  let myHeaders = new Headers();
+  
+  let requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch("http://127.0.0.1:8000/auth/users/dd8be17f-91fa-4cc0-b83d-376d56cd4875/", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      setFollowingTag(result.user.followed_topics)
+      setFollowingUser(result.user.followed_user)
+    })
+    .catch(error => console.log('error', error));
+  
 };

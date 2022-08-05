@@ -55,7 +55,7 @@ class TagFollower(models.Model):
     timeStamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.tag}-{self.user.username}'
+        return f'{self.tag.tag_name}'
 
 
 class StoryTag(models.Model):
@@ -91,6 +91,9 @@ class StoryClap(models.Model):
 
     def __str__(self):
         return f"{self.user} => {self.story}"
+
+    class Meta:
+        unique_together = ('user', 'story')
 
 
 class CommentClap(models.Model):

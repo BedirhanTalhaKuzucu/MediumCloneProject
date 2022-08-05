@@ -11,10 +11,12 @@ def create_UserProfil(sender, instance=None, created=False, **kwargs):
         UserProfile.objects.create(user=instance)
         print("hello")
 
-    
-# @receiver(post_delete, sender=UserProfile)
-# def delete_User(sender, instance=None, deleted=False, **kwargs):
-#     if deleted:
-#        user=User.objects.get(id=id)
-#        if user.id==UserProfile.user:
-#         user.delete()
+
+@receiver(post_delete, sender=UserProfile)
+def delete_profile(sender,instance,**kwargs):
+    users=User.objects.all()
+    for user in users:
+        if user == instance.user:
+            user.delete()
+            print(user,'delete')
+            
