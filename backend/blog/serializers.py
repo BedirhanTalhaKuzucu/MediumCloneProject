@@ -175,3 +175,8 @@ class SearchBarUserSerializer(serializers.ModelSerializer):
         return user_img
 
 
+class AddStoryClapSerializer(serializers.ModelSerializer):
+
+     class Meta:
+        model = StoryClap
+        fields = ('user', 'story', )

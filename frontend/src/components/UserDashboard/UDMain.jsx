@@ -10,6 +10,8 @@ import {
 import Tooltip from "@mui/material/Tooltip";
 import MainFollowingTooltip from "./MainFollowingTooltip";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { userDetails } from "../../helpers/apiRequests"
 
 const topicList = [
   "FullStack",
@@ -21,36 +23,59 @@ const topicList = [
 ];
 
 const UDMain = () => {
+
+  const [followingTag, setFollowingTag] = useState()
+  const [followingUser, setFollowingUser] = useState()
+
+
+  useEffect(() => {
+
+    userDetails(setFollowingTag, setFollowingUser)
+  
+  }, [])
+
+
   return (
     <MainContainer>
       <MainHeader>
         <TopicsStyle>
           <p>YOUR TOPICS</p>
           <div className="scrollbar sc1">
-            {topicList?.map((item) => {
-              return (
-                <div key={item.id}>
-                  <button>{item}</button>
-                </div>
-              );
-            })}
+            {followingTag ?
+              followingTag.map((item, key) => {
+                return (
+                  <div key={key}>
+                    <button>{item}</button>
+                  </div>
+                );
+              })
+              :
+              "There are no topics you follow"
+            }
           </div>
         </TopicsStyle>
 
         <FollowingListStyle>
-          <Tooltip
-            title={<MainFollowingTooltip />}
-            arrow
-            componentsProps={{
-              tooltip: {
-                sx: {
-                  backgroundColor: "white",
-                },
-              },
-            }}
-          >
-            <FollowingImg src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"/>
-          </Tooltip>
+          {followingUser ?
+            followingUser.map((item, key) => {
+              return (
+                <Tooltip
+                  title={<MainFollowingTooltip />}
+                  arrow
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        backgroundColor: "white",
+                      },
+                    },
+                  }}
+                >
+                  <FollowingImg src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" />
+                </Tooltip>
+              );
+            })
+            :
+            "There are no users you follow"}
         </FollowingListStyle>
       </MainHeader>
 

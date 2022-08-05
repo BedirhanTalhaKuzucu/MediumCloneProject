@@ -22,7 +22,7 @@ function LogIn() {
 
     const [errorMesage, setErrorMesage] = useState(false)
     const navigate = useNavigate()
-    const { logInShow, setLogInShow } = useAppState()
+    const { logInShow, setLogInShow, } = useAppState()
 
     const formik = useFormik({
         initialValues: {

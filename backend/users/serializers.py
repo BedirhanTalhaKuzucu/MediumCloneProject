@@ -112,12 +112,13 @@ class FollowingSerializer(serializers.ModelSerializer):
 class FollowedTopicsSerializer(serializers.ModelSerializer):
     class Meta:
         model = TagFollower
-        fields = '__all__'
+        fields = ('tag' , 'user',)
 
 
 class UserSerializer(serializers.ModelSerializer):
     followed_user = FollowingSerializer(many=True, read_only=True)
-    followed_topics = FollowedTopicsSerializer(many=True, read_only=True)
+    # followed_topics = FollowedTopicsSerializer(many=True, read_only=True)
+    followed_topics = serializers.StringRelatedField(many=True)
     user_stories = StorySerializer(many=True, read_only=True)
     user_stories_count = serializers.ReadOnlyField(source='user_stories.count')
     saved_stories = StorySaveSerializer(many=True, read_only=True)

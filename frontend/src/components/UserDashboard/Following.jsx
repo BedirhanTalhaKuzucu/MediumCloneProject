@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 
 const Following = () => {
 
-  const [followingStories, setFollowingStories] = useState()
+  const [followingStories, setFollowingStories] = useState("")
 
   useEffect(() => {
     followedUserStories(setFollowingStories)
+
   }, [])
   
 
