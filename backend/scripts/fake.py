@@ -47,25 +47,7 @@ def set_user():
     users.append(user)
     print(user)
 
-<<<<<<< HEAD
-=======
-# def user_profile():
-#     fake=Faker(['en_US'])
 
-#     user=secrets.choice(users)
-#     short_bio=fake.sentence(nb_words=10)
-#     about_text=fake.paragraph(nb_sentences=5)
-#     about_photo=fake.image_url()
-#     print(user,short_bio)
-
-#     user_profile=UserProfile(
-#         user=user,
-#         short_bio=short_bio,
-#         about_text=about_text,
-#         about_photo=about_photo,
-#     )
-#     user_profile.save()
->>>>>>> 6d626aa6f1a6588b0afe17202d43be1347cf2f0b
 
 
 def set_tag():
@@ -85,20 +67,16 @@ def set_tag():
     )
     tag.save()
 
-<<<<<<< HEAD
 stories=[]
-=======
-
-stories = []
 
 
->>>>>>> 6d626aa6f1a6588b0afe17202d43be1347cf2f0b
+
 def set_story():
     fake = Faker(['en_US'])
 
     user = secrets.choice(users)
     title = fake.sentence(nb_words=3, variable_nb_words=False)
-    content = fake.paragraph(nb_sentences=5, variable_nb_sentences=False)
+    content = fake.paragraph(nb_sentences=800, variable_nb_sentences=False)
     status = fake.random_element(elements=("Published", "Draft"))
 
     story = Story(
