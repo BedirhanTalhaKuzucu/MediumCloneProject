@@ -1,9 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { CardContainer } from "./styles/Following.styles";
 import Images from "../../assets/Images";
 import { Link } from "react-router-dom";
+import { IoIosHeartDislike } from "react-icons/io";
+import {addClapFunction} from "../../helpers/apiRequests"
 
 const ArticleCard = ({data}) => {
+
+  const [addClap, setAddClap] = useState(false)
+  const [authUser, setauthUser] = useState("")
+
+  const addClapHandle = () => {
+    const  tokenKey = authUser.key
+
+    if (addClap) {
+      addClapFunction(data.id, tokenKey, addClap)
+      setAddClap(false)
+    }else{
+      addClapFunction(data.id, tokenKey, addClap)
+      setAddClap(true)
+    }
+  }
+
+  useEffect(() => {
+    let userInfo = sessionStorage.getItem("user_info")
+    userInfo = JSON.parse(userInfo);
+    setauthUser(userInfo)
+    controlClapFunction(userInfo)
+  }, [])
+  
+
+  const controlClapFunction = (userInfo) => {
+    let clapList = []
+    data.clap_story.map(item => {
+      clapList.push(item.user)
+    })
+
+    const userId = userInfo.userInfo.userId;
+
+    // clapList.includes(userId)
+    if (clapList.includes(userId)){
+      setAddClap(true)
+    }else{
+      setAddClap(false)
+    }
+  }
+
   return (
     <CardContainer>
       <section className="authorInf">
@@ -32,7 +74,11 @@ const ArticleCard = ({data}) => {
             </div>
             <div className="icons">
               <img src={Images.bookmarks} alt="icon" />
-              <img src={Images.noentry} alt="icon" />
+              { addClap ? 
+                < IoIosHeartDislike onClick={ addClapHandle } />
+                :
+                <img src={Images.clap} alt="icon" onClick={ addClapHandle } />
+              }
               <img src={Images.more} alt="icon" />
               <div></div>
               <div></div>

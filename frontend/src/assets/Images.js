@@ -15,6 +15,7 @@ const Images = {
   copylink: require("./copylink.png"),
   email: require("./email.png"),
   clap: require("./clap.png"),
+  returnClap: require("./returnClap.png"),
   chat: require("./chat.png"),
   404: require("./404.png"),
 

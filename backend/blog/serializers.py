@@ -12,7 +12,6 @@ class StoryClapSerializer(serializers.ModelSerializer):
         model = StoryClap
         fields = (
             "user",
-            "story",
         )
 
 
@@ -110,7 +109,6 @@ class StorySerializer(serializers.ModelSerializer):
             "last_name": obj.user.last_name,
             "email": obj.user.email,
             "user_img": user_img,
-
             "short_bio": short_bio,
 
         }
@@ -151,6 +149,7 @@ class SearchBarTagSerializer(serializers.ModelSerializer):
         fields = ('id', 'tag_name')
 
 
+
 class SearchBarUserSerializer(serializers.ModelSerializer):
 
     # userfor = SearchBarUserProfilSerializer(many=True)
@@ -175,8 +174,15 @@ class SearchBarUserSerializer(serializers.ModelSerializer):
         return user_img
 
 
-class AddStoryClapSerializer(serializers.ModelSerializer):
 
-     class Meta:
+class AddStoryClapSerializer(serializers.ModelSerializer):
+    class Meta:
         model = StoryClap
-        fields = ('user', 'story', )
+        fields = ('story', )
+
+
+    def create(self, validated_data):
+        user = self.context.get("request").user
+        validated_data['user'] = user
+        clapp = StoryClap.objects.create(**validated_data)
+        return clapp
