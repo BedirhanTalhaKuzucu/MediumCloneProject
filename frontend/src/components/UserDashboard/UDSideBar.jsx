@@ -16,6 +16,7 @@ import { ImPriceTag } from "react-icons/im";
 import SearchBar from "../SearchBar/SearchBar";
 import ReadingToday from "./UDSideBarParts/ReadingToday";
 import TagUsersInfo from "./UDSideBarParts/TagUsersInfo";
+import UserProfile from "./UDSideBarParts/UserProfile";
 
 const topicList = [
   "FullStack",
@@ -91,6 +92,7 @@ const UDSlideBar = () => {
 
       <ReadingToday />
       {/* <TagUsersInfo /> */}
+      {/* <UserProfile /> */}
 
       <TopicListStyle>
         <h5>Recommended topics</h5>
