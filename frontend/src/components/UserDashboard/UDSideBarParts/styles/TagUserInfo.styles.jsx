@@ -21,7 +21,10 @@ export const TagUsersInfoContainer = styled.div`
       width: 36px;
       border-radius: 50%;
       border: 1px solid white;
-      margin-right: -15px;
+      margin-right: -13px;
     }
+  }
+  hr {
+    margin: 2rem 0;
   }
 `;

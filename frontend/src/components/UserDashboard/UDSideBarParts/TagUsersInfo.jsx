@@ -42,6 +42,7 @@ const TagUsersInfo = () => {
           alt=""
         />
       </div>
+      <hr />
     </TagUsersInfoContainer>
   );
 };
