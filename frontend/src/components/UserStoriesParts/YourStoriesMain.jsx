@@ -1,13 +1,16 @@
 import React from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { YourStoriesStyles } from "./styles/YourStoriesMain.styles";
 
 const YourStoriesMain = () => {
+  const navigate = useNavigate();
   return (
     <YourStoriesStyles>
       <header>
         <h1>Your stories</h1>
-        <button className="btn btn-success">Write a story</button>
+        <button className="btn btn-success" onClick={() => navigate("/write")}>
+          Write a story
+        </button>
       </header>
       <div className="links">
         <NavLink

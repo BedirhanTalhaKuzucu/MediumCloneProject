@@ -32,13 +32,13 @@ const UDNavbar = () => {
           </Link>
         </Tooltip>
         <Tooltip title="Notifications" arrow placement="right">
-          <Link to="/">
+          <Link to="/home">
             <IconStyle src={Images.alarm} alt="logo" />
           </Link>
         </Tooltip>
 
         <Tooltip title="Lists" arrow placement="right">
-          <Link to="/">
+          <Link to="/me/lists">
             <IconStyle src={Images.bookmark} alt="Lists Icon" />
           </Link>
         </Tooltip>
@@ -52,7 +52,7 @@ const UDNavbar = () => {
         </Tooltip>
 
         <Tooltip title="Edit" arrow placement="right">
-          <Link to="/">
+          <Link to="/write">
             <IconStyle src={Images.edit} alt="edit icon" />
           </Link>
         </Tooltip>
