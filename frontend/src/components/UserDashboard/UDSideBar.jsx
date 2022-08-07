@@ -89,12 +89,8 @@ const UDSlideBar = () => {
         </Dropdown.Menu>
       </form> */}
 
-      <Link to="#" className="readingToday">
-        <span></span> What We're Reading Today
-      </Link>
-
-      {/* <ReadingToday /> */}
-      <TagUsersInfo />
+      <ReadingToday />
+      {/* <TagUsersInfo /> */}
 
       <TopicListStyle>
         <h5>Recommended topics</h5>

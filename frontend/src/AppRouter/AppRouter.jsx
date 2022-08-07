@@ -11,6 +11,10 @@ import UserDashboard from "../pages/UserDashboard";
 import NotFound from "../pages/NotFound";
 import Write from "../pages/Write";
 import StoryDetail from "../pages/StoryDetail";
+import UserStories from "../pages/UserStories";
+import Drafts from "../components/UserStoriesParts/Drafts";
+import Published from "../components/UserStoriesParts/Published";
+import Responses from "../components/UserStoriesParts/Responses";
 function AppRouter() {
   return (
     <BrowserRouter>
@@ -29,6 +33,13 @@ function AppRouter() {
           <Route path="about" element={<AboutYou />} />
           <Route path="stories" element={<Stories />} />
           <Route path="security" element={<Security />} />
+        </Route>
+
+        <Route path="me/stories" element={<UserStories />}>
+          <Route index element={<Drafts />} />
+          <Route path="drafts" element={<Drafts />} />
+          <Route path="public" element={<Published />} />
+          <Route path="responses" element={<Responses />} />
         </Route>
 
         <Route path="write" element={<Write />} />

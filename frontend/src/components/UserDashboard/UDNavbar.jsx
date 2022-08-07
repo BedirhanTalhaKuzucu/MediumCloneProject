@@ -17,7 +17,7 @@ const UDNavbar = () => {
   const navigate = useNavigate();
   return (
     <LeftSideBar>
-      <LogoStyle onClick={()=> navigate('/')}>
+      <LogoStyle onClick={() => navigate("/")}>
         <img src={Images.medium} alt="logo" />
       </LogoStyle>
 
@@ -44,7 +44,7 @@ const UDNavbar = () => {
         </Tooltip>
         <Tooltip title="Stories" arrow placement="right">
           <Link
-            to=""
+            to="/me/stories"
             style={{ borderBottom: "1px solid grey", paddingBottom: "2rem" }}
           >
             <IconStyle src={Images.script} alt="Stories Icon" />
