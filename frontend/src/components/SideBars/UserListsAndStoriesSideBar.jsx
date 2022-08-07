@@ -4,8 +4,8 @@ import {
   SideBarContainerStyle,
   TopicListStyle,
   UnlimitedButtonStyle,
-} from "./styles/UDSideBar.styles";
-import ReadingToday from "./UDSideBarParts/ReadingToday";
+} from "../UserDashboard/styles/UDSideBar.styles";
+import UserProfile from "../UserDashboard/UDSideBarParts/UserProfile";
 
 const topicList = [
   "FullStack",
@@ -16,16 +16,14 @@ const topicList = [
   "Django",
 ];
 
-const UDSlideBar = () => {
+const UserListsAndStoriesSideBar = () => {
   return (
     <SideBarContainerStyle>
       <UnlimitedButtonStyle>Get unlimited access</UnlimitedButtonStyle>
 
       <SearchBar />
 
-      <ReadingToday />
-      {/* <TagUsersInfo /> */}
-      {/* <UserProfile /> */}
+      <UserProfile />
 
       <TopicListStyle>
         <h5>Recommended topics</h5>
@@ -41,4 +39,4 @@ const UDSlideBar = () => {
   );
 };
 
-export default UDSlideBar;
+export default UserListsAndStoriesSideBar;

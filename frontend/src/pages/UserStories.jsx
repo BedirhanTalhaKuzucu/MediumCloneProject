@@ -1,7 +1,6 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import UserListsAndStoriesSideBar from "../components/SideBars/UserListsAndStoriesSideBar";
 import UDNavbar from "../components/UserDashboard/UDNavbar";
-import UDSideBar from "../components/UserDashboard/UDSideBar";
 import YourStoriesMain from "../components/UserStoriesParts/YourStoriesMain";
 
 const UserStories = () => {
@@ -9,7 +8,7 @@ const UserStories = () => {
     <div className="d-flex">
       <UDNavbar />
       <YourStoriesMain />
-      <UDSideBar />
+      <UserListsAndStoriesSideBar />
     </div>
   );
 };

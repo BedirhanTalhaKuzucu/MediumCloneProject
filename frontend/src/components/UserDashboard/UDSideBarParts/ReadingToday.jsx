@@ -1,5 +1,6 @@
 import React, { useNavigate } from "react";
 import { Link } from "react-router-dom";
+import Images from "../../../assets/Images";
 import { useAppState } from "../../../contexts/AppContext";
 import { Container } from "./styles/ReadingToday.styles";
 
@@ -29,7 +30,7 @@ const ReadingToday = () => {
           </section>
         ))
       ) : (
-        <h1>Loading...</h1>
+        <img src={Images.loading} alt="loading gif" />
       )}
     </Container>
   );
