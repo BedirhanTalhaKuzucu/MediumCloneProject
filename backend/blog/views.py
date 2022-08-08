@@ -2,8 +2,8 @@ from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .pagination import SearchBarLimitPagination
-from .serializers import CommentsSerializer, StorySerializer,SearchBarStorySerializer, SearchBarTagSerializer, SearchBarUserSerializer, StorySaveSerializer, AddStoryClapSerializer
-from .models import Comment, Story, Tag, SavedStories
+from .serializers import CommentsSerializer, StorySerializer,SearchBarStorySerializer, SearchBarTagSerializer, SearchBarUserSerializer, StorySaveSerializer, AddStoryClapSerializer 
+from .models import Comment, Story, Tag, SavedStories, StoryClap
 from rest_framework.generics import get_object_or_404
 from rest_framework.exceptions import ValidationError
 from rest_framework import permissions
@@ -14,7 +14,8 @@ from rest_framework.filters import OrderingFilter
 from users.models import Following
 from drf_multiple_model.views import ObjectMultipleModelAPIView
 from django.contrib.auth.models import User
-
+from rest_framework import status
+import json
 
 class StoryList(viewsets.ModelViewSet):
     serializer_class = StorySerializer
@@ -108,6 +109,26 @@ class StorySaveListView(generics.ListAPIView):
 
 
 class AddClapStoryView(generics.CreateAPIView):
-    queryset = SavedStories.objects.all()
+    queryset = StoryClap.objects.all()
     serializer_class = AddStoryClapSerializer
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
+
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.validated_data['user'] = self.request.user
+    #     serializer.save()
+    #     headers = self.get_success_headers(serializer.data)
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+class DeleteClapStoryView(generics.DestroyAPIView):
+    queryset = StoryClap.objects.all()
+    serializer_class = AddStoryClapSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def destroy(self, request, *args, **kwargs):
+        storyId = request.data["story"]
+        user = self.request.user
+        instance = StoryClap.objects.get(user=user, story= storyId)
+        instance.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

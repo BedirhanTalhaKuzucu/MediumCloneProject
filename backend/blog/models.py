@@ -56,6 +56,9 @@ class TagFollower(models.Model):
 
     def __str__(self):
         return f'{self.tag.tag_name}'
+    
+    class Meta:
+        unique_together = ('user', 'tag')
 
 
 class StoryTag(models.Model):

@@ -42,7 +42,7 @@ export const logInFunction = (
   resetForm,
   handleErrorMesage,
   navigate,
-  setErrorMesage,
+  setErrorMesage
 ) => {
   let myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -176,19 +176,17 @@ export const followedUserStories = (setfollowingStory) => {
     .then((response) => response.json())
     .then((result) => {
       console.log(result);
-      setfollowingStory(result.results)
+      setfollowingStory(result.results);
     })
     .catch((error) => console.log("error", error));
 };
 
 export const searchBar = (values, setSearching) => {
-
   let myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
     "Token 199b7f0caab715642e5314fcc68fcdb6135fbb98"
   );
-  
 
   let requestOptions = {
     method: "GET",
@@ -196,31 +194,71 @@ export const searchBar = (values, setSearching) => {
     redirect: "follow",
   };
 
-  let url =`http://127.0.0.1:8000/blog/stories/search?search=${values.search}`
+  let url = `http://127.0.0.1:8000/blog/stories/search?search=${values.search}`;
   fetch(url, requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result)
-      setSearching(result.results)
+      console.log(result);
+      setSearching(result.results);
     })
     .catch((error) => console.log("error", error));
 };
 
 export const userDetails = (setFollowingTag, setFollowingUser) => {
   let myHeaders = new Headers();
-  
+
   let requestOptions = {
-    method: 'GET',
+    method: "GET",
     headers: myHeaders,
-    redirect: 'follow'
+    redirect: "follow",
   };
-  
-  fetch("http://127.0.0.1:8000/auth/users/dd8be17f-91fa-4cc0-b83d-376d56cd4875/", requestOptions)
-    .then(response => response.json())
-    .then(result => {
-      setFollowingTag(result.user.followed_topics)
-      setFollowingUser(result.user.followed_user)
+
+  fetch(
+    "http://127.0.0.1:8000/auth/users/dd8be17f-91fa-4cc0-b83d-376d56cd4875/",
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((result) => {
+      setFollowingTag(result.user.followed_topics);
+      setFollowingUser(result.user.followed_user);
     })
-    .catch(error => console.log('error', error));
-  
+    .catch((error) => console.log("error", error));
+};
+
+export const addClapFunction = (storyId, tokenKey, addClap) => {
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Token ${tokenKey}`);
+  myHeaders.append("Content-Type", "application/json");
+
+  let raw = JSON.stringify({ story: storyId });
+    
+  if (addClap) {
+      console.log("delete");
+      
+      let requestOptions = {
+        method: "DELETE",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch("http://127.0.0.1:8000/blog/stories/deleteclap", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.log("error", error));
+  } else {    
+      console.log("addd");
+
+      let requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch("http://127.0.0.1:8000/blog/stories/addclap", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.log("error", error));
+  }
 };
