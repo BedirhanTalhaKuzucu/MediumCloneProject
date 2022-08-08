@@ -3,10 +3,12 @@ import { CardContainer } from "./styles/Following.styles";
 import Images from "../../assets/Images";
 import { Link } from "react-router-dom";
 import { IoIosHeartDislike } from "react-icons/io";
-import {addClapFunction} from "../../helpers/apiRequests"
+import { BsBookmarkFill } from "react-icons/bs";
+import {addClapFunction, addSavedFunction } from "../../helpers/apiRequests"
 
 const ArticleCard = ({data}) => {
 
+  const [addSave, setaddSave] = useState(false)
   const [addClap, setAddClap] = useState(false)
   const [authUser, setauthUser] = useState("")
 
@@ -22,11 +24,24 @@ const ArticleCard = ({data}) => {
     }
   }
 
+  const addSaveHandle = () => {
+    const  tokenKey = authUser.key
+
+    if (addSave) {
+      addSavedFunction(data.id, tokenKey, addSave)
+      setaddSave(false)
+    }else{
+      addSavedFunction(data.id, tokenKey, addSave)
+      setaddSave(true)
+    }
+  }
+
   useEffect(() => {
     let userInfo = sessionStorage.getItem("user_info")
     userInfo = JSON.parse(userInfo);
     setauthUser(userInfo)
     controlClapFunction(userInfo)
+    controlSavedArticleFunction(userInfo)
   }, [])
   
 
@@ -43,6 +58,23 @@ const ArticleCard = ({data}) => {
       setAddClap(true)
     }else{
       setAddClap(false)
+    }
+  }
+
+  const controlSavedArticleFunction = (userInfo) => {
+    let savedList = []
+    data.saved_users.map(item => {
+      savedList.push(item.userId)
+    })
+    // console.log(savedList)
+
+    const userId = userInfo.userInfo.userId;
+
+    // clapList.includes(userId)
+    if (savedList.includes(userId)){
+      setaddSave(true)
+    }else{
+      setaddSave(false)
     }
   }
 
@@ -73,7 +105,11 @@ const ArticleCard = ({data}) => {
               <div className="desc">Based on your following</div>
             </div>
             <div className="icons">
-              <img src={Images.bookmarks} alt="icon" />
+              { addSave ? 
+                <BsBookmarkFill onClick={addSaveHandle}  />
+                :
+                <img src={Images.bookmarks} alt="icon" onClick={addSaveHandle} />
+              }
               { addClap ? 
                 < IoIosHeartDislike onClick={ addClapHandle } />
                 :
