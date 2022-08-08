@@ -12,12 +12,11 @@ export const SideBarContainerStyle = styled.main`
   padding: 1.5rem;
   width: 350px;
   border-left: 1px solid #e0deca;
-
   .readingToday {
     text-decoration: none;
     color: black;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
     span {
       display: inline-block;
       background-color: green;
@@ -43,7 +42,6 @@ export const UnlimitedButtonStyle = styled.button`
 export const SearchInputStyle = styled.input.attrs({
   type: "search",
   placeholder: "Search",
-  
 })`
   border-radius: 2rem;
   padding: 5px 20px;
@@ -86,17 +84,17 @@ export const TopicListStyle = styled.div`
 
 const ProfilImage = ({ className, image }) => {
   return (
-      <div className={className}>
-          <img src={ image} alt="ass"  className=" " />
-      </div>
+    <div className={className}>
+      <img src={image} alt="ass" className=" " />
+    </div>
   );
 };
 
 export const StyledProfilImage = styled(ProfilImage)`
-  display:inline;
-  img{
-      width : 2rem;
-      border-radius: 50px;
+  display: inline;
+  img {
+    width: 2rem;
+    border-radius: 50px;
   }
-  padding-right:10px;
+  padding-right: 10px;
 `;

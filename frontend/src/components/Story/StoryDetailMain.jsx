@@ -2,13 +2,12 @@ import React from "react";
 import { ClapsRespond, Header, Main } from "./styles/StoryDetailMain.styles";
 import Images from "../../assets/Images";
 import { Tooltip } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import MainFollowingTooltip from "../UserDashboard/MainFollowingTooltip";
+import CommentsModal from "./CommentsModal";
 // import { useSpeechSynthesis } from "react-speech-kit";
 
 const StoryDetailMain = () => {
   // const { speak } = useSpeechSynthesis();
-  const navigate = useNavigate();
 
   return (
     <Main>
@@ -124,13 +123,8 @@ const StoryDetailMain = () => {
             <span>2</span>
           </div>
           <div>|</div>
-          <div className="icon" onClick={() => navigate("/home/commnets")}>
-            <Tooltip title="Respond" arrow placement="top">
-              <img src={Images.chat} alt="chat" />
-            </Tooltip>
 
-            <span>10</span>
-          </div>
+          <CommentsModal />
         </ClapsRespond>
       </article>
     </Main>

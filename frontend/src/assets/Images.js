@@ -18,7 +18,7 @@ const Images = {
   returnClap: require("./returnClap.png"),
   chat: require("./chat.png"),
   404: require("./404.png"),
-
+  loading: require("./loading.gif"),
 };
 
 export default Images;

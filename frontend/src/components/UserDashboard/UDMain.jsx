@@ -11,7 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MainFollowingTooltip from "./MainFollowingTooltip";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { userDetails } from "../../helpers/apiRequests"
+import { userDetails } from "../../helpers/apiRequests";
 
 const topicList = [
   "FullStack",
@@ -23,17 +23,12 @@ const topicList = [
 ];
 
 const UDMain = () => {
-
-  const [followingTag, setFollowingTag] = useState()
-  const [followingUser, setFollowingUser] = useState()
-
+  const [followingTag, setFollowingTag] = useState();
+  const [followingUser, setFollowingUser] = useState();
 
   useEffect(() => {
-
-    userDetails(setFollowingTag, setFollowingUser)
-  
-  }, [])
-
+    userDetails(setFollowingTag, setFollowingUser);
+  }, []);
 
   return (
     <MainContainer>
@@ -41,52 +36,61 @@ const UDMain = () => {
         <TopicsStyle>
           <p>YOUR TOPICS</p>
           <div className="scrollbar sc1">
-            {followingTag ?
-              followingTag.map((item, key) => {
-                return (
-                  <div key={key}>
-                    <button>{item}</button>
-                  </div>
-                );
-              })
-              :
-              "There are no topics you follow"
-            }
+            {followingTag
+              ? followingTag.map((item, key) => {
+                  return (
+                    <div key={key}>
+                      <button>{item}</button>
+                    </div>
+                  );
+                })
+              : "There are no topics you follow"}
           </div>
         </TopicsStyle>
 
         <FollowingListStyle>
-          {followingUser ?
-            followingUser.map((item, key) => {
-              return (
-                <Tooltip
-                  title={<MainFollowingTooltip />}
-                  arrow
-                  componentsProps={{
-                    tooltip: {
-                      sx: {
-                        backgroundColor: "white",
+          {followingUser
+            ? followingUser.map((item, key) => {
+                return (
+                  <Tooltip
+                    title={<MainFollowingTooltip />}
+                    arrow
+                    componentsProps={{
+                      tooltip: {
+                        sx: {
+                          backgroundColor: "white",
+                        },
                       },
-                    },
-                  }}
-                >
-                  <FollowingImg src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" />
-                </Tooltip>
-              );
-            })
-            :
-            "There are no users you follow"}
+                    }}
+                  >
+                    <FollowingImg src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" />
+                  </Tooltip>
+                );
+              })
+            : "There are no users you follow"}
         </FollowingListStyle>
       </MainHeader>
 
       <ArticlesStyle>
         <NavLink
           to="following"
-          style={({ isActive }) => ({ color: isActive && "black" })}
+          style={({ isActive }) => ({
+            borderBottom: isActive ? "3px solid gray" : "",
+            padding: isActive ? "1rem" : "",
+            opacity: isActive ? "1" : "",
+          })}
         >
           Following
         </NavLink>
-        <Link to="recommended">Recommended</Link>
+        <NavLink
+          style={({ isActive }) => ({
+            borderBottom: isActive ? "3px solid gray" : "",
+            padding: isActive ? "1rem" : "",
+          })}
+          to="recommended"
+        >
+          Recommended
+        </NavLink>
       </ArticlesStyle>
       <Outlet />
     </MainContainer>
