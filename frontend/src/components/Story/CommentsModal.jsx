@@ -10,7 +10,7 @@ import {
   OpenButtonStyle,
 } from "./styles/CommentsModel.styles";
 
-function CommentsModal() {
+function CommentsModal({ commentCounts, comments }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -23,7 +23,7 @@ function CommentsModal() {
           <img src={Images.chat} alt="chat" className="" />
         </Tooltip>
 
-        <span>10</span>
+        <span> {commentCounts} </span>
       </OpenButtonStyle>
       <Modal
         show={show}
@@ -35,7 +35,7 @@ function CommentsModal() {
       >
         <CommentsStyles>
           <Modal.Header closeButton>
-            <Modal.Title>Responses (7)</Modal.Title>
+            <Modal.Title>Responses ( {commentCounts} )</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <form action="">
@@ -59,34 +59,36 @@ function CommentsModal() {
 
             <hr />
 
-            <div className="comments">
-              <div className="userInfo">
-                <div>
-                  <img
-                    src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-                    alt="user-profile-pic"
-                  />
-                </div>
-                <div>
-                  <div className="username">User Name</div>
-                  <div className="timeStamp">3 days ago</div>
-                </div>
-              </div>
+            {comments &&
 
-              <div className="content">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque
-                culpa commodi consectetur rem quam magnam sapiente mollitia
-                distinctio voluptatem similique.
-              </div>
-              <div className="claps">
-                <Tooltip title="Clap" arrow placement="top">
-                  <img src={Images.clap} alt="claps" />
-                </Tooltip>
-                <span>2</span>
-              </div>
-            </div>
+              comments.map(item => (
+                <div className="comments">
+                  <div className="userInfo">
+                    <div>
+                      <img
+                        src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
+                        alt="user-profile-pic"
+                      />
+                    </div>
+                    <div>
+                      <div className="username">{item.user}</div>
+                      <div className="timeStamp">{item.days_since_joined} days ago</div>
+                    </div>
+                  </div>
 
-            <hr />
+                  <div className="content">
+                    {item.content}
+                  </div>
+                  <div className="claps">
+                    <Tooltip title="Clap" arrow placement="top">
+                      <img src={Images.clap} alt="claps" />
+                    </Tooltip>
+                    <span> {item.clap_comment_count} </span>
+                  </div>
+                  <hr />
+                </div>
+              ))
+            }
           </Modal.Body>
         </CommentsStyles>
       </Modal>

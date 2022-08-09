@@ -264,16 +264,14 @@ export const addClapFunction = (storyId, tokenKey, addClap) => {
 };
 
 export const addSavedFunction = (storyId, tokenKey, addSave) => {
-
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Token ${tokenKey}`);
   myHeaders.append("Content-Type", "application/json");
 
   let raw = JSON.stringify({ story: storyId });
 
-
   if (addSave) {
-    console.log("delete")
+    console.log("delete");
 
     var requestOptions = {
       method: "DELETE",
@@ -282,16 +280,12 @@ export const addSavedFunction = (storyId, tokenKey, addSave) => {
       redirect: "follow",
     };
 
-    fetch(
-      `http://127.0.0.1:8000/blog/save/${storyId}/`,
-      requestOptions
-    )
+    fetch(`http://127.0.0.1:8000/blog/save/${storyId}/`, requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
-  } else {   
-
-    console.log("add")
+  } else {
+    console.log("add");
 
     let requestOptions = {
       method: "POST",
@@ -306,4 +300,5 @@ export const addSavedFunction = (storyId, tokenKey, addSave) => {
       .catch((error) => console.log("error", error));
   }
 };
+
 

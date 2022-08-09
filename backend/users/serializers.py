@@ -80,9 +80,15 @@ class CustomTokenSerializer(serializers.ModelSerializer):
 
     def get_userInfo(self, obj):
         profileInfo = UserProfile.objects.filter(user=obj.user).first()
+
+        request = self.context.get('request')
+        img = profileInfo.profile_photo.url
+        img = request.build_absolute_uri(img)
+
         context = {
             'userId': obj.user.id,
             "profileInfoId": profileInfo.id,
+            "image": img,
             "first_name": obj.user.first_name,
             "last_name": obj.user.last_name,
             "email": obj.user.email,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import {
   SideBarContainerStyle,
@@ -17,13 +17,13 @@ const topicList = [
 ];
 
 const UserListsAndStoriesSideBar = () => {
+
+  
   return (
     <SideBarContainerStyle>
       <UnlimitedButtonStyle>Get unlimited access</UnlimitedButtonStyle>
-
       <SearchBar />
-
-      <UserProfile />
+      <UserProfile editOrFollowButton={true} />
 
       <TopicListStyle>
         <h5>Recommended topics</h5>

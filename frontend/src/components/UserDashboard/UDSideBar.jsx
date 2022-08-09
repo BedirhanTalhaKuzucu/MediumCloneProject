@@ -6,6 +6,8 @@ import {
   UnlimitedButtonStyle,
 } from "./styles/UDSideBar.styles";
 import ReadingToday from "./UDSideBarParts/ReadingToday";
+import UserProfile from "../UserDashboard/UDSideBarParts/UserProfile";
+
 
 const topicList = [
   "FullStack",
@@ -16,14 +18,19 @@ const topicList = [
   "Django",
 ];
 
-const UDSlideBar = () => {
+const UDSlideBar = ({sideBarEffect, creatorInfo}) => {
+
   return (
     <SideBarContainerStyle>
       <UnlimitedButtonStyle>Get unlimited access</UnlimitedButtonStyle>
 
       <SearchBar />
 
-      <ReadingToday />
+      {sideBarEffect ? 
+        <UserProfile creatorInfo = {creatorInfo} />        
+      : 
+        <ReadingToday />
+      }
       {/* <TagUsersInfo /> */}
       {/* <UserProfile /> */}
 

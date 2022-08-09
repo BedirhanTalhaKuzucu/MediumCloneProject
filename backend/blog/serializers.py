@@ -3,7 +3,7 @@
 from rest_framework import serializers
 from .models import CommentClap, SavedStories, StorieView, Story, Tag, StoryClap, Comment
 from django.utils.timezone import now 
-from users.models import UserProfile
+from users.models import UserProfile, Following
 from django.contrib.auth.models import User
 
 
@@ -112,13 +112,15 @@ class StorySerializer(serializers.ModelSerializer):
         user_img = request.build_absolute_uri(user_img)
         print(user_img)
 
+        followedCount = Following.objects.filter(followed = obj.user ).count()
+
         context = {
             "first_name": obj.user.first_name,
             "last_name": obj.user.last_name,
             "email": obj.user.email,
             "user_img": user_img,
             "short_bio": short_bio,
-
+            "followedCount": followedCount,
         }
         return context
 
