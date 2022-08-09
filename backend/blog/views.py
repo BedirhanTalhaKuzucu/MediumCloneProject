@@ -103,10 +103,33 @@ class SearchBarView(ObjectMultipleModelAPIView):
         return querylist
 
 
-class StorySaveListView(generics.ListAPIView):
+class StorySaveListView(viewsets.ModelViewSet):
     queryset = SavedStories.objects.all()
     serializer_class = StorySaveSerializer
-    permission_classes = (IsAuthorOrReadOnly,)
+    permission_classes = (IsAuthenticated,)
+    http_method_names = ['get', 'post', 'delete',]
+    lookup_field = 'storyId'
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(SavedStories.objects.filter(user = self.request.user))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    
+    def destroy(self, request, *args, **kwargs):
+        storyId = self.kwargs.get('storyId')
+        user = self.request.user
+        instance = SavedStories.objects.get(user=user, story= storyId)
+        instance.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
 
 
 class AddClapStoryView(generics.CreateAPIView):
@@ -114,13 +137,6 @@ class AddClapStoryView(generics.CreateAPIView):
     serializer_class = AddStoryClapSerializer
     permission_classes = (IsAuthenticated,)
 
-    # def create(self, request, *args, **kwargs):
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.validated_data['user'] = self.request.user
-    #     serializer.save()
-    #     headers = self.get_success_headers(serializer.data)
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class DeleteClapStoryView(generics.DestroyAPIView):

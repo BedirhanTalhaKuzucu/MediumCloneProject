@@ -48,9 +48,18 @@ class StoryViewSerializer(serializers.ModelSerializer):
 
 
 class StorySaveSerializer(serializers.ModelSerializer):
+
+    userId = serializers.IntegerField(source="user.id",  required=False)
+
     class Meta:
         model = SavedStories
-        fields = ('user',)
+        fields = ('story', 'userId')
+
+    def create(self, validated_data):
+        user = self.context.get("request").user
+        validated_data['user'] = user
+        saved = SavedStories.objects.create(**validated_data)
+        return saved
 
 
 class StorySerializer(serializers.ModelSerializer):
@@ -187,8 +196,6 @@ class AddStoryClapSerializer(serializers.ModelSerializer):
 
 
 class TagsSerializer(serializers.ModelSerializer):
-    # tag_count = serializers.IntegerField(
-    #     source='tag_name.count', read_only=True)
     class Meta:
         model = Tag
         fields = ('tag_name', 'id')
