@@ -234,8 +234,6 @@ export const userDetails = (
     .catch((error) => console.log("error", error));
 };
 
-userDetails();
-
 export const addClapFunction = (storyId, tokenKey, addClap) => {
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Token ${tokenKey}`);
