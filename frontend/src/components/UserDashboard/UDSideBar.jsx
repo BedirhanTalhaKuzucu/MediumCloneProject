@@ -1,20 +1,11 @@
 import React from "react";
 import SearchBar from "../SearchBar/SearchBar";
+import TopicRecommended from "../SideBars/TopicRecommended";
 import {
   SideBarContainerStyle,
-  TopicListStyle,
   UnlimitedButtonStyle,
 } from "./styles/UDSideBar.styles";
 import ReadingToday from "./UDSideBarParts/ReadingToday";
-
-const topicList = [
-  "FullStack",
-  "Python",
-  "Machine Learning",
-  "Programming",
-  "React",
-  "Django",
-];
 
 const UDSlideBar = () => {
   return (
@@ -24,19 +15,8 @@ const UDSlideBar = () => {
       <SearchBar />
 
       <ReadingToday />
-      {/* <TagUsersInfo /> */}
-      {/* <UserProfile /> */}
 
-      <TopicListStyle>
-        <h5>Recommended topics</h5>
-        {topicList?.map((item) => {
-          return (
-            <div key={item.id} className="topicItem">
-              <button>{item}</button>
-            </div>
-          );
-        })}
-      </TopicListStyle>
+      <TopicRecommended />
     </SideBarContainerStyle>
   );
 };

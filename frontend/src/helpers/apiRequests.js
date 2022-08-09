@@ -204,7 +204,14 @@ export const searchBar = (values, setSearching) => {
     .catch((error) => console.log("error", error));
 };
 
-export const userDetails = (setFollowingTag, setFollowingUser) => {
+export const userDetails = (
+  id,
+  detail,
+  setDetail,
+  setUserDetail,
+  setFollowingTag,
+  setFollowingUser
+) => {
   let myHeaders = new Headers();
 
   let requestOptions = {
@@ -214,16 +221,20 @@ export const userDetails = (setFollowingTag, setFollowingUser) => {
   };
 
   fetch(
-    "http://127.0.0.1:8000/auth/users/dd8be17f-91fa-4cc0-b83d-376d56cd4875/",
+    `http://127.0.0.1:8000/auth/users/896ff21c-1c32-4bc8-bab8-d9adc5e60e51`,
     requestOptions
   )
     .then((response) => response.json())
     .then((result) => {
       setFollowingTag(result.user.followed_topics);
       setFollowingUser(result.user.followed_user);
+      console.log(result);
+      // setDetail(result);
     })
     .catch((error) => console.log("error", error));
 };
+
+userDetails();
 
 export const addClapFunction = (storyId, tokenKey, addClap) => {
   let myHeaders = new Headers();
@@ -231,34 +242,59 @@ export const addClapFunction = (storyId, tokenKey, addClap) => {
   myHeaders.append("Content-Type", "application/json");
 
   let raw = JSON.stringify({ story: storyId });
-    
+
   if (addClap) {
-      console.log("delete");
-      
-      let requestOptions = {
-        method: "DELETE",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
+    console.log("delete");
 
-      fetch("http://127.0.0.1:8000/blog/stories/deleteclap", requestOptions)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.log("error", error));
-  } else {    
-      console.log("addd");
+    let requestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
 
-      let requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
+    fetch("http://127.0.0.1:8000/blog/stories/deleteclap", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  } else {
+    console.log("addd");
 
-      fetch("http://127.0.0.1:8000/blog/stories/addclap", requestOptions)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.log("error", error));
+    let requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://127.0.0.1:8000/blog/stories/addclap", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
   }
 };
+
+export const TopicRecommendedFunc = (setTopics) => {
+  fetch("http://127.0.0.1:8000/blog/tags")
+    .then((response) => response.json())
+    .then(({ results }) => {
+      const randomSelection = (n) => {
+        let newArr = [];
+        if (n >= results.length) {
+          return results;
+        }
+        for (let i = 0; i < n; i++) {
+          let newElem = results[Math.floor(Math.random() * results.length)];
+          while (newArr.includes(newElem)) {
+            newElem = results[Math.floor(Math.random() * results.length)];
+          }
+          newArr.push(newElem);
+        }
+        return newArr;
+      };
+      setTopics(randomSelection(8));
+    })
+    .catch((error) => console.log("error", error));
+};
+
+TopicRecommendedFunc();

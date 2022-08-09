@@ -36,38 +36,46 @@ const UDMain = () => {
         <TopicsStyle>
           <p>YOUR TOPICS</p>
           <div className="scrollbar sc1">
-            {followingTag
-              ? followingTag.map((item, key) => {
-                  return (
-                    <div key={key}>
-                      <button>{item}</button>
-                    </div>
-                  );
-                })
-              : "There are no topics you follow"}
+            {followingTag ? (
+              followingTag.map((item, key) => {
+                return (
+                  <div key={key}>
+                    <button>{item}</button>
+                  </div>
+                );
+              })
+            ) : (
+              <p style={{ fontSize: "12px" }}>
+                Topics you follow appear here..
+              </p>
+            )}
           </div>
         </TopicsStyle>
 
         <FollowingListStyle>
-          {followingUser
-            ? followingUser.map((item, key) => {
-                return (
-                  <Tooltip
-                    title={<MainFollowingTooltip />}
-                    arrow
-                    componentsProps={{
-                      tooltip: {
-                        sx: {
-                          backgroundColor: "white",
-                        },
+          {followingUser ? (
+            followingUser.map((item, key) => {
+              return (
+                <Tooltip
+                  title={<MainFollowingTooltip />}
+                  arrow
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        backgroundColor: "white",
                       },
-                    }}
-                  >
-                    <FollowingImg src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" />
-                  </Tooltip>
-                );
-              })
-            : "There are no users you follow"}
+                    },
+                  }}
+                >
+                  <FollowingImg src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" />
+                </Tooltip>
+              );
+            })
+          ) : (
+            <p style={{ fontSize: "12px", opacity: "0.5" }}>
+              users you follow appear here
+            </p>
+          )}
         </FollowingListStyle>
       </MainHeader>
 

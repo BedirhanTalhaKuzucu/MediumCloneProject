@@ -2,13 +2,13 @@ from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .pagination import SearchBarLimitPagination
-from .serializers import CommentsSerializer, StorySerializer,SearchBarStorySerializer, SearchBarTagSerializer, SearchBarUserSerializer, StorySaveSerializer, AddStoryClapSerializer 
+from .serializers import CommentsSerializer, StorySerializer, SearchBarStorySerializer, SearchBarTagSerializer, SearchBarUserSerializer, StorySaveSerializer, AddStoryClapSerializer, TagsSerializer
 from .models import Comment, Story, Tag, SavedStories, StoryClap
 from rest_framework.generics import get_object_or_404
 from rest_framework.exceptions import ValidationError
 from rest_framework import permissions
 from .permissions import IsAuthorOrReadOnly
-from rest_framework.permissions import  IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.filters import SearchFilter
 from rest_framework.filters import OrderingFilter
 from users.models import Following
@@ -16,6 +16,7 @@ from drf_multiple_model.views import ObjectMultipleModelAPIView
 from django.contrib.auth.models import User
 from rest_framework import status
 import json
+
 
 class StoryList(viewsets.ModelViewSet):
     serializer_class = StorySerializer
@@ -83,19 +84,20 @@ class CommentsDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthorOrReadOnly,)
 
 
-
-
 class SearchBarView(ObjectMultipleModelAPIView):
 
     pagination_class = SearchBarLimitPagination
 
     def get_querylist(self):
-        search = self.request.query_params['search'].replace('-',' ')
-        
+        search = self.request.query_params['search'].replace('-', ' ')
+
         querylist = [
-            {'queryset': Story.objects.filter(title__icontains=search), 'serializer_class': SearchBarStorySerializer },
-            {'queryset': Tag.objects.filter( tag_name__icontains=search), 'serializer_class': SearchBarTagSerializer},
-            {'queryset': User.objects.filter( first_name__icontains=search), 'serializer_class': SearchBarUserSerializer},            
+            {'queryset': Story.objects.filter(
+                title__icontains=search), 'serializer_class': SearchBarStorySerializer},
+            {'queryset': Tag.objects.filter(
+                tag_name__icontains=search), 'serializer_class': SearchBarTagSerializer},
+            {'queryset': User.objects.filter(
+                first_name__icontains=search), 'serializer_class': SearchBarUserSerializer},
         ]
 
         return querylist
@@ -105,7 +107,6 @@ class StorySaveListView(generics.ListAPIView):
     queryset = SavedStories.objects.all()
     serializer_class = StorySaveSerializer
     permission_classes = (IsAuthorOrReadOnly,)
-
 
 
 class AddClapStoryView(generics.CreateAPIView):
@@ -121,6 +122,7 @@ class AddClapStoryView(generics.CreateAPIView):
     #     headers = self.get_success_headers(serializer.data)
     #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
+
 class DeleteClapStoryView(generics.DestroyAPIView):
     queryset = StoryClap.objects.all()
     serializer_class = AddStoryClapSerializer
@@ -129,6 +131,12 @@ class DeleteClapStoryView(generics.DestroyAPIView):
     def destroy(self, request, *args, **kwargs):
         storyId = request.data["story"]
         user = self.request.user
-        instance = StoryClap.objects.get(user=user, story= storyId)
+        instance = StoryClap.objects.get(user=user, story=storyId)
         instance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class TagListView(generics.ListAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagsSerializer
+    # permission_classes = (IsAuthorOrReadOnly,)
