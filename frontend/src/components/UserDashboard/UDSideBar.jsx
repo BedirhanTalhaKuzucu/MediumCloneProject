@@ -6,6 +6,7 @@ import {
   UnlimitedButtonStyle,
 } from "./styles/UDSideBar.styles";
 import ReadingToday from "./UDSideBarParts/ReadingToday";
+import UserProfile from "../UserDashboard/UDSideBarParts/UserProfile";
 
 const UDSlideBar = ({ sideBarEffect, creatorInfo }) => {
   return (
