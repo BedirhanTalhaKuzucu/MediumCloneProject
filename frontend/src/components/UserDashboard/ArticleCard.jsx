@@ -92,7 +92,7 @@ const ArticleCard = ({data}) => {
 
       <section className="articleInf">
         <nav className="part1">
-          <Link to="/story" className="title">
+          <Link to="/story"  state={{ details: data }} className="title">
             {data.title}
           </Link>
           <div className="articlePart">

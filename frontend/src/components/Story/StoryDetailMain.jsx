@@ -6,7 +6,7 @@ import MainFollowingTooltip from "../UserDashboard/MainFollowingTooltip";
 import CommentsModal from "./CommentsModal";
 // import { useSpeechSynthesis } from "react-speech-kit";
 
-const StoryDetailMain = () => {
+const StoryDetailMain = ({details}) => {
   // const { speak } = useSpeechSynthesis();
 
   return (
@@ -15,7 +15,7 @@ const StoryDetailMain = () => {
         <nav className="authorInf">
           <div>
             <Tooltip
-              title={<MainFollowingTooltip />}
+              title={<MainFollowingTooltip creatorInfo = { details.creatorInfo} />}
               arrow
               componentsProps={{
                 tooltip: {
@@ -26,7 +26,7 @@ const StoryDetailMain = () => {
               }}
             >
               <img
-                src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
+                src={details.creatorInfo.user_img}
                 alt="yazar profil foto"
                 className="AuthorPhoto"
               />
@@ -34,10 +34,10 @@ const StoryDetailMain = () => {
           </div>
           <div>
             <div>
-              <h5>Aman Khan</h5>
+              <h5> {details.creatorInfo.first_name +" " + details.creatorInfo.last_name} </h5>
             </div>
             <div className="d-flex fs-6 text-secondary">
-              <div className="me-3">Jun 25</div>
+              <div className="me-3">{details.publish_date.split('T')[0]} </div>
               <div>3 min read</div>
               {/* <button>
                 dinleme çubuğu
@@ -60,71 +60,18 @@ const StoryDetailMain = () => {
       </Header>
       <article className="my-5">
         <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate ea
-          enim dignissimos magnam, sapiente, rem numquam optio modi sint
-          cupiditate culpa. Vitae, sed veritatis itaque nobis saepe quos amet
-          unde eum voluptates tempore, voluptatibus repellat veniam consectetur
-          sequi eius provident, laborum aspernatur repellendus porro at
-          doloribus totam harum neque. Et iure dolore, perferendis ipsa saepe
-          autem qui totam necessitatibus libero voluptatem minima eveniet
-          nesciunt sed provident corporis quo eligendi veniam tenetur molestias?
-          Praesentium velit quas, recusandae, voluptatibus, accusantium
-          doloribus adipisci itaque eius consectetur asperiores perspiciatis
-          mollitia. Ipsa dolor eius dignissimos, voluptatibus accusantium cumque
-          quo molestiae. Alias, vero. Esse, quae minima.
-        </p>
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate ea
-          enim dignissimos magnam, sapiente, rem numquam optio modi sint
-          cupiditate culpa. Vitae, sed veritatis itaque nobis saepe quos amet
-          unde eum voluptates tempore, voluptatibus repellat veniam consectetur
-          sequi eius provident, laborum aspernatur repellendus porro at
-          doloribus totam harum neque. Et iure dolore, perferendis ipsa saepe
-          autem qui totam necessitatibus libero voluptatem minima eveniet
-          nesciunt sed provident corporis quo eligendi veniam tenetur molestias?
-          Praesentium velit quas, recusandae, voluptatibus, accusantium
-          doloribus adipisci itaque eius consectetur asperiores perspiciatis
-          mollitia. Ipsa dolor eius dignissimos, voluptatibus accusantium cumque
-          quo molestiae. Alias, vero. Esse, quae minima.
-        </p>
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate ea
-          enim dignissimos magnam, sapiente, rem numquam optio modi sint
-          cupiditate culpa. Vitae, sed veritatis itaque nobis saepe quos amet
-          unde eum voluptates tempore, voluptatibus repellat veniam consectetur
-          sequi eius provident, laborum aspernatur repellendus porro at
-          doloribus totam harum neque. Et iure dolore, perferendis ipsa saepe
-          autem qui totam necessitatibus libero voluptatem minima eveniet
-          nesciunt sed provident corporis quo eligendi veniam tenetur molestias?
-          Praesentium velit quas, recusandae, voluptatibus, accusantium
-          doloribus adipisci itaque eius consectetur asperiores perspiciatis
-          mollitia. Ipsa dolor eius dignissimos, voluptatibus accusantium cumque
-          quo molestiae. Alias, vero. Esse, quae minima.
-        </p>
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate ea
-          enim dignissimos magnam, sapiente, rem numquam optio modi sint
-          cupiditate culpa. Vitae, sed veritatis itaque nobis saepe quos amet
-          unde eum voluptates tempore, voluptatibus repellat veniam consectetur
-          sequi eius provident, laborum aspernatur repellendus porro at
-          doloribus totam harum neque. Et iure dolore, perferendis ipsa saepe
-          autem qui totam necessitatibus libero voluptatem minima eveniet
-          nesciunt sed provident corporis quo eligendi veniam tenetur molestias?
-          Praesentium velit quas, recusandae, voluptatibus, accusantium
-          doloribus adipisci itaque eius consectetur asperiores perspiciatis
-          mollitia. Ipsa dolor eius dignissimos, voluptatibus accusantium cumque
-          quo molestiae. Alias, vero. Esse, quae minima.
+          {details.content }
         </p>
         <ClapsRespond>
           <div className="icon">
             <Tooltip title="Clap" arrow placement="top">
               <img src={Images.clap} alt="claps" />
             </Tooltip>
-            <span>2</span>
+            <span>{details.clap_count }</span>
           </div>
           <div>|</div>
 
-          <CommentsModal />
+          <CommentsModal commentCounts = {details.comment_count} comments = {details.comments}  />
         </ClapsRespond>
       </article>
     </Main>

@@ -7,14 +7,18 @@ import {
 } from "./styles/UDSideBar.styles";
 import ReadingToday from "./UDSideBarParts/ReadingToday";
 
-const UDSlideBar = () => {
+const UDSlideBar = ({ sideBarEffect, creatorInfo }) => {
   return (
     <SideBarContainerStyle>
       <UnlimitedButtonStyle>Get unlimited access</UnlimitedButtonStyle>
 
       <SearchBar />
 
-      <ReadingToday />
+      {sideBarEffect ? (
+        <UserProfile creatorInfo={creatorInfo} />
+      ) : (
+        <ReadingToday />
+      )}
 
       <TopicRecommended />
     </SideBarContainerStyle>

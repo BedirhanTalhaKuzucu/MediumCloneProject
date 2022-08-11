@@ -19,7 +19,6 @@ export default function AccountMenu() {
 
   useEffect(() => {
     get_user_info();
-    console.log(userInfo);
   }, []);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
