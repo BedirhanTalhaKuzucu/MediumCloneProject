@@ -108,12 +108,35 @@ class FollowingSerializer(serializers.ModelSerializer):
 
 class FollowingSerializer(serializers.ModelSerializer):
 
+    followedDetails = serializers.SerializerMethodField()
     class Meta:
         model = Following
         fields = (
             "id",
-            "followed"
+            "followed",
+            "followedDetails",
         )
+    
+    def get_followedDetails(self, obj):
+        followedInfo = UserProfile.objects.filter(user=obj.followed).first()
+
+        request = self.context.get('request')
+        img = followedInfo.profile_photo.url
+        img = request.build_absolute_uri(img)
+        
+        name = followedInfo.user.first_name + followedInfo.user.last_name
+        bio  = followedInfo.short_bio
+        email = followedInfo.user.email
+        followedCount = Following.objects.filter(followed=obj.followed).count()
+
+        context = {
+            'name': name,
+            "bio": bio,
+            "image": img,
+            "email": email,
+            "followedCount": followedCount,
+        }
+        return context
 
 
 class FollowedTopicsSerializer(serializers.ModelSerializer):

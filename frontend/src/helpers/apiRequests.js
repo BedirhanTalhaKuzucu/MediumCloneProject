@@ -161,10 +161,7 @@ export const followedUserStories = (setfollowingStory, token) => {
   myHeaders.append(
     "Authorization", `Token ${token}`
   );
-  //   myHeaders.append(
-  //     "Cookie",
-  //     "csrftoken=ELiWUgqxhTQmVoViigupeVDooY7d90qARaohIkvQSS5ZqJy4p26tjhCzRzyCXJRJ"
-  //   );
+ 
 
   let requestOptions = {
     method: "GET",
@@ -205,11 +202,10 @@ export const searchBar = (values, setSearching, token) => {
 };
 
 export const userDetails = (
-  
-  setFollowingTag = console.log(),
-  setFollowingUser = console.log(),
+  // setFollowingTag,
+  // setFollowingUser,
+  setUserDetail,
   userId,
-
 ) => {
   let myHeaders = new Headers();
 
@@ -227,8 +223,9 @@ export const userDetails = (
   )
     .then((response) => response.json())
     .then((result) => {
-      setFollowingTag(result.user.followed_topics);
-      setFollowingUser(result.user.followed_user);
+      // setFollowingTag(result.user.followed_topics);
+      // setFollowingUser(result.user.followed_user);
+      setUserDetail(result)
       console.log(result);
       // setDetail(result);
     })

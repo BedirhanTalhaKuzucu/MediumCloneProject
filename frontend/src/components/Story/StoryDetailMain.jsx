@@ -8,6 +8,7 @@ import CommentsModal from "./CommentsModal";
 
 const StoryDetailMain = ({details}) => {
   // const { speak } = useSpeechSynthesis();
+  console.log(details.creatorInfo);
 
   return (
     <Main>
