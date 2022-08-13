@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Images from "../../assets/Images";
 import { TopicRecommendedFunc } from "../../helpers/apiRequests";
 import { TopicListStyle } from "../UserDashboard/styles/UDSideBar.styles";
+import { Link } from "react-router-dom";
 
 const TopicRecommended = () => {
   const [topics, setTopics] = useState([]);
@@ -15,10 +16,12 @@ const TopicRecommended = () => {
       <TopicListStyle>
         <h5>Recommended topics</h5>
         {topics ? (
-          topics?.map((item) => {
+          topics?.map((data) => {
             return (
-              <div key={item.id} className="topicItem">
-                <button>{item.tag_name}</button>
+              <div key={data.id} className="topicItem">
+                <Link to="/tag" state={{ detail: data }}>
+                  {data.tag_name}
+                </Link>
               </div>
             );
           })

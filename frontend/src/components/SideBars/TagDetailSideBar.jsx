@@ -1,5 +1,6 @@
 import React from "react";
 import SearchBar from "../SearchBar/SearchBar";
+import TagSideBarUserInfo from "../TagDetailParts/TagSideBarUserInfo";
 import {
   SideBarContainerStyle,
   UnlimitedButtonStyle,
@@ -13,7 +14,7 @@ const TagDetailSideBar = () => {
 
       <SearchBar />
 
-      <TagUsersInfo />
+      <TagSideBarUserInfo />
 
       <TopicRecommended />
     </SideBarContainerStyle>
