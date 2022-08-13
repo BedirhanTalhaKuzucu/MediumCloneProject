@@ -155,11 +155,11 @@ export const createStory = (formData, values, resetForm) => {
     .catch((error) => console.log("error", error));
 };
 
-export const followedUserStories = (setfollowingStory) => {
+export const followedUserStories = (setfollowingStory, token) => {
   let myHeaders = new Headers();
+
   myHeaders.append(
-    "Authorization",
-    "Token 199b7f0caab715642e5314fcc68fcdb6135fbb98"
+    "Authorization", `Token ${token}`
   );
   //   myHeaders.append(
   //     "Cookie",
@@ -181,11 +181,11 @@ export const followedUserStories = (setfollowingStory) => {
     .catch((error) => console.log("error", error));
 };
 
-export const searchBar = (values, setSearching) => {
+export const searchBar = (values, setSearching, token) => {
   let myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
-    "Token 199b7f0caab715642e5314fcc68fcdb6135fbb98"
+    `Token ${token}`
   );
 
   let requestOptions = {
@@ -205,14 +205,15 @@ export const searchBar = (values, setSearching) => {
 };
 
 export const userDetails = (
-  id,
-  detail,
-  setDetail,
-  setUserDetail,
-  setFollowingTag,
-  setFollowingUser
+  
+  setFollowingTag = console.log(),
+  setFollowingUser = console.log(),
+  userId,
+
 ) => {
   let myHeaders = new Headers();
+
+  console.log(userId)
 
   let requestOptions = {
     method: "GET",
@@ -221,7 +222,7 @@ export const userDetails = (
   };
 
   fetch(
-    `http://127.0.0.1:8000/auth/users/896ff21c-1c32-4bc8-bab8-d9adc5e60e51`,
+    `http://127.0.0.1:8000/auth/users/${userId}`,
     requestOptions
   )
     .then((response) => response.json())

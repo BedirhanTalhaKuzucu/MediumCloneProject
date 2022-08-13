@@ -26,8 +26,15 @@ const UDMain = () => {
   const [followingTag, setFollowingTag] = useState();
   const [followingUser, setFollowingUser] = useState();
 
+  const getUserId = () => {
+    const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
+    const userId = get_session_user_info.userInfo.profileInfoId
+    return userId
+  }
+
   useEffect(() => {
-    userDetails(setFollowingTag, setFollowingUser);
+    const userId = getUserId()
+    userDetails(setFollowingTag, setFollowingUser, userId);
   }, []);
 
   return (
@@ -57,7 +64,7 @@ const UDMain = () => {
             followingUser.map((item, key) => {
               return (
                 <Tooltip
-                  title={<MainFollowingTooltip />}
+                  title={<MainFollowingTooltip userId = {item} />}
                   arrow
                   componentsProps={{
                     tooltip: {

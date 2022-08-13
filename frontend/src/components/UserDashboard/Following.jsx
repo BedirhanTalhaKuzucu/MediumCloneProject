@@ -7,8 +7,15 @@ import Images from "../../assets/Images";
 const Following = () => {
   const [followingStories, setFollowingStories] = useState("");
 
+  const getToken = () => {
+    const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
+    const token = get_session_user_info.key
+    return token
+  }
+
   useEffect(() => {
-    followedUserStories(setFollowingStories);
+    const token = getToken()
+    followedUserStories(setFollowingStories, token);
   }, []);
 
   return (
