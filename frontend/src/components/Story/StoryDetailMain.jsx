@@ -9,6 +9,7 @@ import CommentsModal from "./CommentsModal";
 const StoryDetailMain = ({ details }) => {
   // const { speak } = useSpeechSynthesis();
   const [copied, setCopied] = useState(false);
+  // console.log(details.id);
 
   function copyLink() {
     const el = document.createElement("input");
@@ -92,6 +93,8 @@ const StoryDetailMain = ({ details }) => {
           <CommentsModal
             commentCounts={details.comment_count}
             comments={details.comments}
+            commentID={details.id}
+            details={details}
           />
         </ClapsRespond>
       </article>

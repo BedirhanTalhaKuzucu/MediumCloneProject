@@ -114,7 +114,7 @@ export const getData = (setData, setTrendList) => {
   fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       const trendList = getTrending(data.results);
       setTrendList(trendList);
       setData(data.results);
@@ -159,7 +159,7 @@ export const followedUserStories = (setfollowingStory) => {
   let myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
-    "Token 199b7f0caab715642e5314fcc68fcdb6135fbb98"
+    "Token 7bd755efba5b91d82ab8a876b3121902be46d97f"
   );
   //   myHeaders.append(
   //     "Cookie",
@@ -175,7 +175,7 @@ export const followedUserStories = (setfollowingStory) => {
   fetch("http://127.0.0.1:8000/blog/stories/following", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
+      // console.log(result);
       setfollowingStory(result.results);
     })
     .catch((error) => console.log("error", error));
@@ -221,7 +221,7 @@ export const userDetails = (
   };
 
   fetch(
-    `http://127.0.0.1:8000/auth/users/896ff21c-1c32-4bc8-bab8-d9adc5e60e51`,
+    `http://127.0.0.1:8000/auth/users/326067ca-486c-468a-aeea-6072475012c8`,
     requestOptions
   )
     .then((response) => response.json())
@@ -317,7 +317,7 @@ export const addSavedFunction = (storyId, tokenKey, addSave) => {
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
   } else {
-    console.log("add");
+    // console.log("add");
 
     let requestOptions = {
       method: "POST",
@@ -332,3 +332,34 @@ export const addSavedFunction = (storyId, tokenKey, addSave) => {
       .catch((error) => console.log("error", error));
   }
 };
+
+export const commentCreateFunc = (setNewComment) => {
+  var myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    `Token aca4f2525c1de046d6ec61a5e8b3c2537b6af751`
+  );
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = "";
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch(
+    `http://127.0.0.1:8000/blog/stories/a09e33ff-6f2c-4637-987a-241e6d45e74b/comment-create`,
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+      setNewComment(result.content);
+    })
+    .catch((error) => console.log("error", error));
+};
+
+commentCreateFunc();

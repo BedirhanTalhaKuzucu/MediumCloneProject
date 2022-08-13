@@ -19,7 +19,11 @@ const TopicRecommended = () => {
           topics?.map((data) => {
             return (
               <div key={data.id} className="topicItem">
-                <Link to="/tag" state={{ detail: data }}>
+                <Link
+                  style={{ textDecoration: "none", color: "black" }}
+                  to="/tag"
+                  state={{ detail: data }}
+                >
                   {data.tag_name}
                 </Link>
               </div>

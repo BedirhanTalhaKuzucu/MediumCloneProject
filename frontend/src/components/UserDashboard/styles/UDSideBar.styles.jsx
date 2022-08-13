@@ -70,6 +70,8 @@ export const TopicListStyle = styled.div`
     font-weight: lighter;
     font-size: small;
     button {
+      text-decoration: none;
+      color: black;
       border: none;
       background-color: #e6e6e6;
       &:hover {
