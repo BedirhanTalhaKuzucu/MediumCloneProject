@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  section {
+  a {
     width: fit-content;
     cursor: pointer;
     margin-top: 1rem;
+    text-decoration: none;
+    color: black;
     nav {
       img {
         width: 20px;
