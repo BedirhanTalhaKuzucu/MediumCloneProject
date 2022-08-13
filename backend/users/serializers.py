@@ -96,23 +96,15 @@ class CustomTokenSerializer(serializers.ModelSerializer):
         return context
 
 
-class FollowingSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Following
-        fields = (
-            "id",
-            "followed"
-        )
-
 
 class FollowingSerializer(serializers.ModelSerializer):
 
+    follower = serializers.IntegerField(source="user.id",  required=False)
     followedDetails = serializers.SerializerMethodField()
     class Meta:
         model = Following
         fields = (
-            "id",
+            "follower",
             "followed",
             "followedDetails",
         )
@@ -137,6 +129,12 @@ class FollowingSerializer(serializers.ModelSerializer):
             "followedCount": followedCount,
         }
         return context
+    
+    def create(self, validated_data):
+        follower = self.context.get("request").user
+        validated_data['follower'] = follower
+        saved = Following.objects.create(**validated_data)
+        return saved
 
 
 class FollowedTopicsSerializer(serializers.ModelSerializer):
