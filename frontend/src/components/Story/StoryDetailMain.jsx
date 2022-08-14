@@ -11,7 +11,7 @@ const StoryDetailMain = ({ details }) => {
   const [copied, setCopied] = useState(false);
   // console.log(details.id);
 
-  function copyLink() {
+  const copyLink = () => {
     const el = document.createElement("input");
     el.value = window.location.href;
     document.body.appendChild(el);
