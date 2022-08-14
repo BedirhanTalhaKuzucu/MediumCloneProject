@@ -294,6 +294,29 @@ export const TopicRecommendedFunc = (setTopics) => {
     })
     .catch((error) => console.log("error", error));
 };
+export const UserFollowFunc = (setUsers) => {
+  fetch("http://127.0.0.1:8000/auth/users")
+    .then((response) => response.json())
+    .then(({ results }) => {
+      const randomSelection = (n) => {
+        console.log(results);
+        let newArr = [];
+        if (n >= results.length) {
+          return results;
+        }
+        for (let i = 0; i < n; i++) {
+          let newElem = results[Math.floor(Math.random() * results.length)];
+          while (newArr.includes(newElem)) {
+            newElem = results[Math.floor(Math.random() * results.length)];
+          }
+          newArr.push(newElem);
+        }
+        return newArr;
+      };
+      setUsers(randomSelection(4));
+    })
+    .catch((error) => console.log("error", error));
+};
 
 export const addSavedFunction = (storyId, tokenKey, addSave) => {
   let myHeaders = new Headers();

@@ -7,6 +7,7 @@ import {
 } from "./styles/UDSideBar.styles";
 import ReadingToday from "./UDSideBarParts/ReadingToday";
 import UserProfile from "../UserDashboard/UDSideBarParts/UserProfile";
+import WhoToFollow from "./UDSideBarParts/WhoToFollow";
 
 const UDSlideBar = ({ sideBarEffect, creatorInfo }) => {
   return (
@@ -22,6 +23,8 @@ const UDSlideBar = ({ sideBarEffect, creatorInfo }) => {
       )}
 
       <TopicRecommended />
+
+      <WhoToFollow />
     </SideBarContainerStyle>
   );
 };
