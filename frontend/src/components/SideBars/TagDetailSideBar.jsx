@@ -5,6 +5,7 @@ import {
   SideBarContainerStyle,
   UnlimitedButtonStyle,
 } from "../UserDashboard/styles/UDSideBar.styles";
+import WhoToFollow from "../UserDashboard/UDSideBarParts/WhoToFollow";
 import TopicRecommended from "./TopicRecommended";
 
 const TagDetailSideBar = () => {
@@ -17,6 +18,7 @@ const TagDetailSideBar = () => {
       <TagSideBarUserInfo />
 
       <TopicRecommended />
+      <WhoToFollow />
     </SideBarContainerStyle>
   );
 };
