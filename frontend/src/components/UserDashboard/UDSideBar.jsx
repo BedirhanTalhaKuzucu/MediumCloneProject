@@ -1,49 +1,30 @@
 import React from "react";
 import SearchBar from "../SearchBar/SearchBar";
+import TopicRecommended from "../SideBars/TopicRecommended";
 import {
   SideBarContainerStyle,
-  TopicListStyle,
   UnlimitedButtonStyle,
 } from "./styles/UDSideBar.styles";
 import ReadingToday from "./UDSideBarParts/ReadingToday";
 import UserProfile from "../UserDashboard/UDSideBarParts/UserProfile";
+import WhoToFollow from "./UDSideBarParts/WhoToFollow";
 
-
-const topicList = [
-  "FullStack",
-  "Python",
-  "Machine Learning",
-  "Programming",
-  "React",
-  "Django",
-];
-
-const UDSlideBar = ({sideBarEffect, creatorInfo}) => {
-
+const UDSlideBar = ({ sideBarEffect, creatorInfo, storyId }) => {
   return (
     <SideBarContainerStyle>
       <UnlimitedButtonStyle>Get unlimited access</UnlimitedButtonStyle>
 
       <SearchBar />
 
-      {sideBarEffect ? 
-        <UserProfile creatorInfo = {creatorInfo} />        
-      : 
+      {sideBarEffect ? (
+        <UserProfile creatorInfo={creatorInfo} storyId = {storyId} />
+      ) : (
         <ReadingToday />
-      }
-      {/* <TagUsersInfo /> */}
-      {/* <UserProfile /> */}
+      )}
 
-      <TopicListStyle>
-        <h5>Recommended topics</h5>
-        {topicList?.map((item) => {
-          return (
-            <div key={item.id} className="topicItem">
-              <button>{item}</button>
-            </div>
-          );
-        })}
-      </TopicListStyle>
+      <TopicRecommended />
+
+      <WhoToFollow />
     </SideBarContainerStyle>
   );
 };

@@ -1,19 +1,12 @@
 import React from "react";
 import SearchBar from "../SearchBar/SearchBar";
+import TagSideBarUserInfo from "../TagDetailParts/TagSideBarUserInfo";
 import {
   SideBarContainerStyle,
-  TopicListStyle,
   UnlimitedButtonStyle,
 } from "../UserDashboard/styles/UDSideBar.styles";
-
-const topicList = [
-  "FullStack",
-  "Python",
-  "Machine Learning",
-  "Programming",
-  "React",
-  "Django",
-];
+import WhoToFollow from "../UserDashboard/UDSideBarParts/WhoToFollow";
+import TopicRecommended from "./TopicRecommended";
 
 const TagDetailSideBar = () => {
   return (
@@ -22,18 +15,10 @@ const TagDetailSideBar = () => {
 
       <SearchBar />
 
-      <TagUsersInfo />
+      <TagSideBarUserInfo />
 
-      <TopicListStyle>
-        <h5>Recommended topics</h5>
-        {topicList?.map((item) => {
-          return (
-            <div key={item.id} className="topicItem">
-              <button>{item}</button>
-            </div>
-          );
-        })}
-      </TopicListStyle>
+      <TopicRecommended />
+      <WhoToFollow />
     </SideBarContainerStyle>
   );
 };

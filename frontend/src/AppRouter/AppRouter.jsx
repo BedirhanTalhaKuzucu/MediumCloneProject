@@ -17,6 +17,7 @@ import Published from "../components/UserStoriesParts/Published";
 import Responses from "../components/UserStoriesParts/Responses";
 import UserLists from "../pages/UserLists";
 import SavedStories from "../components/UserStoriesParts/SavedStories";
+import TagDetail from "../pages/TagDetail";
 
 function AppRouter() {
   return (
@@ -50,6 +51,7 @@ function AppRouter() {
           <Route path="save" element={<SavedStories />} />
         </Route>
 
+        <Route path="tag" element={<TagDetail />} />
         <Route path="write" element={<Write />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

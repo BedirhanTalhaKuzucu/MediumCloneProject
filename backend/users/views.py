@@ -1,12 +1,14 @@
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework import viewsets
 from rest_framework.generics import CreateAPIView,ListAPIView,RetrieveUpdateDestroyAPIView
 from django.contrib.auth.models import User
 # from .permissions import IsUserOrReadOnly
 from rest_framework.permissions import IsAdminUser
-from .models import UserProfile
-from.serializers import RegisterSerializer, UserProfileSerializer
+from .models import Following, UserProfile
+from.serializers import RegisterSerializer, UserProfileSerializer, FollowingSerializer
+from rest_framework.permissions import IsAuthenticated
 
 
 class RegisterView(CreateAPIView):
@@ -32,3 +34,29 @@ class AboutYouUpdateDeleteView(RetrieveUpdateDestroyAPIView):
     serializer_class = UserProfileSerializer
     # permission_classes = (, )
         
+class UserFollowListView(viewsets.ModelViewSet):
+    queryset = Following.objects.all()
+    serializer_class = FollowingSerializer
+    permission_classes = (IsAuthenticated,)
+    http_method_names = ['get', 'post', 'delete',]
+    lookup_field = 'followed'
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(Following.objects.filter(follower = self.request.user))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    
+    def destroy(self, request, *args, **kwargs):
+        followed = self.kwargs.get('followed')
+        follower = self.request.user
+        instance = Following.objects.get(follower=follower, followed= followed)
+        instance.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+

@@ -72,8 +72,9 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            {/* Username baş harfi gelecek */}
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>
+              {userInfo?.userInfo?.first_name[0]}
+            </Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -116,22 +117,7 @@ export default function AccountMenu() {
           <Avatar /> {userInfo ? userInfo.first_name : "Profile"}
           Profile / Settings
         </MenuItem>
-        {/* <MenuItem>
-          <Avatar /> My account
-        </MenuItem> */}
-        <Divider />
-        {/* <MenuItem>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add another account
-        </MenuItem> */}
-        {/* <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem> */}
+
         <MenuItem onClick={() => LogOutFunction()}>
           <ListItemIcon>
             <Logout fontSize="small" />

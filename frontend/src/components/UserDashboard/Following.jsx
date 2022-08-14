@@ -1,27 +1,40 @@
 import React from "react";
 import ArticleCard from "./ArticleCard";
-import {followedUserStories} from "../../helpers/apiRequests"
+import { followedUserStories } from "../../helpers/apiRequests";
 import { useEffect, useState } from "react";
+import Images from "../../assets/Images";
 
 const Following = () => {
+  const [followingStories, setFollowingStories] = useState("");
 
-  const [followingStories, setFollowingStories] = useState("")
+  const getToken = () => {
+    const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
+    const token = get_session_user_info.key
+    return token
+  }
 
   useEffect(() => {
-    followedUserStories(setFollowingStories)
-
-  }, [])
-  
+    const token = getToken()
+    followedUserStories(setFollowingStories, token);
+  }, []);
 
   return (
     <div>
-      { followingStories ?
-      followingStories.map((item, key) => (
-        <ArticleCard key={key} data ={item} />
-        )) 
-      :
-      <h4>LOADİNG</h4>
-      }
+      {followingStories ? (
+        followingStories.map((item, key) => (
+          <ArticleCard key={key} data={item} />
+        ))
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img src={Images.loading} alt="loading gif" />
+        </div>
+      )}
     </div>
   );
 };

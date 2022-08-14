@@ -1,8 +1,8 @@
 
 # from numpy import require
 from rest_framework import serializers
-from .models import CommentClap, SavedStories, StorieView, Story, Tag, StoryClap, Comment
-from django.utils.timezone import now 
+from .models import CommentClap, SavedStories, StorieView, Story, StoryTag, Tag, StoryClap, Comment, TagFollower
+from django.utils.timezone import now
 from users.models import UserProfile, Following
 from django.contrib.auth.models import User
 
@@ -28,16 +28,19 @@ class CommentsSerializer(serializers.ModelSerializer):
     clap_comment = CommentClapSerializer(many=True)
     clap_comment_count = serializers.IntegerField(
         source='clap_comment.count', read_only=True)
-    days_since_joined = serializers.SerializerMethodField() 
+    days_since_joined = serializers.SerializerMethodField()
 
     class Meta:
         model = Comment
         # exclude = ('story', 'user',)
-        fields = ('content', 'user', 'id', 'clap_comment_count', 'clap_comment', 'days_since_joined')
+        fields = ('content', 'user', 'id', 'clap_comment_count',
+                  'clap_comment', 'days_since_joined')
 
-    def get_days_since_joined(self, obj): 
+    def get_days_since_joined(self, obj):
         return (now() - obj.created_date).days
-        # return (now() - obj.created_date).seconds #dakika olarak gostermek istersen  
+        # return (now() - obj.created_date).seconds #dakika olarak gostermek istersen
+
+
 class StoryViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = StorieView
@@ -46,7 +49,8 @@ class StoryViewSerializer(serializers.ModelSerializer):
 
 class StorySaveSerializer(serializers.ModelSerializer):
 
-    userId = serializers.IntegerField( source="user.id",  required = False)
+    userId = serializers.IntegerField(source="user.id",  required=False)
+
     class Meta:
         model = SavedStories
         fields = ('story', 'userId')
@@ -56,7 +60,6 @@ class StorySaveSerializer(serializers.ModelSerializer):
         validated_data['user'] = user
         saved = SavedStories.objects.create(**validated_data)
         return saved
-
 
 
 class StorySerializer(serializers.ModelSerializer):
@@ -105,6 +108,8 @@ class StorySerializer(serializers.ModelSerializer):
     def get_creatorInfo(self, obj):
 
         user_img = UserProfile.objects.filter(user=obj.user).first()
+        userId = user_img.id
+        
         short_bio = user_img.short_bio
 
         request = self.context.get('request')
@@ -112,7 +117,7 @@ class StorySerializer(serializers.ModelSerializer):
         user_img = request.build_absolute_uri(user_img)
         print(user_img)
 
-        followedCount = Following.objects.filter(followed = obj.user ).count()
+        followedCount = Following.objects.filter(followed=obj.user).count()
 
         context = {
             "first_name": obj.user.first_name,
@@ -121,6 +126,8 @@ class StorySerializer(serializers.ModelSerializer):
             "user_img": user_img,
             "short_bio": short_bio,
             "followedCount": followedCount,
+            "userId": userId,
+            "userProfilId":obj.user.id,
         }
         return context
 
@@ -159,16 +166,14 @@ class SearchBarTagSerializer(serializers.ModelSerializer):
         fields = ('id', 'tag_name')
 
 
-
 class SearchBarUserSerializer(serializers.ModelSerializer):
 
     # userfor = SearchBarUserProfilSerializer(many=True)
     userImage = serializers.SerializerMethodField('get_userImage')
 
-
     class Meta:
         model = User
-        fields = ( 'id', 'first_name', 'last_name', 'userImage', )
+        fields = ('id', 'first_name', 'last_name', 'userImage', )
 
     def get_userImage(self, obj):
 
@@ -184,15 +189,41 @@ class SearchBarUserSerializer(serializers.ModelSerializer):
         return user_img
 
 
-
 class AddStoryClapSerializer(serializers.ModelSerializer):
     class Meta:
         model = StoryClap
         fields = ('story', )
-
 
     def create(self, validated_data):
         user = self.context.get("request").user
         validated_data['user'] = user
         clapp = StoryClap.objects.create(**validated_data)
         return clapp
+
+
+class TagFollowerSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = TagFollower
+        fields = '__all__'
+
+
+class StoryTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StoryTag
+        fields = ('story',)
+
+
+class TagsSerializer(serializers.ModelSerializer):
+    tag_follower = TagFollowerSerializer(many=True, read_only=True)
+    stories = StorySerializer(many=True)
+    stories_count = serializers.IntegerField(
+        source='stories.count', read_only=True)
+    tag_follower_count = serializers.IntegerField(
+        source='tag_follower.count', read_only=True)
+
+    class Meta:
+        model = Tag
+        fields = ('tag_name', 'id', "tag_follower_count",
+                  'tag_follower', 'stories_count', 'stories')

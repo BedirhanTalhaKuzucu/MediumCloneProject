@@ -114,10 +114,39 @@ export const getData = (setData, setTrendList) => {
   fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       const trendList = getTrending(data.results);
       setTrendList(trendList);
       setData(data.results);
+    })
+    .catch((error) => console.log("error", error));
+};
+
+export const getStoryDetails = (setdetails, tokenKey, detailsId) => {
+
+  let myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization", `Token ${tokenKey}`
+  );
+  myHeaders.append("Content-Type", "application/json");
+  
+
+  
+
+  let requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  fetch(
+    `http://127.0.0.1:8000/blog/stories/${detailsId}/`,
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result)
+      setdetails(result)
     })
     .catch((error) => console.log("error", error));
 };
@@ -155,16 +184,10 @@ export const createStory = (formData, values, resetForm) => {
     .catch((error) => console.log("error", error));
 };
 
-export const followedUserStories = (setfollowingStory) => {
+export const followedUserStories = (setfollowingStory, token) => {
   let myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    "Token 199b7f0caab715642e5314fcc68fcdb6135fbb98"
-  );
-  //   myHeaders.append(
-  //     "Cookie",
-  //     "csrftoken=ELiWUgqxhTQmVoViigupeVDooY7d90qARaohIkvQSS5ZqJy4p26tjhCzRzyCXJRJ"
-  //   );
+
+  myHeaders.append("Authorization", `Token ${token}`);
 
   let requestOptions = {
     method: "GET",
@@ -175,18 +198,15 @@ export const followedUserStories = (setfollowingStory) => {
   fetch("http://127.0.0.1:8000/blog/stories/following", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
+      // console.log(result);
       setfollowingStory(result.results);
     })
     .catch((error) => console.log("error", error));
 };
 
-export const searchBar = (values, setSearching) => {
+export const searchBar = (values, setSearching, token) => {
   let myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    "Token 199b7f0caab715642e5314fcc68fcdb6135fbb98"
-  );
+  myHeaders.append("Authorization", `Token ${token}`);
 
   let requestOptions = {
     method: "GET",
@@ -204,7 +224,12 @@ export const searchBar = (values, setSearching) => {
     .catch((error) => console.log("error", error));
 };
 
-export const userDetails = (setFollowingTag, setFollowingUser) => {
+export const userDetails = (
+  // setFollowingTag,
+  // setFollowingUser,
+  setUserDetail,
+  userId
+) => {
   let myHeaders = new Headers();
 
   let requestOptions = {
@@ -213,14 +238,14 @@ export const userDetails = (setFollowingTag, setFollowingUser) => {
     redirect: "follow",
   };
 
-  fetch(
-    "http://127.0.0.1:8000/auth/users/dd8be17f-91fa-4cc0-b83d-376d56cd4875/",
-    requestOptions
-  )
+  fetch(`http://127.0.0.1:8000/auth/users/${userId}`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      setFollowingTag(result.user.followed_topics);
-      setFollowingUser(result.user.followed_user);
+      // setFollowingTag(result.user.followed_topics);
+      // setFollowingUser(result.user.followed_user);
+      setUserDetail(result);
+      console.log(result);
+      // setDetail(result);
     })
     .catch((error) => console.log("error", error));
 };
@@ -263,6 +288,52 @@ export const addClapFunction = (storyId, tokenKey, addClap) => {
   }
 };
 
+export const TopicRecommendedFunc = (setTopics) => {
+  fetch("http://127.0.0.1:8000/blog/tags")
+    .then((response) => response.json())
+    .then(({ results }) => {
+      const randomSelection = (n) => {
+        let newArr = [];
+        if (n >= results.length) {
+          return results;
+        }
+        for (let i = 0; i < n; i++) {
+          let newElem = results[Math.floor(Math.random() * results.length)];
+          while (newArr.includes(newElem)) {
+            newElem = results[Math.floor(Math.random() * results.length)];
+          }
+          newArr.push(newElem);
+        }
+        return newArr;
+      };
+      setTopics(randomSelection(8));
+    })
+    .catch((error) => console.log("error", error));
+};
+export const UserFollowFunc = (setUsers) => {
+  fetch("http://127.0.0.1:8000/auth/users")
+    .then((response) => response.json())
+    .then(({ results }) => {
+      const randomSelection = (n) => {
+        console.log(results);
+        let newArr = [];
+        if (n >= results.length) {
+          return results;
+        }
+        for (let i = 0; i < n; i++) {
+          let newElem = results[Math.floor(Math.random() * results.length)];
+          while (newArr.includes(newElem)) {
+            newElem = results[Math.floor(Math.random() * results.length)];
+          }
+          newArr.push(newElem);
+        }
+        return newArr;
+      };
+      setUsers(randomSelection(4));
+    })
+    .catch((error) => console.log("error", error));
+};
+
 export const addSavedFunction = (storyId, tokenKey, addSave) => {
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Token ${tokenKey}`);
@@ -285,7 +356,7 @@ export const addSavedFunction = (storyId, tokenKey, addSave) => {
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
   } else {
-    console.log("add");
+    // console.log("add");
 
     let requestOptions = {
       method: "POST",
@@ -301,4 +372,105 @@ export const addSavedFunction = (storyId, tokenKey, addSave) => {
   }
 };
 
+export const controlFollowFunction = (setfollowOrFollowing, userId, tokenKey) => {
+  let myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    `Token ${tokenKey}`
+  );
+  myHeaders.append("Content-Type", "application/json");
+
+  let requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  fetch("http://127.0.0.1:8000/auth/following/", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+
+      let followedList = [];
+      result.results.map((item) => {
+        followedList.push(item.followed);
+      });
+
+      if (followedList.includes(userId)) {
+        setfollowOrFollowing(true);
+      } else {
+        setfollowOrFollowing(false);
+      }
+    })
+    .catch((error) => console.log("error", error));
+};
+
+export const add_deleteFollowHandle = (followOrFollowing, tokenKey, userId) => {
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Token ${tokenKey}`);
+  myHeaders.append("Content-Type", "application/json");
+
+  if (followOrFollowing) {
+    let raw = JSON.stringify({
+      followed: userId,
+    });
+
+    var requestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(`http://127.0.0.1:8000/auth/following/${userId}/`, requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  } else {
+    let raw = JSON.stringify({
+      followed: userId,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://127.0.0.1:8000/auth/following/", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  }
+};
+
+export const commentCreateFunc = (setNewComment) => {
+  var myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    `Token aca4f2525c1de046d6ec61a5e8b3c2537b6af751`
+  );
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = "";
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch(
+    `http://127.0.0.1:8000/blog/stories/a09e33ff-6f2c-4637-987a-241e6d45e74b/comment-create`,
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+      setNewComment(result.content);
+    })
+    .catch((error) => console.log("error", error));
+};
 
