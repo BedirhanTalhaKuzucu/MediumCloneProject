@@ -11,6 +11,8 @@ const StoryDetail = () => {
   const { details } = location.state;
   // console.log(details);
 
+>>>>>>> 53165feef88c6cc2f6f3cfa951e3772322cbacc6
+
   useEffect(() => {
     setsideBarEffect(true);
     return () => {
@@ -21,11 +23,8 @@ const StoryDetail = () => {
   return (
     <div className="d-flex">
       <UDNavbar />
-      <StoryDetailMain details={details} />
-      <UDSideBar
-        sideBarEffect={sideBarEffect}
-        creatorInfo={details.creatorInfo}
-      />
+      <StoryDetailMain details = {details} />
+      <UDSideBar sideBarEffect= {sideBarEffect} creatorInfo = {details.creatorInfo } storyId = {details.id}  />
     </div>
   );
 };

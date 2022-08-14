@@ -13,21 +13,23 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { userDetails } from "../../helpers/apiRequests";
 
-const topicList = [
-  "FullStack",
-  "Python",
-  "Machine Learning",
-  "Programming",
-  "React",
-  "Django",
-];
+
 
 const UDMain = () => {
-  const [followingTag, setFollowingTag] = useState();
-  const [followingUser, setFollowingUser] = useState();
+  // const [followingTag, setFollowingTag] = useState();
+  // const [followingUser, setFollowingUser] = useState();
+  const [UserDetail, setUserDetail] = useState();
+
+
+  const getUserId = () => {
+    const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
+    const userId = get_session_user_info.userInfo.profileInfoId
+    return userId
+  }
 
   useEffect(() => {
-    userDetails(setFollowingTag, setFollowingUser);
+    const userId = getUserId()
+    userDetails(setUserDetail, userId);
   }, []);
 
   return (
@@ -36,8 +38,8 @@ const UDMain = () => {
         <TopicsStyle>
           <p>YOUR TOPICS</p>
           <div className="scrollbar sc1">
-            {followingTag ? (
-              followingTag.map((item, key) => {
+            {UserDetail ? (
+              UserDetail.user.followed_topics.map((item, key) => {
                 return (
                   <div key={key}>
                     <button>{item}</button>
@@ -53,11 +55,11 @@ const UDMain = () => {
         </TopicsStyle>
 
         <FollowingListStyle>
-          {followingUser ? (
-            followingUser.map((item, key) => {
+          {UserDetail ? (
+            UserDetail.user.followed_user.map((item, key) => {
               return (
                 <Tooltip
-                  title={<MainFollowingTooltip />}
+                  title={<MainFollowingTooltip followedInfo = {item} />}
                   arrow
                   componentsProps={{
                     tooltip: {
@@ -66,8 +68,9 @@ const UDMain = () => {
                       },
                     },
                   }}
+                  key={key}
                 >
-                  <FollowingImg src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" />
+                  <FollowingImg src={item.followedDetails.image} />
                 </Tooltip>
               );
             })

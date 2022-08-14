@@ -108,6 +108,8 @@ class StorySerializer(serializers.ModelSerializer):
     def get_creatorInfo(self, obj):
 
         user_img = UserProfile.objects.filter(user=obj.user).first()
+        userId = user_img.id
+        
         short_bio = user_img.short_bio
 
         request = self.context.get('request')
@@ -124,6 +126,8 @@ class StorySerializer(serializers.ModelSerializer):
             "user_img": user_img,
             "short_bio": short_bio,
             "followedCount": followedCount,
+            "userId": userId,
+            "userProfilId":obj.user.id,
         }
         return context
 

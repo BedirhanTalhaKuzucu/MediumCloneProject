@@ -17,6 +17,12 @@ function SearchBar() {
     
     const [openSearchBar, setopenSearchBar] = useState(false)
 
+    const getToken = () => {
+      const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
+      const token = get_session_user_info.key
+      return token
+    }
+
     const formik = useFormik({
         initialValues: {
           search: '',
@@ -25,8 +31,8 @@ function SearchBar() {
           if (values.search !== "") {
             setopenSearchBar(true)
             console.log(values);
-            searchBar(values, setSearching)
-            console.log(Boolean(searching.Tag))
+            const token = getToken()
+            searchBar(values, setSearching, token)
           } else {
             setopenSearchBar(false)
           }
