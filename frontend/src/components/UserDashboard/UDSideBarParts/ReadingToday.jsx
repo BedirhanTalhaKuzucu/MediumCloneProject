@@ -15,7 +15,12 @@ const ReadingToday = () => {
       </Link>
       {trendList ? (
         trendList?.slice(0, 3).map((data, id) => (
-          <section key={id} onClick={() => console.log("Hi!")}>
+          <Link
+            to="/story"
+            state={{ details: data }}
+            key={id}
+            onClick={() => console.log("Hi!")}
+          >
             <nav>
               <img src={data?.creatorInfo.user_img} alt="" className="" />{" "}
               <span>
@@ -27,7 +32,7 @@ const ReadingToday = () => {
             <nav>
               <h6>{data.title}</h6>
             </nav>
-          </section>
+          </Link>
         ))
       ) : (
         <img src={Images.loading} alt="loading gif" />

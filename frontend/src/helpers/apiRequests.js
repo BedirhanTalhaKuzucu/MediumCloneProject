@@ -114,7 +114,7 @@ export const getData = (setData, setTrendList) => {
   fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       const trendList = getTrending(data.results);
       setTrendList(trendList);
       setData(data.results);
@@ -198,7 +198,7 @@ export const followedUserStories = (setfollowingStory, token) => {
   fetch("http://127.0.0.1:8000/blog/stories/following", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
+      // console.log(result);
       setfollowingStory(result.results);
     })
     .catch((error) => console.log("error", error));
@@ -310,6 +310,29 @@ export const TopicRecommendedFunc = (setTopics) => {
     })
     .catch((error) => console.log("error", error));
 };
+export const UserFollowFunc = (setUsers) => {
+  fetch("http://127.0.0.1:8000/auth/users")
+    .then((response) => response.json())
+    .then(({ results }) => {
+      const randomSelection = (n) => {
+        console.log(results);
+        let newArr = [];
+        if (n >= results.length) {
+          return results;
+        }
+        for (let i = 0; i < n; i++) {
+          let newElem = results[Math.floor(Math.random() * results.length)];
+          while (newArr.includes(newElem)) {
+            newElem = results[Math.floor(Math.random() * results.length)];
+          }
+          newArr.push(newElem);
+        }
+        return newArr;
+      };
+      setUsers(randomSelection(4));
+    })
+    .catch((error) => console.log("error", error));
+};
 
 export const addSavedFunction = (storyId, tokenKey, addSave) => {
   let myHeaders = new Headers();
@@ -333,7 +356,7 @@ export const addSavedFunction = (storyId, tokenKey, addSave) => {
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
   } else {
-    console.log("add");
+    // console.log("add");
 
     let requestOptions = {
       method: "POST",
@@ -421,3 +444,33 @@ export const add_deleteFollowHandle = (followOrFollowing, tokenKey, userId) => {
       .catch((error) => console.log("error", error));
   }
 };
+
+export const commentCreateFunc = (setNewComment) => {
+  var myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    `Token aca4f2525c1de046d6ec61a5e8b3c2537b6af751`
+  );
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = "";
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch(
+    `http://127.0.0.1:8000/blog/stories/a09e33ff-6f2c-4637-987a-241e6d45e74b/comment-create`,
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+      setNewComment(result.content);
+    })
+    .catch((error) => console.log("error", error));
+};
+

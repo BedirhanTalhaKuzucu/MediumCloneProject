@@ -3,9 +3,11 @@ import styled from "styled-components";
 export const CardContainer = styled.div`
   margin-top: 2rem;
   border-bottom: 1px solid lightgray;
-  .title{
+  .title {
     text-decoration: none;
     color: black;
+    display: block;
+    text-transform: capitalize;
   }
   .authorInf {
     display: flex;
@@ -28,6 +30,10 @@ export const CardContainer = styled.div`
   .articleInf {
     display: flex;
     justify-content: space-between;
+    .articlePart {
+      text-decoration: none;
+      color: black;
+    }
     .part1 {
       .title {
         font-weight: bold;
@@ -64,11 +70,14 @@ export const CardContainer = styled.div`
         display: flex;
         align-items: center;
         padding-left: 0 1rem;
-        filter: invert(48%) sepia(13%);
-        &:hover {
-          filter: none;
-        }
+
         & > * {
+          filter: invert(48%) sepia(13%);
+          &:hover {
+            filter: none;
+            opacity: 1;
+          }
+
           width: 22px;
           height: 22px;
           margin-left: 10px;
@@ -100,7 +109,7 @@ export const CardContainer = styled.div`
           visibility: hidden;
         }
         .tag,
-        .readTime{
+        .readTime {
           font-size: 0.8rem;
           white-space: nowrap;
           padding-top: 1rem;

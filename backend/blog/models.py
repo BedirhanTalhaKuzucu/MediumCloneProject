@@ -28,7 +28,7 @@ class Story(models.Model):
     last_update = models.DateTimeField(auto_now=True)
     status = models.CharField(choices=STATUS, max_length=10, default='Draft')
     tags = models.ManyToManyField(
-        Tag, through='StoryTag', through_fields=('story', 'tag'))
+        Tag, through='StoryTag', through_fields=('story', 'tag'), related_name='stories')
     # !serializerda
     #  tag
     # claps
@@ -49,14 +49,15 @@ class Story(models.Model):
 
 class TagFollower(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE,
+                            related_name='tag_follower')
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='followed_topics')
     timeStamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.tag.tag_name}'
-    
+
     class Meta:
         unique_together = ('user', 'tag')
 
@@ -150,5 +151,6 @@ class SavedStories(models.Model):
 
     def __str__(self):
         return f"{self.user} => {self.story}"
+
     class Meta:
         unique_together = ('user', 'story')

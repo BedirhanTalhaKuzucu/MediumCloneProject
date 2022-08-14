@@ -51,7 +51,7 @@ const UDNavbar = () => {
           </Link>
         </Tooltip>
 
-        <Tooltip title="Edit" arrow placement="right">
+        <Tooltip title="Write" arrow placement="right">
           <Link to="/write">
             <IconStyle src={Images.edit} alt="edit icon" />
           </Link>

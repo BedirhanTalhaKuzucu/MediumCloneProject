@@ -10,7 +10,7 @@ export const SideBarContainerStyle = styled.main`
   left: 0;
   height: 100%;
   padding: 1.5rem;
-  width: 350px;
+  width: 370px;
   border-left: 1px solid #e0deca;
   .readingToday {
     text-decoration: none;
@@ -70,6 +70,8 @@ export const TopicListStyle = styled.div`
     font-weight: lighter;
     font-size: small;
     button {
+      text-decoration: none;
+      color: black;
       border: none;
       background-color: #e6e6e6;
       &:hover {

@@ -1,20 +1,30 @@
 import { Tooltip } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Images from "../../assets/Images";
+import { commentCreateFunc } from "../../helpers/apiRequests";
 import {
   CommentsStyles,
   ModalStyles,
   OpenButtonStyle,
 } from "./styles/CommentsModel.styles";
 
-function CommentsModal({ commentCounts, comments }) {
+function CommentsModal({ commentCounts, comments, commentID, details }) {
   const [show, setShow] = useState(false);
+
+  const [newComment, setNewComment] = useState([]);
+
+  useEffect(() => {}, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const commentCreate = () => {
+    commentCreateFunc(setNewComment);
+    console.log("başarılı", newComment);
+  };
 
   return (
     <>
@@ -38,7 +48,7 @@ function CommentsModal({ commentCounts, comments }) {
             <Modal.Title>Responses ( {commentCounts} )</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <form action="">
+            <form action="#">
               <textarea
                 name=""
                 id=""
@@ -51,7 +61,11 @@ function CommentsModal({ commentCounts, comments }) {
                 <button type="reset" className="resetButton">
                   Cancel
                 </button>
-                <button type="submit" className="submitButton btn btn-success">
+                <button
+                  type="submit"
+                  onClick={() => commentCreate()}
+                  className="submitButton btn btn-success"
+                >
                   Respond
                 </button>
               </div>
@@ -60,9 +74,8 @@ function CommentsModal({ commentCounts, comments }) {
             <hr />
 
             {comments &&
-
-              comments.map(item => (
-                <div className="comments">
+              comments.map((item, index) => (
+                <div className="comments" key={index}>
                   <div className="userInfo">
                     <div>
                       <img
@@ -72,13 +85,13 @@ function CommentsModal({ commentCounts, comments }) {
                     </div>
                     <div>
                       <div className="username">{item.user}</div>
-                      <div className="timeStamp">{item.days_since_joined} days ago</div>
+                      <div className="timeStamp">
+                        {item.days_since_joined} days ago
+                      </div>
                     </div>
                   </div>
 
-                  <div className="content">
-                    {item.content}
-                  </div>
+                  <div className="content">{item.content}</div>
                   <div className="claps">
                     <Tooltip title="Clap" arrow placement="top">
                       <img src={Images.clap} alt="claps" />
@@ -87,8 +100,7 @@ function CommentsModal({ commentCounts, comments }) {
                   </div>
                   <hr />
                 </div>
-              ))
-            }
+              ))}
           </Modal.Body>
         </CommentsStyles>
       </Modal>
