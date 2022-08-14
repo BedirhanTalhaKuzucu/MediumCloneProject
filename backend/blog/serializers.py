@@ -1,7 +1,7 @@
 
 # from numpy import require
 from rest_framework import serializers
-from .models import CommentClap, SavedStories, StorieView, Story, Tag, StoryClap, Comment
+from .models import CommentClap, SavedStories, StorieView, Story, StoryTag, Tag, StoryClap, Comment, TagFollower
 from django.utils.timezone import now
 from users.models import UserProfile, Following
 from django.contrib.auth.models import User
@@ -197,7 +197,29 @@ class AddStoryClapSerializer(serializers.ModelSerializer):
         return clapp
 
 
+class TagFollowerSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = TagFollower
+        fields = '__all__'
+
+
+class StoryTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StoryTag
+        fields = ('story',)
+
+
 class TagsSerializer(serializers.ModelSerializer):
+    tag_follower = TagFollowerSerializer(many=True, read_only=True)
+    stories = StorySerializer(many=True)
+    stories_count = serializers.IntegerField(
+        source='stories.count', read_only=True)
+    tag_follower_count = serializers.IntegerField(
+        source='tag_follower.count', read_only=True)
+
     class Meta:
         model = Tag
-        fields = ('tag_name', 'id')
+        fields = ('tag_name', 'id', "tag_follower_count",
+                  'tag_follower', 'stories_count', 'stories')

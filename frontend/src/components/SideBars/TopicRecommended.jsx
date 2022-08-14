@@ -14,7 +14,7 @@ const TopicRecommended = () => {
   return (
     <div>
       <TopicListStyle>
-        <h5>Recommended topics</h5>
+        <h5>Recommended topics</h5> <br />
         {topics ? (
           topics?.map((data) => {
             return (

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const MainStyle = styled.main`
   width: 100%;
-  header {
+  .tagmain {
     /* background-color: red; */
     margin: 5rem;
     .title {
