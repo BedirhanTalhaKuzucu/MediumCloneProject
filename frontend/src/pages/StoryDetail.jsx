@@ -9,7 +9,7 @@ const StoryDetail = () => {
 
   const location = useLocation()
   const { details } = location.state 
-  console.log(details)
+
   
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const StoryDetail = () => {
     <div className="d-flex">
       <UDNavbar />
       <StoryDetailMain details = {details} />
-      <UDSideBar sideBarEffect= {sideBarEffect} creatorInfo = {details.creatorInfo } />
+      <UDSideBar sideBarEffect= {sideBarEffect} creatorInfo = {details.creatorInfo } storyId = {details.id}  />
     </div>
   );
 };

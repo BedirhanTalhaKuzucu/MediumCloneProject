@@ -122,6 +122,35 @@ export const getData = (setData, setTrendList) => {
     .catch((error) => console.log("error", error));
 };
 
+export const getStoryDetails = (setdetails, tokenKey, detailsId) => {
+
+  let myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization", `Token ${tokenKey}`
+  );
+  myHeaders.append("Content-Type", "application/json");
+  
+
+  
+
+  let requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  fetch(
+    `http://127.0.0.1:8000/blog/stories/${detailsId}/`,
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result)
+      setdetails(result)
+    })
+    .catch((error) => console.log("error", error));
+};
+
 export const createStory = (formData, values, resetForm) => {
   // console.log(formData);
   // console.log(values)
@@ -158,10 +187,7 @@ export const createStory = (formData, values, resetForm) => {
 export const followedUserStories = (setfollowingStory, token) => {
   let myHeaders = new Headers();
 
-  myHeaders.append(
-    "Authorization", `Token ${token}`
-  );
- 
+  myHeaders.append("Authorization", `Token ${token}`);
 
   let requestOptions = {
     method: "GET",
@@ -180,10 +206,7 @@ export const followedUserStories = (setfollowingStory, token) => {
 
 export const searchBar = (values, setSearching, token) => {
   let myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    `Token ${token}`
-  );
+  myHeaders.append("Authorization", `Token ${token}`);
 
   let requestOptions = {
     method: "GET",
@@ -205,11 +228,9 @@ export const userDetails = (
   // setFollowingTag,
   // setFollowingUser,
   setUserDetail,
-  userId,
+  userId
 ) => {
   let myHeaders = new Headers();
-
-  console.log(userId)
 
   let requestOptions = {
     method: "GET",
@@ -217,15 +238,12 @@ export const userDetails = (
     redirect: "follow",
   };
 
-  fetch(
-    `http://127.0.0.1:8000/auth/users/${userId}`,
-    requestOptions
-  )
+  fetch(`http://127.0.0.1:8000/auth/users/${userId}`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       // setFollowingTag(result.user.followed_topics);
       // setFollowingUser(result.user.followed_user);
-      setUserDetail(result)
+      setUserDetail(result);
       console.log(result);
       // setDetail(result);
     })
@@ -325,6 +343,79 @@ export const addSavedFunction = (storyId, tokenKey, addSave) => {
     };
 
     fetch("http://127.0.0.1:8000/blog/save/", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  }
+};
+
+export const controlFollowFunction = (setfollowOrFollowing, userId, tokenKey) => {
+  let myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    `Token ${tokenKey}`
+  );
+  myHeaders.append("Content-Type", "application/json");
+
+  let requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  fetch("http://127.0.0.1:8000/auth/following/", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+
+      let followedList = [];
+      result.results.map((item) => {
+        followedList.push(item.followed);
+      });
+
+      if (followedList.includes(userId)) {
+        setfollowOrFollowing(true);
+      } else {
+        setfollowOrFollowing(false);
+      }
+    })
+    .catch((error) => console.log("error", error));
+};
+
+export const add_deleteFollowHandle = (followOrFollowing, tokenKey, userId) => {
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Token ${tokenKey}`);
+  myHeaders.append("Content-Type", "application/json");
+
+  if (followOrFollowing) {
+    let raw = JSON.stringify({
+      followed: userId,
+    });
+
+    var requestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(`http://127.0.0.1:8000/auth/following/${userId}/`, requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  } else {
+    let raw = JSON.stringify({
+      followed: userId,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("http://127.0.0.1:8000/auth/following/", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));

@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import IsAdminUser
 from .models import Following, UserProfile
 from.serializers import RegisterSerializer, UserProfileSerializer, FollowingSerializer
+from rest_framework.permissions import IsAuthenticated
 
 
 class RegisterView(CreateAPIView):
@@ -36,7 +37,7 @@ class AboutYouUpdateDeleteView(RetrieveUpdateDestroyAPIView):
 class UserFollowListView(viewsets.ModelViewSet):
     queryset = Following.objects.all()
     serializer_class = FollowingSerializer
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     http_method_names = ['get', 'post', 'delete',]
     lookup_field = 'followed'
 

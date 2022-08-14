@@ -8,7 +8,7 @@ import {
 import ReadingToday from "./UDSideBarParts/ReadingToday";
 import UserProfile from "../UserDashboard/UDSideBarParts/UserProfile";
 
-const UDSlideBar = ({ sideBarEffect, creatorInfo }) => {
+const UDSlideBar = ({ sideBarEffect, creatorInfo, storyId }) => {
   return (
     <SideBarContainerStyle>
       <UnlimitedButtonStyle>Get unlimited access</UnlimitedButtonStyle>
@@ -16,7 +16,7 @@ const UDSlideBar = ({ sideBarEffect, creatorInfo }) => {
       <SearchBar />
 
       {sideBarEffect ? (
-        <UserProfile creatorInfo={creatorInfo} />
+        <UserProfile creatorInfo={creatorInfo} storyId = {storyId} />
       ) : (
         <ReadingToday />
       )}
