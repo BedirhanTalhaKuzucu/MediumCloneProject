@@ -4,9 +4,9 @@ import { Container } from "./styles/UserProfile.styles";
 import { useState, useEffect } from "react";
 import { useAppState } from "../../../contexts/AppContext";
 import Button from 'react-bootstrap/Button';
-import {controlFollowFunction, add_deleteFollowHandle, userDetails} from "../../../helpers/apiRequests"
+import {controlFollowFunction, add_deleteFollowHandle,} from "../../../helpers/apiRequests"
 
-const UserProfile = ( {editOrFollowButton, creatorInfo, storyId}) => {
+const UserProfile = ( {editOrFollowButton, authorInfo, updateDetails }) => {
 
   const [followOrFollowing, setfollowOrFollowing] = useState(false)
   const [companentInfoData, setcompanentInfoData] = useState({
@@ -17,10 +17,10 @@ const UserProfile = ( {editOrFollowButton, creatorInfo, storyId}) => {
 
   useEffect(() => {
     sideBarInfoGet()
-    let userId = creatorInfo.userProfilId
+    let userId = authorInfo.userProfilId
     let tokenKey = get_token()
     controlFollowFunction(setfollowOrFollowing, userId, tokenKey)
-  }, [])
+  }, [authorInfo])
 
   const get_token = () => {
     const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
@@ -30,18 +30,17 @@ const UserProfile = ( {editOrFollowButton, creatorInfo, storyId}) => {
 
   const addFollowHandle = () => {
     const  tokenKey = get_token()
-    let userId = creatorInfo.userProfilId
+    let userId = authorInfo.userProfilId
 
     if (followOrFollowing) {
       add_deleteFollowHandle(followOrFollowing, tokenKey, userId)
-      // addSavedFunction(data.id, tokenKey, addSave)
-      // setaddSave(false)
       setfollowOrFollowing(false)
-      sideBarInfoGet()
+      updateDetails()
     }else{
       add_deleteFollowHandle(followOrFollowing, tokenKey, userId)
       setfollowOrFollowing(true)
-      sideBarInfoGet()
+      updateDetails()
+
     }
   }
 
@@ -59,14 +58,11 @@ const UserProfile = ( {editOrFollowButton, creatorInfo, storyId}) => {
         img: userInfo.userInfo.image
       })
     }else{
-      // let userId = creatorInfo.userId
-      // userDetails(setcompanentInfoData, userId )
-      
       setcompanentInfoData({
-        name: creatorInfo.first_name + " " + creatorInfo.last_name,
-        img: creatorInfo.user_img,
-        bio: creatorInfo.short_bio,
-        followedCount : creatorInfo.followedCount,
+        name: authorInfo.first_name + " " + authorInfo.last_name,
+        img: authorInfo.user_img,
+        bio: authorInfo.short_bio,
+        followedCount : authorInfo.followedCount,
       })
     }
   }
@@ -76,14 +72,14 @@ const UserProfile = ( {editOrFollowButton, creatorInfo, storyId}) => {
   return (
     <Container>
       <div>
-        <img src={companentInfoData.img && companentInfoData.img } alt="user-photo" />
+        <img src={companentInfoData.img ? companentInfoData.img : "" } alt="user-photo" />
         <div className="username"> {companentInfoData ? companentInfoData.name : ""} </div>
         {editOrFollowButton ?
           ""
         :
           <div className="my-3" >  
-            <small className="text-muted"> {companentInfoData.followedCount} Follower</small> 
-            <div> <small className="text-muted"> {companentInfoData.bio} </small>  </div>
+            <small className="text-muted"> {companentInfoData ? companentInfoData.followedCount : ""} Follower</small> 
+            <div> <small className="text-muted"> { companentInfoData ? companentInfoData.bio : ""} </small>  </div>
           </div> 
         }
 

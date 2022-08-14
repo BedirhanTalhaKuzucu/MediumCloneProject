@@ -4,12 +4,9 @@ import Images from "../../assets/Images";
 import { Tooltip } from "@mui/material";
 import MainFollowingTooltip from "../UserDashboard/MainFollowingTooltip";
 import CommentsModal from "./CommentsModal";
-// import { useSpeechSynthesis } from "react-speech-kit";
 
-const StoryDetailMain = ({ details }) => {
-  // const { speak } = useSpeechSynthesis();
+const StoryDetailMain = ({  detaylar }) => {
   const [copied, setCopied] = useState(false);
-  // console.log(details.id);
 
   const copyLink = () => {
     const el = document.createElement("input");
@@ -27,7 +24,7 @@ const StoryDetailMain = ({ details }) => {
         <nav className="authorInf">
           <div>
             <Tooltip
-              title={<MainFollowingTooltip creatorInfo={details.creatorInfo} />}
+              title={<MainFollowingTooltip creatorInfo={detaylar ? detaylar.creatorInfo : ""} />}
               arrow
               componentsProps={{
                 tooltip: {
@@ -38,7 +35,7 @@ const StoryDetailMain = ({ details }) => {
               }}
             >
               <img
-                src={details.creatorInfo.user_img}
+                src={detaylar ? detaylar.creatorInfo.user_img : ""}
                 alt="yazar profil foto"
                 className="AuthorPhoto"
               />
@@ -47,14 +44,11 @@ const StoryDetailMain = ({ details }) => {
           <div>
             <div>
               <h5>
-                {" "}
-                {details.creatorInfo.first_name +
-                  " " +
-                  details.creatorInfo.last_name}{" "}
+                {detaylar ? detaylar.creatorInfo.first_name + " " + detaylar.creatorInfo.last_name : " " }
               </h5>
             </div>
             <div className="d-flex fs-6 text-secondary">
-              <div className="me-3">{details.publish_date.split("T")[0]} </div>
+              <div className="me-3">{detaylar ? detaylar.publish_date.split("T")[0] : " "} </div>
               <div>3 min read</div>
               {/* <button>
                 dinleme çubuğu
@@ -80,21 +74,21 @@ const StoryDetailMain = ({ details }) => {
         </nav>
       </Header>
       <article className="my-5">
-        <p>{details.content}</p>
+        <p>{detaylar ? detaylar.content : ""}</p>
         <ClapsRespond>
           <div className="icon">
             <Tooltip title="Clap" arrow placement="top">
               <img src={Images.clap} alt="claps" />
             </Tooltip>
-            <span>{details.clap_count}</span>
+            <span>{detaylar ? detaylar.clap_count : ""}</span>
           </div>
           <div>|</div>
 
           <CommentsModal
-            commentCounts={details.comment_count}
-            comments={details.comments}
-            commentID={details.id}
-            details={details}
+            commentCounts={detaylar ? detaylar.comment_count : ""}
+            comments={detaylar ? detaylar.comments : ""}
+            commentID={detaylar ? detaylar.id : ""}
+            details={detaylar ? detaylar : ""}
           />
         </ClapsRespond>
       </article>

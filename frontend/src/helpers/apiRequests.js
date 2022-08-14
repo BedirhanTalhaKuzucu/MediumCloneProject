@@ -122,7 +122,7 @@ export const getData = (setData, setTrendList) => {
     .catch((error) => console.log("error", error));
 };
 
-export const getStoryDetails = (setdetails, tokenKey, detailsId) => {
+export const getStoryDetails = (setcompanentInfoData, tokenKey, detailsId) => {
 
   let myHeaders = new Headers();
   myHeaders.append(
@@ -146,7 +146,41 @@ export const getStoryDetails = (setdetails, tokenKey, detailsId) => {
     .then((response) => response.json())
     .then((result) => {
       console.log(result)
-      setdetails(result)
+      setcompanentInfoData({
+        name: result.creatorInfo.first_name + " " + result.creatorInfo.last_name,
+        img: result.creatorInfo.user_img,
+        bio: result.creatorInfo.short_bio,
+        followedCount : result.creatorInfo.followedCount,
+      })
+    })
+    .catch((error) => console.log("error", error));
+};
+
+export const getStoryDetailsA = (tokenKey, detailsId, setdetaylar) => {
+
+  let myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization", `Token ${tokenKey}`
+  );
+  myHeaders.append("Content-Type", "application/json");
+  
+
+  
+
+  let requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  fetch(
+    `http://127.0.0.1:8000/blog/stories/${detailsId}/`,
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result)
+      setdetaylar(result)
     })
     .catch((error) => console.log("error", error));
 };
