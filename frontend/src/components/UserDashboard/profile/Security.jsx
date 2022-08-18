@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SecurityContainer } from "../styles/profile/Security.styles";
 import { Buttons } from "../styles/profile/AboutYou.styles";
+import PasswordChangeModal from "./PasswordChangeModal";
+import { userDetails } from "../../../helpers/apiRequests";
+import axios from "axios";
+import UserDeleteModal from "./UserDeleteModal";
+import { useAppState } from "../../../contexts/AppContext";
 
 const Security = () => {
+  const { userInfo } = useAppState();
+
   return (
     <SecurityContainer>
       <h3>Security</h3>
       <nav>
         <div>
           <h5>Email</h5>
-          <input type="email" value="useremail@example.com" />
+          <input type="email" value={userInfo?.userInfo?.email} />
           <p>
             Control whether to receive email from Medium. You’ll still receive
             administrative emails even if this setting is off.
@@ -17,8 +24,6 @@ const Security = () => {
         </div>
         <Buttons>
           <button>Edit</button>
-          {/* <button>Save</button>
-        <button>Cancel</button> */}
         </Buttons>
       </nav>
       <nav>
@@ -31,7 +36,9 @@ const Security = () => {
           </p>
         </div>
         <Buttons>
-          <button>Edit</button>
+          <button>
+            <PasswordChangeModal />
+          </button>
           {/* <button>Save</button>
         <button>Cancel</button> */}
         </Buttons>
@@ -39,7 +46,12 @@ const Security = () => {
       <nav className="deleteAcoount">
         <h5>Delete account</h5>
         <p>Permanently delete your account and all of your content.</p>
-        <a href="#">Delete account</a>
+        <a
+          href="#"
+          //  onClick={() => deleteUser() && console.log("welldone")}
+        >
+          <UserDeleteModal />
+        </a>
       </nav>
     </SecurityContainer>
   );
