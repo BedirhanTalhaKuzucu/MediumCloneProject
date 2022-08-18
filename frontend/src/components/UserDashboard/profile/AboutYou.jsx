@@ -100,8 +100,8 @@ const AboutYou = () => {
             </p>
           </div>
           <div>
-            <img src={settingPageInfo && settingPageInfo.userfor?.profile_photo} alt="" className="profilePhoto" />
-            {/* <input type="image" src="" value={settingPageInfo && settingPageInfo.userfor?.profile_photo} alt="" className="profilePhoto" /> */}
+            {/* <img src={settingPageInfo && settingPageInfo.userfor?.profile_photo} alt="" className="profilePhoto" /> */}
+            <input type="image" src={settingPageInfo && settingPageInfo.userfor?.profile_photo} alt="" className="profilePhoto" />
           </div>
         </div>
         <Buttons>
