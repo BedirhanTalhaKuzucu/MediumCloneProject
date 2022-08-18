@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import {getData, UserFollowFunc, followedUserStories} from "../helpers/apiRequests"
+import {getData, UserFollowFunc, followedUserStories, settingUserInfo} from "../helpers/apiRequests"
 
 const AppStateContext = React.createContext();
 
@@ -31,6 +31,9 @@ export function AppStateProvider({ children }) {
     const [trendList, setTrendList] = useState("")
     const [userInfo, setUserInfo] = useState("")
 
+    //setting page user data
+    const [settingPageInfo, setsettingPageInfo] = useState()
+
 
     const get_user_info = () => {
         const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
@@ -48,9 +51,12 @@ export function AppStateProvider({ children }) {
     useEffect(() => {
         getData(setData, setTrendList)
         UserFollowFunc(setUsers);
-        let token = getToken()
-        if (token) {
+        const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
+        if (get_session_user_info) {
+            const token = get_session_user_info.key
+            const userId = get_session_user_info.userInfo.userId
             followedUserStories(setFollowingStories, token)
+            settingUserInfo(setsettingPageInfo, token, userId)
         }
     }, []);
   
@@ -67,6 +73,7 @@ export function AppStateProvider({ children }) {
         setFollowingStories, followingStories,
         getToken,
         users,
+        settingPageInfo, setsettingPageInfo
     };
   
     return <AppStateContext.Provider value={value}> {children} </ AppStateContext.Provider>;

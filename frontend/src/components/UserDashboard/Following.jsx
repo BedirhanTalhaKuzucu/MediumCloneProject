@@ -11,15 +11,9 @@ const Following = () => {
   const { followingStories} = useAppState()
 
 
-  const getToken = () => {
-    const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
-    const token = get_session_user_info.key
-    return token
-  }
+  
 
   useEffect(() => {
-    // const token = getToken()
-    // followedUserStories(setFollowingStories, token);
   }, [followingStories]);
 
   return (

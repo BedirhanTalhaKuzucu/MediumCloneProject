@@ -168,8 +168,7 @@ class UserSerializer(serializers.ModelSerializer):
             'saved_stories_count',
             'saved_stories',
         )
-    # def get_followed_user(self, obj):
-    #     return obj.followed_user.all().values('id',"followed")
+   
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -191,4 +190,34 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'about_photo',
             )
 
+
+
+
+
+class UserProfileSettingSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserProfile
+        fields = (
+            "short_bio",
+            "profile_photo",
+        )
+
+
+
+class UserSettingSerializer(serializers.ModelSerializer):
+
+    userfor = UserProfileSettingSerializer()
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "userfor",
+        )
+   
             

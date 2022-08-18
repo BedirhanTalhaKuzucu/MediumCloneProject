@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import RegisterView, UserView, AboutYouUpdateDeleteView, UserFollowListView
+from .views import RegisterView, UserView, AboutYouUpdateDeleteView, UserFollowListView, UserSettingInfoView
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -11,4 +11,6 @@ urlpatterns = [
     path("register/", RegisterView.as_view()),
     path("users/", UserView.as_view()),
     path("users/<uuid:pk>/", AboutYouUpdateDeleteView.as_view(), name='user-detail'),
-    ]
+    path("users/settings/<int:id>/", UserSettingInfoView.as_view()),
+
+]

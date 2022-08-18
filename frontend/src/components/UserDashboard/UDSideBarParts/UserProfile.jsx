@@ -20,9 +20,11 @@ const UserProfile = ( {editOrFollowButton, authorInfo, updateDetails }) => {
 
   useEffect(() => {
     sideBarInfoGet()
-    let userId = authorInfo.userProfilId
-    let tokenKey = get_token()
-    controlFollowFunction(setfollowOrFollowing, userId, tokenKey)
+    if (authorInfo) {
+      let userId = authorInfo.userProfilId
+      let tokenKey = get_token()
+      controlFollowFunction(setfollowOrFollowing, userId, tokenKey)
+    }
   }, [authorInfo])
 
   const get_token = () => {

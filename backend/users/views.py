@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 # from .permissions import IsUserOrReadOnly
 from rest_framework.permissions import IsAdminUser
 from .models import Following, UserProfile
-from.serializers import RegisterSerializer, UserProfileSerializer, FollowingSerializer
+from.serializers import RegisterSerializer, UserProfileSerializer, FollowingSerializer, UserSettingSerializer
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -59,4 +59,14 @@ class UserFollowListView(viewsets.ModelViewSet):
         instance = Following.objects.get(follower=follower, followed= followed)
         instance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+
+class UserSettingInfoView(RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSettingSerializer
+    permission_classes = (IsAuthenticated,)
+    lookup_field="id"
+
 

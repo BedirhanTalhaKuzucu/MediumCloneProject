@@ -38,10 +38,14 @@ export const signUpFunction = (values, resetForm, setErrorMesage, navigate) => {
 };
 
 export const logInFunction = (
-  values, resetForm, handleErrorMesage,
+  values,
+  resetForm,
+  handleErrorMesage,
   navigate,
   setErrorMesage,
-  setFollowingStories, getToken
+  setFollowingStories, 
+  getToken,
+  setsettingPageInfo
 ) => {
   let myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -69,8 +73,11 @@ export const logInFunction = (
         response.text().then((result) => {
           setErrorMesage("");
           sessionStorage.setItem("user_info", result);
-          let token = getToken()
-          followedUserStories(setFollowingStories, token)
+          let token = getToken();
+          const user_info = JSON.parse(sessionStorage.getItem("user_info"));
+          const userId = user_info.userInfo.userId;
+          followedUserStories(setFollowingStories, token);
+          settingUserInfo(setsettingPageInfo, token, userId)
           resetForm({ values: "" });
           navigate("home");
         });
@@ -123,50 +130,66 @@ export const getData = (setData, setTrendList) => {
     .catch((error) => console.log("error", error));
 };
 
-export const getStoryDetails = (setcompanentInfoData, tokenKey, detailsId) => {
-
+export const settingUserInfo = (setsettingPageInfo, token, userId) => {
   let myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization", `Token ${tokenKey}`
-  );
+  myHeaders.append("Authorization", `Token ${token}`);
   myHeaders.append("Content-Type", "application/json");
   
 
-  
+  // let raw = JSON.stringify({
+  //   followed: 20,
+  // });
 
   let requestOptions = {
     method: "GET",
     headers: myHeaders,
+    // body: raw,
     redirect: "follow",
   };
 
-  fetch(
-    `http://127.0.0.1:8000/blog/stories/${detailsId}/`,
-    requestOptions
-  )
+  fetch(`http://127.0.0.1:8000/auth/users/settings/${userId}/`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result)
-      setcompanentInfoData({
-        name: result.creatorInfo.first_name + " " + result.creatorInfo.last_name,
-        img: result.creatorInfo.user_img,
-        bio: result.creatorInfo.short_bio,
-        followedCount : result.creatorInfo.followedCount,
-      })
-    })
+      setsettingPageInfo(result)
+      console.log(result)})
     .catch((error) => console.log("error", error));
 };
 
+// export const getStoryDetails = (setcompanentInfoData, tokenKey, detailsId) => {
+
+//   let myHeaders = new Headers();
+//   myHeaders.append(
+//     "Authorization", `Token ${tokenKey}`
+//   );
+//   myHeaders.append("Content-Type", "application/json");
+
+//   let requestOptions = {
+//     method: "GET",
+//     headers: myHeaders,
+//     redirect: "follow",
+//   };
+
+//   fetch(
+//     `http://127.0.0.1:8000/blog/stories/${detailsId}/`,
+//     requestOptions
+//   )
+//     .then((response) => response.json())
+//     .then((result) => {
+//       console.log(result)
+//       setcompanentInfoData({
+//         name: result.creatorInfo.first_name + " " + result.creatorInfo.last_name,
+//         img: result.creatorInfo.user_img,
+//         bio: result.creatorInfo.short_bio,
+//         followedCount : result.creatorInfo.followedCount,
+//       })
+//     })
+//     .catch((error) => console.log("error", error));
+// };
+
 export const getStoryDetailsA = (tokenKey, detailsId, setdetaylar) => {
-
   let myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization", `Token ${tokenKey}`
-  );
+  myHeaders.append("Authorization", `Token ${tokenKey}`);
   myHeaders.append("Content-Type", "application/json");
-  
-
-  
 
   let requestOptions = {
     method: "GET",
@@ -174,14 +197,11 @@ export const getStoryDetailsA = (tokenKey, detailsId, setdetaylar) => {
     redirect: "follow",
   };
 
-  fetch(
-    `http://127.0.0.1:8000/blog/stories/${detailsId}/`,
-    requestOptions
-  )
+  fetch(`http://127.0.0.1:8000/blog/stories/${detailsId}/`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result)
-      setdetaylar(result)
+      console.log(result);
+      setdetaylar(result);
     })
     .catch((error) => console.log("error", error));
 };
@@ -407,12 +427,13 @@ export const addSavedFunction = (storyId, tokenKey, addSave) => {
   }
 };
 
-export const controlFollowFunction = (setfollowOrFollowing, userId, tokenKey) => {
+export const controlFollowFunction = (
+  setfollowOrFollowing,
+  userId,
+  tokenKey
+) => {
   let myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    `Token ${tokenKey}`
-  );
+  myHeaders.append("Authorization", `Token ${tokenKey}`);
   myHeaders.append("Content-Type", "application/json");
 
   let requestOptions = {
@@ -508,4 +529,3 @@ export const commentCreateFunc = (setNewComment) => {
     })
     .catch((error) => console.log("error", error));
 };
-
