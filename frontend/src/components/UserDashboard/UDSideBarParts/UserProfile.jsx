@@ -4,7 +4,8 @@ import { Container } from "./styles/UserProfile.styles";
 import { useState, useEffect } from "react";
 import { useAppState } from "../../../contexts/AppContext";
 import Button from 'react-bootstrap/Button';
-import {controlFollowFunction, add_deleteFollowHandle,} from "../../../helpers/apiRequests"
+import {controlFollowFunction, add_deleteFollowHandle, followedUserStories} from "../../../helpers/apiRequests"
+
 
 const UserProfile = ( {editOrFollowButton, authorInfo, updateDetails }) => {
 
@@ -13,6 +14,8 @@ const UserProfile = ( {editOrFollowButton, authorInfo, updateDetails }) => {
     name:"",
     img : "",
   })
+  const { setFollowingStories } = useAppState()
+
 
 
   useEffect(() => {
@@ -36,11 +39,12 @@ const UserProfile = ( {editOrFollowButton, authorInfo, updateDetails }) => {
       add_deleteFollowHandle(followOrFollowing, tokenKey, userId)
       setfollowOrFollowing(false)
       updateDetails()
+      followedUserStories(setFollowingStories, tokenKey )
     }else{
       add_deleteFollowHandle(followOrFollowing, tokenKey, userId)
       setfollowOrFollowing(true)
       updateDetails()
-
+      followedUserStories(setFollowingStories, tokenKey )
     }
   }
 

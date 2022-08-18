@@ -96,10 +96,10 @@ const ArticleCard = ({ data }) => {
 
       <section className="articleInf">
         <nav className="part1">
-          <Link to="/story" state={{ details: data }} className="title">
+          <Link to={`/story/${data.id}`}  className="title">
             {data.title.replace(".", "")}
           </Link>{" "}
-          <Link to="/story" state={{ details: data }} className="articlePart">
+          <Link to={`/story/${data.id}`}  className="articlePart">
             {data?.content.slice(0, 170) + "..."}
           </Link>
           <div className="specialDetail">

@@ -3,9 +3,13 @@ import ArticleCard from "./ArticleCard";
 import { followedUserStories } from "../../helpers/apiRequests";
 import { useEffect, useState } from "react";
 import Images from "../../assets/Images";
+import { useAppState } from "../../contexts/AppContext";
+
 
 const Following = () => {
-  const [followingStories, setFollowingStories] = useState("");
+  // const [followingStories, setFollowingStories] = useState("");
+  const { followingStories} = useAppState()
+
 
   const getToken = () => {
     const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
@@ -14,9 +18,9 @@ const Following = () => {
   }
 
   useEffect(() => {
-    const token = getToken()
-    followedUserStories(setFollowingStories, token);
-  }, []);
+    // const token = getToken()
+    // followedUserStories(setFollowingStories, token);
+  }, [followingStories]);
 
   return (
     <div>

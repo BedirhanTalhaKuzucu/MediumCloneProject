@@ -38,11 +38,10 @@ export const signUpFunction = (values, resetForm, setErrorMesage, navigate) => {
 };
 
 export const logInFunction = (
-  values,
-  resetForm,
-  handleErrorMesage,
+  values, resetForm, handleErrorMesage,
   navigate,
-  setErrorMesage
+  setErrorMesage,
+  setFollowingStories, getToken
 ) => {
   let myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -70,6 +69,8 @@ export const logInFunction = (
         response.text().then((result) => {
           setErrorMesage("");
           sessionStorage.setItem("user_info", result);
+          let token = getToken()
+          followedUserStories(setFollowingStories, token)
           resetForm({ values: "" });
           navigate("home");
         });
@@ -232,7 +233,7 @@ export const followedUserStories = (setfollowingStory, token) => {
   fetch("http://127.0.0.1:8000/blog/stories/following", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      // console.log(result);
+      console.log("deneme");
       setfollowingStory(result.results);
     })
     .catch((error) => console.log("error", error));
