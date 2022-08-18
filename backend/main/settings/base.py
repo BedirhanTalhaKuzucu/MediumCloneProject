@@ -157,4 +157,3 @@ CORS_ALLOW_METHODS = [
 #         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
 #     ]
 # }
-

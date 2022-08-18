@@ -28,10 +28,12 @@ const UserProfile = ( {editOrFollowButton, authorInfo, updateDetails }) => {
   }, [authorInfo])
 
   const get_token = () => {
-    const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
-    let tokenKey = get_session_user_info.key
-    return tokenKey
-  }
+    const get_session_user_info = JSON.parse(
+      sessionStorage.getItem("user_info")
+    );
+    let tokenKey = get_session_user_info.key;
+    return tokenKey;
+  };
 
   const addFollowHandle = () => {
     const  tokenKey = get_token()
@@ -57,23 +59,24 @@ const UserProfile = ( {editOrFollowButton, authorInfo, updateDetails }) => {
 
   const sideBarInfoGet = () => {
     if (editOrFollowButton) {
-      let userInfo = get_user_info()
-      console.log(userInfo)
+      let userInfo = get_user_info();
+      console.log(userInfo);
       setcompanentInfoData({
         name: userInfo.userInfo.first_name + " " + userInfo.userInfo.last_name,
         img: userInfo.userInfo.image
       })
     }else{
+      // let userId = creatorInfo.userId
+      // userDetails(setcompanentInfoData, userId )
+      
       setcompanentInfoData({
         name: authorInfo.first_name + " " + authorInfo.last_name,
         img: authorInfo.user_img,
         bio: authorInfo.short_bio,
-        followedCount : authorInfo.followedCount,
-      })
+        followedCount: authorInfo.followedCount,
+      });
     }
-  }
-
-
+  };
 
   return (
     <Container>
@@ -89,14 +92,15 @@ const UserProfile = ( {editOrFollowButton, authorInfo, updateDetails }) => {
           </div> 
         }
 
-      {editOrFollowButton ?
-        <Link className="edit-profile" to="/home/profile">
-          Edit profile
-        </Link>
-        :
-        <Button variant="success" onClick={addFollowHandle} >{followOrFollowing ? "Following"  : "Follow" }</Button>  
-      }
-             
+        {editOrFollowButton ? (
+          <Link className="edit-profile" to="/home/profile">
+            Edit profile
+          </Link>
+        ) : (
+          <Button variant="success" onClick={addFollowHandle}>
+            {followOrFollowing ? "Following" : "Follow"}
+          </Button>
+        )}
       </div>
     </Container>
   );
