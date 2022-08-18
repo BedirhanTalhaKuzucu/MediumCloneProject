@@ -110,7 +110,7 @@ function PasswordChangeModal() {
   }, []);
 
   const handleFormSubmit = () => {
-    console.log("tamam");
+    // console.log("tamam");
   };
 
   return (
