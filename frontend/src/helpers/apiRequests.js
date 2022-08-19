@@ -43,7 +43,7 @@ export const logInFunction = (
   handleErrorMesage,
   navigate,
   setErrorMesage,
-  setFollowingStories, 
+  setFollowingStories,
   getToken,
   setsettingPageInfo
 ) => {
@@ -77,7 +77,7 @@ export const logInFunction = (
           const user_info = JSON.parse(sessionStorage.getItem("user_info"));
           const userId = user_info.userInfo.userId;
           followedUserStories(setFollowingStories, token);
-          settingUserInfo(setsettingPageInfo, token, userId)
+          settingUserInfo(setsettingPageInfo, token, userId);
           resetForm({ values: "" });
           navigate("home");
         });
@@ -134,7 +134,6 @@ export const settingUserInfo = (setsettingPageInfo, token, userId) => {
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Token ${token}`);
   myHeaders.append("Content-Type", "application/json");
-  
 
   // let raw = JSON.stringify({
   //   followed: 20,
@@ -150,8 +149,9 @@ export const settingUserInfo = (setsettingPageInfo, token, userId) => {
   fetch(`http://127.0.0.1:8000/auth/users/settings/${userId}/`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      setsettingPageInfo(result)
-      console.log(result)})
+      setsettingPageInfo(result);
+      console.log(result);
+    })
     .catch((error) => console.log("error", error));
 };
 
@@ -301,6 +301,23 @@ export const userDetails = (
       setUserDetail(result);
       console.log(result);
       // setDetail(result);
+    })
+    .catch((error) => console.log("error", error));
+};
+export const userDetailsForStories = (userId, setUserDetailForStories) => {
+  let myHeaders = new Headers();
+
+  let requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  fetch(`http://127.0.0.1:8000/auth/users/${userId}`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      setUserDetailForStories(result);
+      console.log(result);
     })
     .catch((error) => console.log("error", error));
 };
