@@ -33,7 +33,7 @@ function CommentsModal({ commentCounts, comments, commentID, details }) {
           <img src={Images.chat} alt="chat" className="" />
         </Tooltip>
 
-        <span> {commentCounts} </span>
+        <span> {commentCounts ? commentCounts : ""} </span>
       </OpenButtonStyle>
       <Modal
         show={show}

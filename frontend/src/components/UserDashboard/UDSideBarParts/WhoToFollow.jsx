@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import Images from "../../../assets/Images";
 import { UserFollowFunc } from "../../../helpers/apiRequests";
 import { UserFollowStyle } from "./styles/WhoToFollow.styles";
+import { useAppState } from "../../../contexts/AppContext";
 
 const WhoToFollow = () => {
-  const [users, setUsers] = useState([]);
+  const { users} = useAppState()
 
-  useEffect(() => {
-    UserFollowFunc(setUsers);
-    console.log(users);
-  }, []);
+
+  // useEffect(() => {
+  //   UserFollowFunc(setUsers);
+  //   console.log(users);
+  // }, []);
 
   return (
     <UserFollowStyle>

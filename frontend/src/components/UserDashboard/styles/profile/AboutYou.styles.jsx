@@ -10,11 +10,30 @@ export const AboutContainer = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 2rem;
+
     h5 {
       margin-bottom: 1.5rem;
       font-weight: bolder;
       font-size: 1.2rem;
     }
+
+    .NameDiv{
+      display: flex;
+
+      span{
+        color:#8d8a8a;
+        width: 8rem;
+      }
+      input {
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid #bdbdbd;
+      color: gray;
+      &:focus {
+        outline: none;}
+      }
+    }
+    
     input {
       width: 100%;
       border: none;
@@ -24,6 +43,7 @@ export const AboutContainer = styled.div`
         outline: none;
       }
     }
+    
     p {
       font-size: 13px;
       margin-top: 1rem;

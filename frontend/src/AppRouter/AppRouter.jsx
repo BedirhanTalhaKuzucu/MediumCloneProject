@@ -18,6 +18,8 @@ import Responses from "../components/UserStoriesParts/Responses";
 import UserLists from "../pages/UserLists";
 import SavedStories from "../components/UserStoriesParts/SavedStories";
 import TagDetail from "../pages/TagDetail";
+import { memo } from "react";
+
 
 function AppRouter() {
   return (
@@ -30,7 +32,7 @@ function AppRouter() {
           <Route path="recommended" element={<Recommended />} />
         </Route>
 
-        <Route path="story" element={<StoryDetail />} />
+        <Route path="/story/:id" element={<StoryDetail />} />
 
         <Route path="home/profile" element={<Profile />}>
           <Route index element={<AboutYou />} />
@@ -59,4 +61,6 @@ function AppRouter() {
   );
 }
 
-export default AppRouter;
+// export default AppRouter;
+
+export default memo(AppRouter);

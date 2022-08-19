@@ -3,7 +3,6 @@ import { SecurityContainer } from "../styles/profile/Security.styles";
 import { Buttons } from "../styles/profile/AboutYou.styles";
 import PasswordChangeModal from "./PasswordChangeModal";
 import { userDetails } from "../../../helpers/apiRequests";
-import axios from "axios";
 import UserDeleteModal from "./UserDeleteModal";
 import { useAppState } from "../../../contexts/AppContext";
 

@@ -1,8 +1,15 @@
 import React from "react";
 import { useState } from "react";
 import { AboutContainer, Buttons } from "../styles/profile/AboutYou.styles";
+import { useAppState } from "../../../contexts/AppContext";
+
 
 const AboutYou = () => {
+
+  const {  settingPageInfo } = useAppState();
+  
+  // console.log(settingPageInfo);
+
   const [edit, setEdit] = useState({
     firstname: false,
     shortBio: false,
@@ -21,7 +28,15 @@ const AboutYou = () => {
       <nav>
         <div>
           <h5>Full Name</h5>
-          <input type="text" value="full name Input" />
+          <div className="NameDiv">
+            <span  >First Name:  </span>
+            <input type="text" value={settingPageInfo && settingPageInfo.first_name} />
+          </div>
+          <div className="mt-3 NameDiv" >
+            <span>Last Name: </span>
+            <input type="text" value={settingPageInfo && settingPageInfo.last_name} />
+          </div>
+
           <p>
             Your name appears on your Profile page, as your byline, and in your
             responses. It is a required field.
@@ -47,7 +62,7 @@ const AboutYou = () => {
       <nav>
         <div>
           <h5>Short Bio</h5>
-          <input type="text" value="" placeholder="Add your short bio" />
+          <input type="text" value={settingPageInfo && settingPageInfo.userfor?.short_bio} placeholder="Add your short bio" />
           <p>
             Your short bio appears on your Profile and next to your stories. Max
             160 characters.
@@ -85,7 +100,8 @@ const AboutYou = () => {
             </p>
           </div>
           <div>
-            <input type="image" src="" alt="" className="profilePhoto" />
+            {/* <img src={settingPageInfo && settingPageInfo.userfor?.profile_photo} alt="" className="profilePhoto" /> */}
+            <input type="image" src={settingPageInfo && settingPageInfo.userfor?.profile_photo} alt="" className="profilePhoto" />
           </div>
         </div>
         <Buttons>
@@ -105,11 +121,11 @@ const AboutYou = () => {
           <div className="userName-URL">
             <div>
               <label htmlFor="">Username</label>
-              <input type="text" name="" id="" value="userName Input" />
+              <input type="text" name="" id="" value={settingPageInfo && settingPageInfo.username} />
             </div>
             <div>
               <label htmlFor="">URL</label>
-              <input type="text" value="	https://medium.com/@username" />
+              <input type="text" value={`https://medium.com/@${settingPageInfo && settingPageInfo.username}` }/>
             </div>
           </div>
         </div>

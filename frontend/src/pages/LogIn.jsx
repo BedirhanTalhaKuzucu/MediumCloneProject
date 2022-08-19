@@ -22,7 +22,7 @@ function LogIn() {
 
     const [errorMesage, setErrorMesage] = useState(false)
     const navigate = useNavigate()
-    const { logInShow, setLogInShow, } = useAppState()
+    const { logInShow, setLogInShow, setFollowingStories, getToken, setsettingPageInfo } = useAppState()
 
     const formik = useFormik({
         initialValues: {
@@ -32,7 +32,7 @@ function LogIn() {
         validationSchema: validationSchemaLogIn,
         onSubmit: ((values, { resetForm }) => {
             console.log(values)
-            logInFunction(values, resetForm, handleErrorMesage, navigate, setErrorMesage)
+            logInFunction(values, resetForm, handleErrorMesage, navigate, setErrorMesage, setFollowingStories, getToken, setsettingPageInfo)
         }),
     });
 
