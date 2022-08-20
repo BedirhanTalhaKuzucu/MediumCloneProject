@@ -25,7 +25,7 @@ class CommentClapSerializer(serializers.ModelSerializer):
 class CommentsSerializer(serializers.ModelSerializer):
     #! yorum sahibi ekleme işini view da yapacağımız için read_only dedik.
     user = serializers.StringRelatedField(read_only=True)
-    clap_comment = CommentClapSerializer(many=True)
+    clap_comment = CommentClapSerializer(many=True, read_only=True)
     clap_comment_count = serializers.IntegerField(
         source='clap_comment.count', read_only=True)
     days_since_joined = serializers.SerializerMethodField()
