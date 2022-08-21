@@ -216,8 +216,31 @@ class UserSettingSerializer(serializers.ModelSerializer):
             "username",
             "first_name",
             "last_name",
-            "email",
             "userfor",
         )
+    
+    def update(self, instance, validated_data):
+
+        userProfilUpdated = validated_data.pop('userfor')
+
+        userProfil = UserProfile.objects.get(user=instance.id)
+        userProfil.short_bio = userProfilUpdated["short_bio"]
+        userProfil.profile_photo = userProfilUpdated["profile_photo"]
+
+        
+        userProfil.save()
+
+        instance.username = validated_data["username"]
+        instance.first_name = validated_data["first_name"]
+        instance.last_name = validated_data["last_name"]
+        instance.save()
+
+        return instance
+
+
+
+
+
+
    
             

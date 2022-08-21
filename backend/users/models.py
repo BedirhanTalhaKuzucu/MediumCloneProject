@@ -17,6 +17,15 @@ class UserProfile(models.Model):
     def __str__(self):
         return f'{self.user}'
 
+    def image_img(self):
+     if self.item_image:
+         return u'<img src="%s" width="50" height="50" />' % self.profile_photo.url
+     else:
+         return '(Sin imagen)'
+
+    image_img.short_description = 'Thumb'
+    image_img.allow_tags = True
+
 
 
 class Following(models.Model):
