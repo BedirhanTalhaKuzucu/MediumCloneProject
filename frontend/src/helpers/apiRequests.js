@@ -77,7 +77,7 @@ export const logInFunction = (
           const user_info = JSON.parse(sessionStorage.getItem("user_info"));
           const userId = user_info.userInfo.userId;
           followedUserStories(setFollowingStories, token);
-          settingUserInfo(setsettingPageInfo, token, userId);
+          settingUserInfo(setsettingPageInfo, token, userId);;
           resetForm({ values: "" });
           navigate("home");
         });
@@ -130,61 +130,92 @@ export const getData = (setData, setTrendList) => {
     .catch((error) => console.log("error", error));
 };
 
-export const settingUserInfo = (setsettingPageInfo, token, userId) => {
-  let myHeaders = new Headers();
-  myHeaders.append("Authorization", `Token ${token}`);
-  myHeaders.append("Content-Type", "application/json");
+export const settingUserInfo = (setsettingPageInfo, token, userId, values, resetForm ) => {
 
-  // let raw = JSON.stringify({
-  //   followed: 20,
-  // });
+  if (values) {
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", `Token ${token}`);
+    myHeaders.append(
+      "Cookie",
+      "csrftoken=ELiWUgqxhTQmVoViigupeVDooY7d90qARaohIkvQSS5ZqJy4p26tjhCzRzyCXJRJ"
+    );
 
-  let requestOptions = {
-    method: "GET",
+    let formdata = new FormData();
+    formdata.append("id", userId);
+    formdata.append("username", values.username);
+    formdata.append("first_name", values.first_name);
+    formdata.append("last_name", values.last_name);
+    // formdata.append("userfor.profile_photo", fileInput.files[0], values.profil_photo);
+    formdata.append("userfor.short_bio", values.short_bio);
+
+    let requestOptions = {
+      method: "PUT",
+      headers: myHeaders,
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://127.0.0.1:8000/auth/users/settings/${userId}/`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setsettingPageInfo(result);
+      })
+      .catch((error) => console.log("error", error));
+  } else {
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", `Token ${token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    let requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      `http://127.0.0.1:8000/auth/users/settings/${userId}/`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setsettingPageInfo(result);
+        console.log(result);
+      })
+      .catch((error) => console.log("error", error));
+  }
+
+};
+
+export const updatedProfilImage = (token, userId, profil_ımage, setsettingPageInfo) => {
+  var myHeaders = new Headers();
+  myHeaders.append( "Authorization", `Token ${token}` );
+  myHeaders.append(
+    "Cookie",
+    "csrftoken=ELiWUgqxhTQmVoViigupeVDooY7d90qARaohIkvQSS5ZqJy4p26tjhCzRzyCXJRJ"
+  );
+
+  var formdata = new FormData();
+  formdata.append("profile_photo", profil_ımage);
+
+  var requestOptions = {
+    method: "PUT",
     headers: myHeaders,
-    // body: raw,
+    body: formdata,
     redirect: "follow",
   };
 
-  fetch(`http://127.0.0.1:8000/auth/users/settings/${userId}/`, requestOptions)
+  fetch(`http://127.0.0.1:8000/auth/users/settings/image/${userId}/`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      setsettingPageInfo(result);
-      console.log(result);
+      console.log(result)
+      settingUserInfo(setsettingPageInfo, token, userId,)  
     })
     .catch((error) => console.log("error", error));
-};
-
-// export const getStoryDetails = (setcompanentInfoData, tokenKey, detailsId) => {
-
-//   let myHeaders = new Headers();
-//   myHeaders.append(
-//     "Authorization", `Token ${tokenKey}`
-//   );
-//   myHeaders.append("Content-Type", "application/json");
-
-//   let requestOptions = {
-//     method: "GET",
-//     headers: myHeaders,
-//     redirect: "follow",
-//   };
-
-//   fetch(
-//     `http://127.0.0.1:8000/blog/stories/${detailsId}/`,
-//     requestOptions
-//   )
-//     .then((response) => response.json())
-//     .then((result) => {
-//       console.log(result)
-//       setcompanentInfoData({
-//         name: result.creatorInfo.first_name + " " + result.creatorInfo.last_name,
-//         img: result.creatorInfo.user_img,
-//         bio: result.creatorInfo.short_bio,
-//         followedCount : result.creatorInfo.followedCount,
-//       })
-//     })
-//     .catch((error) => console.log("error", error));
-// };
+}
 
 export const getStoryDetailsA = (tokenKey, detailsId, setdetaylar) => {
   let myHeaders = new Headers();
