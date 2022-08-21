@@ -20,6 +20,7 @@ const Images = {
   404: require("./404.png"),
   tag: require("./tag.png"),
   loading: require("./loading.gif"),
+  Mgif: require("./Mgif.gif"),
 };
 
 export default Images;
