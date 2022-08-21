@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { YourStoriesStyles } from "./styles/YourStoriesMain.styles";
 
 const YourStoriesMain = () => {
@@ -30,15 +30,6 @@ const YourStoriesMain = () => {
           to="public"
         >
           Published
-        </NavLink>
-        <NavLink
-          style={({ isActive }) => ({
-            borderBottom: isActive ? "3px solid gray" : "",
-            opacity: isActive ? "1" : "",
-          })}
-          to="responses"
-        >
-          Responses
         </NavLink>
       </div>
       <Outlet />
