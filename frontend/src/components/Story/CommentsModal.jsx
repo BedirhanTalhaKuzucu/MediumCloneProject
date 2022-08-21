@@ -1,9 +1,8 @@
 import { Tooltip } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Images from "../../assets/Images";
+import { useAppState } from "../../contexts/AppContext";
 import { commentCreateFunc } from "../../helpers/apiRequests";
 import {
   CommentsStyles,
@@ -12,19 +11,31 @@ import {
 } from "./styles/CommentsModel.styles";
 
 function CommentsModal({ commentCounts, comments, commentID, details }) {
+  const { userInfo } = useAppState();
+  const ref = useRef(null);
+
   const [show, setShow] = useState(false);
-
-  const [newComment, setNewComment] = useState([]);
-
-  useEffect(() => {}, []);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const commentCreate = () => {
-    commentCreateFunc(setNewComment);
-    console.log("başarılı", newComment);
+  const storyId = details?.id;
+
+  const Token = userInfo?.key;
+
+  const [comment, setComment] = useState("");
+
+  const handleComment = (e) => {
+    e.preventDefault();
+    setComment(ref?.current?.value);
+    console.log(comment);
+    commentCreateFunc(comment, storyId, Token);
   };
+
+  useEffect(() => {
+    if (commentCounts === 0) {
+      setShow(false);
+    }
+  }, [commentCounts]);
 
   return (
     <>
@@ -48,12 +59,13 @@ function CommentsModal({ commentCounts, comments, commentID, details }) {
             <Modal.Title>Responses ( {commentCounts} )</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <form action="#">
+            <form action="#" onSubmit={(e) => handleComment(e)}>
               <textarea
                 name=""
                 id=""
                 cols="50"
                 rows="3"
+                ref={ref}
                 placeholder="What are your thoughts?"
               ></textarea>
 
@@ -61,11 +73,7 @@ function CommentsModal({ commentCounts, comments, commentID, details }) {
                 <button type="reset" className="resetButton">
                   Cancel
                 </button>
-                <button
-                  type="submit"
-                  onClick={() => commentCreate()}
-                  className="submitButton btn btn-success"
-                >
+                <button type="submit" className="submitButton btn btn-success">
                   Respond
                 </button>
               </div>

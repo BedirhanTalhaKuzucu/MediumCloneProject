@@ -77,7 +77,7 @@ export const logInFunction = (
           const user_info = JSON.parse(sessionStorage.getItem("user_info"));
           const userId = user_info.userInfo.userId;
           followedUserStories(setFollowingStories, token);
-          settingUserInfo(setsettingPageInfo, token, userId);
+          settingUserInfo(setsettingPageInfo, token, userId);;
           resetForm({ values: "" });
           navigate("home");
         });
@@ -335,6 +335,23 @@ export const userDetails = (
     })
     .catch((error) => console.log("error", error));
 };
+export const userDetailsForStories = (userId, setUserDetailForStories) => {
+  let myHeaders = new Headers();
+
+  let requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  fetch(`http://127.0.0.1:8000/auth/users/${userId}`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      setUserDetailForStories(result);
+      console.log(result);
+    })
+    .catch((error) => console.log("error", error));
+};
 
 export const addClapFunction = (storyId, tokenKey, addClap) => {
   let myHeaders = new Headers();
@@ -532,15 +549,14 @@ export const add_deleteFollowHandle = (followOrFollowing, tokenKey, userId) => {
   }
 };
 
-export const commentCreateFunc = (setNewComment) => {
-  var myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    `Token aca4f2525c1de046d6ec61a5e8b3c2537b6af751`
-  );
+export const commentCreateFunc = (comment, storyId, Token) => {
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Token ${Token}`);
   myHeaders.append("Content-Type", "application/json");
 
-  var raw = "";
+  let raw = JSON.stringify({
+    content: comment,
+  });
 
   var requestOptions = {
     method: "POST",
@@ -550,13 +566,33 @@ export const commentCreateFunc = (setNewComment) => {
   };
 
   fetch(
-    `http://127.0.0.1:8000/blog/stories/a09e33ff-6f2c-4637-987a-241e6d45e74b/comment-create`,
+    `http://127.0.0.1:8000/blog/stories/${storyId}/comment-create/`,
     requestOptions
   )
     .then((response) => response.json())
-    .then((result) => {
-      console.log(result);
-      setNewComment(result.content);
-    })
+    .then((result) => console.log(result))
+    .catch((error) => console.log("error", error));
+};
+
+export const changePasswordFunc = (values, Token) => {
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Token ${Token}`);
+  myHeaders.append("Content-Type", "application/json");
+
+  let raw = JSON.stringify({
+    new_password1: values?.password1,
+    new_password2: values?.password1,
+  });
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch(`http://127.0.0.1:8000/auth/password/change/`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => console.log(result))
     .catch((error) => console.log("error", error));
 };

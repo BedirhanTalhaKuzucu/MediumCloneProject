@@ -25,7 +25,7 @@ class CommentClapSerializer(serializers.ModelSerializer):
 class CommentsSerializer(serializers.ModelSerializer):
     #! yorum sahibi ekleme işini view da yapacağımız için read_only dedik.
     user = serializers.StringRelatedField(read_only=True)
-    clap_comment = CommentClapSerializer(many=True)
+    clap_comment = CommentClapSerializer(many=True, read_only=True)
     clap_comment_count = serializers.IntegerField(
         source='clap_comment.count', read_only=True)
     days_since_joined = serializers.SerializerMethodField()
@@ -48,18 +48,26 @@ class StoryViewSerializer(serializers.ModelSerializer):
 
 
 class StorySaveSerializer(serializers.ModelSerializer):
-
-    userId = serializers.IntegerField(source="user.id",  required=False)
+    user = serializers.CharField(source='story.user.username')
+    title = serializers.CharField(source='story.title')
+    content = serializers.CharField(source='story.content')
+    publish_date = serializers.CharField(source='story.publish_date')
+    status = serializers.CharField(source='story.status')
+    # tag_name = serializers.CharField(source='story.tag_name[0]')
+    # clap_count = serializers.CharField(source='story.clap_count')
+    # comment_count = serializers.CharField(source='story.comment_count')
+    # views_count = serializers.CharField(source='story.views_count')
 
     class Meta:
         model = SavedStories
-        fields = ('story', 'userId')
+        fields = ('user', 'story', 'id', 'title', 'content', 'publish_date',
+                  'status')
 
-    def create(self, validated_data):
-        user = self.context.get("request").user
-        validated_data['user'] = user
-        saved = SavedStories.objects.create(**validated_data)
-        return saved
+    # def create(self, validated_data):
+    #     user = self.context.get("request").user
+    #     validated_data['user'] = user
+    #     saved = SavedStories.objects.create(**validated_data)
+    #     return saved
 
 
 class StorySerializer(serializers.ModelSerializer):
@@ -109,7 +117,7 @@ class StorySerializer(serializers.ModelSerializer):
 
         user_img = UserProfile.objects.filter(user=obj.user).first()
         userId = user_img.id
-        
+
         short_bio = user_img.short_bio
 
         request = self.context.get('request')
@@ -127,7 +135,7 @@ class StorySerializer(serializers.ModelSerializer):
             "short_bio": short_bio,
             "followedCount": followedCount,
             "userId": userId,
-            "userProfilId":obj.user.id,
+            "userProfilId": obj.user.id,
         }
         return context
 

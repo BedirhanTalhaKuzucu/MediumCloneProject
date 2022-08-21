@@ -13,9 +13,9 @@ urlpatterns = [
          CommentCreate.as_view(), name='comment-create'),
     path('stories/following', FollowingStoriesList.as_view(), name='following'),
     path('stories/search', SearchBarView.as_view()),
-    # path('stories/save', StorySaveListView.as_view(), name='save-story'),
     path('stories/addclap', AddClapStoryView.as_view()),
     path('stories/deleteclap', DeleteClapStoryView.as_view()),
-    path('tags', TagListView.as_view())
+    path('tags', TagListView.as_view()),
+    # path('stories/save/<int:id>/', SaveStoryListView.as_view(), name='save-story'),
 
 ]
