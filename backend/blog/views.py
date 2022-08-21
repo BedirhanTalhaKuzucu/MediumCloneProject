@@ -15,7 +15,6 @@ from users.models import Following
 from drf_multiple_model.views import ObjectMultipleModelAPIView
 from django.contrib.auth.models import User
 from rest_framework import status
-import json
 
 
 class StoryList(viewsets.ModelViewSet):
