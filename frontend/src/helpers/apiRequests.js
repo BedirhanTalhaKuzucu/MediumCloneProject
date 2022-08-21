@@ -542,3 +542,29 @@ export const commentCreateFunc = (comment, storyId, Token) => {
     .then((result) => console.log(result))
     .catch((error) => console.log("error", error));
 };
+
+export const changePasswordFunc = (Token, values) => {
+  let myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    `Token b4f919531b12c61f8dbe5094b9a921a1a93b744d`
+  );
+  myHeaders.append("Content-Type", "application/json");
+
+  let raw = JSON.stringify({
+    new_password1: values?.password1,
+    new_password2: values?.password1,
+  });
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch(`http://127.0.0.1:8000/auth/password/change/`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => console.log(result))
+    .catch((error) => console.log("error", error));
+};
