@@ -4,13 +4,14 @@ import { AboutContainer, Buttons } from "../styles/profile/AboutYou.styles";
 import { useAppState } from "../../../contexts/AppContext";
 import { useFormik } from 'formik';
 import { useEffect } from "react";
-import {settingUserInfo} from "../../../helpers/apiRequests"
+import {settingUserInfo, updatedProfilImage} from "../../../helpers/apiRequests";
 
 
 
 const AboutYou = () => {
 
   const {  settingPageInfo, setsettingPageInfo } = useAppState();
+
 
   const [edit, setEdit] = useState({
     firstname: true,
@@ -41,8 +42,8 @@ const AboutYou = () => {
   
 
   function changeState(e) {
-    console.log(e.target.className);
-
+    // inputElement.current.value = formik.values.profil_photo
+    // console.log(inputElement.current.files[0])
     switch (e.target.className) {
       case "fullname":
         setEdit({ ...edit, firstname: !edit.firstname });
@@ -61,16 +62,24 @@ const AboutYou = () => {
     }
 
     if ( e.target.innerHTML === "Save" ) {
-      console.log(e.target.innerHTML);
       formik.handleSubmit();
       return
     }else if( e.target.innerHTML === "Cancel") {
-      console.log(e.target.innerHTML);
       formik.resetForm()
       return
     }
 
   }
+
+  const fileHandle = (e) => {
+    console.log(e.target.files[0]);
+    const profil_ımage = e.target.files[0];
+
+    const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
+    const token = get_session_user_info.key
+    const userId = get_session_user_info.userInfo.userId
+    updatedProfilImage(token, userId, profil_ımage, setsettingPageInfo )
+}
 
   return (
     <AboutContainer>
@@ -159,10 +168,9 @@ const AboutYou = () => {
             </p>
           </div>
           <div>
-            {/* <input type="file" name="" id="" /> */}
-            <img src={formik.values.profil_photo} alt="" className="profilePhoto"  />
-            <input type="file" name="profil_photo" 
-             className="profilePhoto"  /> 
+            {/* <input type="file" id="avatar" name="avatar" ref={inputElement}  accept="image/png, image/jpeg" />  */}
+            
+            <input type="image" src={formik.values.profil_photo}  alt="" className="profilePhoto" />
           </div>
         </div>
         <Buttons>
@@ -170,7 +178,8 @@ const AboutYou = () => {
             <button type="button" onClick={changeState} className="img" >Edit</button>
           ) : (
             <>
-              <button type="button" onClick={changeState} className="img" >Save</button>
+              <input type="file" accept="image/*"  onChange={(e) => fileHandle(e)} /> 
+              {/* <button type="button" onClick={changeState} className="img" >Save</button> */}
               <button type="button" onClick={changeState} className="img" >Cancel</button>
             </>
           )}

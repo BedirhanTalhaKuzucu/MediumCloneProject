@@ -12,7 +12,9 @@ import Card from 'react-bootstrap/Card';
 function WriteModal({ show, setShow, formData, formik1, seteditor }) {
 
     const fileHandle = (e) => {
+        console.log(e.target);
         console.log(e.target.files[0]);
+
         // setformData({...formData, image: e.target.files[0] })
         // console.log(formData);
         formik2.values.image = e.target.files[0]
