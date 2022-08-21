@@ -4,12 +4,14 @@ import { AboutContainer, Buttons } from "../styles/profile/AboutYou.styles";
 import { useAppState } from "../../../contexts/AppContext";
 import { useFormik } from 'formik';
 import { useEffect } from "react";
+import {settingUserInfo, updatedProfilImage} from "../../../helpers/apiRequests";
 
 
 
 const AboutYou = () => {
 
-  const {  settingPageInfo } = useAppState();
+  const {  settingPageInfo, setsettingPageInfo } = useAppState();
+
 
   const [edit, setEdit] = useState({
     firstname: true,
@@ -29,18 +31,17 @@ const AboutYou = () => {
     },
     
     onSubmit: ((values, { resetForm }) => {
-      console.log(values);
+        const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
+        const token = get_session_user_info.key
+        const userId = get_session_user_info.userInfo.userId
+        settingUserInfo(setsettingPageInfo, token, userId,  values, resetForm)
     }),
   });
   
   
 
   function changeState(e) {
-    console.log(e.target.className);
-    // if (e.target.className === "fullname") {
-    //   setEdit({ ...edit, firstname: !edit.firstname });
-    // }
-
+    
     switch (e.target.className) {
       case "fullname":
         setEdit({ ...edit, firstname: !edit.firstname });
@@ -57,7 +58,25 @@ const AboutYou = () => {
       default:
         break;
     }
+
+    if ( e.target.innerHTML === "Save" ) {
+      formik.handleSubmit();
+      return
+    }else if( e.target.innerHTML === "Cancel") {
+      formik.resetForm()
+      return
+    }
+
   }
+
+  const fileHandle = (e) => {
+    const profil_ımage = e.target.files[0];
+
+    const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
+    const token = get_session_user_info.key
+    const userId = get_session_user_info.userInfo.userId
+    updatedProfilImage(token, userId, profil_ımage, setsettingPageInfo )
+}
 
   return (
     <AboutContainer>
@@ -88,15 +107,15 @@ const AboutYou = () => {
         </div>
         <Buttons>
           {edit.firstname ? (
-            <button onClick={changeState} id="edit" className="fullname">
+            <button type="button" onClick={changeState}   id="edit" className="fullname">
               Edit
             </button>
           ) : (
             <>
-              <button   type="submit"  className="fullname" >
+              <button type="button" onClick={changeState}  className="fullname" >
                 Save
               </button>
-              <button onClick={changeState} className="fullname">
+              <button type="button" onClick={changeState}  className="fullname">
                 Cancel
               </button>
             </>
@@ -116,15 +135,15 @@ const AboutYou = () => {
         </div>
         <Buttons>
           {edit.bio ? (
-            <button onClick={changeState} className="bio">
+            <button type="button" onClick={changeState} className="bio">
               Edit
             </button>
           ) : (
             <>
-              <button onClick={changeState} className="bio">
+              <button type="button"  onClick={changeState} className="bio">
                 Save
               </button>
-              <button onClick={changeState} className="bio">
+              <button type="button" onClick={changeState} className="bio">
                 Cancel
               </button>
             </>
@@ -146,17 +165,20 @@ const AboutYou = () => {
             </p>
           </div>
           <div>
-            {/* <input type="file" name="" id="" /> */}
-            <input type="image" name="profil_photo" src={formik.values.profil_photo} alt="" className="profilePhoto"  />
+            <input type="image" src={formik.values.profil_photo}  alt="" className="profilePhoto" />
           </div>
         </div>
         <Buttons>
           {edit.img ? (
-            <button onClick={changeState} className="img" >Edit</button>
+            <button type="button" onClick={changeState} className="img" >Edit</button>
           ) : (
             <>
-              <button onClick={changeState} className="img" >Save</button>
-              <button onClick={changeState} className="img" >Cancel</button>
+            <button>
+              <input type="file" accept="image/*"   onChange={(e) => fileHandle(e)} className="img" /> 
+
+            </button>
+              {/* <button type="button" onClick={changeState} className="img" >Save</button> */}
+              <button type="button" onClick={changeState} className="img" >Cancel</button>
             </>
           )}
         </Buttons>
@@ -179,11 +201,11 @@ const AboutYou = () => {
         </div>
         <Buttons>
           {edit.usernameButton ? (
-            <button onClick={changeState} className="usernameButton" >Edit</button>
+            <button type="button" onClick={changeState} className="usernameButton" >Edit</button>
           ) : (
             <>
-              <button onClick={changeState} className="usernameButton" >Save</button>
-              <button onClick={changeState} className="usernameButton" >Cancel</button>
+              <button type="button" onClick={changeState} className="usernameButton" >Save</button>
+              <button type="button"  onClick={changeState} className="usernameButton" >Cancel</button>
             </>
           )}
         </Buttons>

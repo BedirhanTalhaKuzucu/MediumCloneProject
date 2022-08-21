@@ -7,9 +7,9 @@ from django.contrib.auth.models import User
 # from .permissions import IsUserOrReadOnly
 from rest_framework.permissions import IsAdminUser
 from .models import Following, UserProfile
-from.serializers import RegisterSerializer, UserProfileSerializer, FollowingSerializer, UserSettingSerializer
+from.serializers import RegisterSerializer, UserProfileSerializer, FollowingSerializer, UserSettingSerializer, UserProfileImageUpdateSerializer
 from rest_framework.permissions import IsAuthenticated
-
+from django.shortcuts import get_object_or_404
 
 class RegisterView(CreateAPIView):
     queryset = User.objects.all()
@@ -69,4 +69,17 @@ class UserSettingInfoView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
     lookup_field="id"
 
+class UserImageUpdatedView(RetrieveUpdateDestroyAPIView):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileImageUpdateSerializer
+    permission_classes = (IsAuthenticated,)
+    lookup_field="id"
 
+    def get_object(self):
+        id = self.kwargs.get('id')
+        queryset = UserProfile.objects.filter(user = id)
+        
+
+        obj = get_object_or_404(queryset)
+        self.check_object_permissions(self.request, obj)
+        return obj

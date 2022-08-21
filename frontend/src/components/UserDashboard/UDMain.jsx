@@ -13,22 +13,21 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { userDetails } from "../../helpers/apiRequests";
 
-
-
 const UDMain = () => {
   // const [followingTag, setFollowingTag] = useState();
   // const [followingUser, setFollowingUser] = useState();
   const [UserDetail, setUserDetail] = useState();
 
-
   const getUserId = () => {
-    const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
-    const userId = get_session_user_info.userInfo.profileInfoId
-    return userId
-  }
+    const get_session_user_info = JSON.parse(
+      sessionStorage.getItem("user_info")
+    );
+    const userId = get_session_user_info?.userInfo?.profileInfoId;
+    return userId;
+  };
 
   useEffect(() => {
-    const userId = getUserId()
+    const userId = getUserId();
     userDetails(setUserDetail, userId);
   }, []);
 
@@ -39,7 +38,7 @@ const UDMain = () => {
           <p>YOUR TOPICS</p>
           <div className="scrollbar sc1">
             {UserDetail ? (
-              UserDetail.user.followed_topics.map((item, key) => {
+              UserDetail?.user?.followed_topics.map((item, key) => {
                 return (
                   <div key={key}>
                     <button>{item}</button>
@@ -56,10 +55,10 @@ const UDMain = () => {
 
         <FollowingListStyle>
           {UserDetail ? (
-            UserDetail.user.followed_user.map((item, key) => {
+            UserDetail?.user.followed_user.map((item, key) => {
               return (
                 <Tooltip
-                  title={<MainFollowingTooltip followedInfo = {item} />}
+                  title={<MainFollowingTooltip followedInfo={item} />}
                   arrow
                   componentsProps={{
                     tooltip: {

@@ -1,6 +1,8 @@
 from importlib.metadata import requires
 from os import read
+from pickletools import read_floatnl
 from pprint import pprint
+import profile
 from rest_framework import serializers, validators
 from django.contrib.auth.models import User
 from blog.serializers import StorySaveSerializer
@@ -196,6 +198,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 class UserProfileSettingSerializer(serializers.ModelSerializer):
 
+    profile_photo =serializers.ImageField(read_only =True )
     class Meta:
         model = UserProfile
         fields = (
@@ -216,8 +219,39 @@ class UserSettingSerializer(serializers.ModelSerializer):
             "username",
             "first_name",
             "last_name",
-            "email",
             "userfor",
         )
+    
+    def update(self, instance, validated_data):
+
+        userProfilUpdated = validated_data.pop('userfor')
+
+        userProfil = UserProfile.objects.get(user=instance.id)
+        userProfil.short_bio = userProfilUpdated["short_bio"]
+        # userProfil.profile_photo = userProfilUpdated["profile_photo"]
+
+        
+        userProfil.save()
+
+        instance.username = validated_data["username"]
+        instance.first_name = validated_data["first_name"]
+        instance.last_name = validated_data["last_name"]
+        instance.save()
+
+        return instance
+
+
+class UserProfileImageUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserProfile
+        fields = (
+            "profile_photo",
+        )
+
+
+
+
+
    
             
