@@ -31,7 +31,6 @@ const AboutYou = () => {
     },
     
     onSubmit: ((values, { resetForm }) => {
-        console.log(values);
         const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
         const token = get_session_user_info.key
         const userId = get_session_user_info.userInfo.userId
@@ -42,8 +41,7 @@ const AboutYou = () => {
   
 
   function changeState(e) {
-    // inputElement.current.value = formik.values.profil_photo
-    // console.log(inputElement.current.files[0])
+    
     switch (e.target.className) {
       case "fullname":
         setEdit({ ...edit, firstname: !edit.firstname });
@@ -72,7 +70,6 @@ const AboutYou = () => {
   }
 
   const fileHandle = (e) => {
-    console.log(e.target.files[0]);
     const profil_ımage = e.target.files[0];
 
     const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
@@ -168,8 +165,6 @@ const AboutYou = () => {
             </p>
           </div>
           <div>
-            {/* <input type="file" id="avatar" name="avatar" ref={inputElement}  accept="image/png, image/jpeg" />  */}
-            
             <input type="image" src={formik.values.profil_photo}  alt="" className="profilePhoto" />
           </div>
         </div>
@@ -178,7 +173,10 @@ const AboutYou = () => {
             <button type="button" onClick={changeState} className="img" >Edit</button>
           ) : (
             <>
-              <input type="file" accept="image/*"  onChange={(e) => fileHandle(e)} /> 
+            <button>
+              <input type="file" accept="image/*"   onChange={(e) => fileHandle(e)} className="img" /> 
+
+            </button>
               {/* <button type="button" onClick={changeState} className="img" >Save</button> */}
               <button type="button" onClick={changeState} className="img" >Cancel</button>
             </>
