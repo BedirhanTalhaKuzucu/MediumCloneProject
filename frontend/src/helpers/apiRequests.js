@@ -102,7 +102,7 @@ function getTrending(list) {
     return b.numberofClap - a.numberofClap;
   });
 
-  for (let index = 0; index < 6; index++) {
+  for (let index = 0; index < 5; index++) {
     list.map((item) => {
       if (item.id === numberOfClapsList[index].id) {
         trendingStory.push(item);
@@ -114,6 +114,10 @@ function getTrending(list) {
 }
 
 export const getData = (setData, setTrendList) => {
+
+  let myHeaders = new Headers();
+  myHeaders.append("Cookie", "csrftoken=ELiWUgqxhTQmVoViigupeVDooY7d90qARaohIkvQSS5ZqJy4p26tjhCzRzyCXJRJ");
+
   let requestOptions = {
     method: "GET",
     redirect: "follow",
@@ -122,7 +126,7 @@ export const getData = (setData, setTrendList) => {
   fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
     .then((response) => response.json())
     .then((data) => {
-      // console.log(data);
+      console.log(data);
       const trendList = getTrending(data.results);
       setTrendList(trendList);
       setData(data.results);
@@ -413,6 +417,7 @@ export const TopicRecommendedFunc = (setTopics) => {
     })
     .catch((error) => console.log("error", error));
 };
+
 export const UserFollowFunc = (setUsers) => {
   fetch("http://127.0.0.1:8000/auth/users")
     .then((response) => response.json())
