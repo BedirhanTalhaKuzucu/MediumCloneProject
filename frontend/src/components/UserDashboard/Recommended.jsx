@@ -13,7 +13,7 @@ const Recommended = () => {
 
   useEffect(() => {
     const getArticles = async () => {
-      const res = await fetch(`http://127.0.0.1:8000/blog/stories/?_offset=0`);
+      const res = await fetch(`http://127.0.0.1:8000/blog/stories/?offset=0`);
       const data = await res.json();
       console.log(data);
       setItems(data.results);
@@ -24,7 +24,7 @@ const Recommended = () => {
 
   const fetchArticleCards = async () => {
     const res = await fetch(
-      `http://127.0.0.1:8000/blog/stories/?_offset=${offset}`
+      `http://127.0.0.1:8000/blog/stories/?offset=${offset}`
     );
     const data = await res.json();
     console.log(data);
@@ -38,7 +38,7 @@ const Recommended = () => {
     if (commentsFormServer.length === 0 || commentsFormServer.length < 5) {
       sethasMore(false);
     }
-    setoffset(offset + 1);
+    setoffset(offset + 5);
   };
 
   return (

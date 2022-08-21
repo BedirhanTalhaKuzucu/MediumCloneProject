@@ -543,12 +543,9 @@ export const commentCreateFunc = (comment, storyId, Token) => {
     .catch((error) => console.log("error", error));
 };
 
-export const changePasswordFunc = (Token, values) => {
+export const changePasswordFunc = (values, Token) => {
   let myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    `Token b4f919531b12c61f8dbe5094b9a921a1a93b744d`
-  );
+  myHeaders.append("Authorization", `Token ${Token}`);
   myHeaders.append("Content-Type", "application/json");
 
   let raw = JSON.stringify({

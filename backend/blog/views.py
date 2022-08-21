@@ -107,11 +107,12 @@ class StorySaveListView(viewsets.ModelViewSet):
     queryset = SavedStories.objects.all()
     serializer_class = StorySaveSerializer
     permission_classes = (IsAuthenticated,)
-    http_method_names = ['get', 'post', 'delete',]
+    http_method_names = ['get', 'post', 'delete', ]
     lookup_field = 'storyId'
 
     def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(SavedStories.objects.filter(user = self.request.user))
+        queryset = self.filter_queryset(
+            SavedStories.objects.filter(user=self.request.user))
 
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -121,22 +122,18 @@ class StorySaveListView(viewsets.ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
-    
     def destroy(self, request, *args, **kwargs):
         storyId = self.kwargs.get('storyId')
         user = self.request.user
-        instance = SavedStories.objects.get(user=user, story= storyId)
+        instance = SavedStories.objects.get(user=user, story=storyId)
         instance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
-
 
 
 class AddClapStoryView(generics.CreateAPIView):
     queryset = StoryClap.objects.all()
     serializer_class = AddStoryClapSerializer
     permission_classes = (IsAuthenticated,)
-
 
 
 class DeleteClapStoryView(generics.DestroyAPIView):
@@ -155,4 +152,21 @@ class DeleteClapStoryView(generics.DestroyAPIView):
 class TagListView(generics.ListAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagsSerializer
+    # permission_classes = (IsAuthorOrReadOnly,)
+
+
+# class SaveStoryListView(generics.ListAPIView):
+#     queryset = Story.objects.all()
+#     serializer_class = StorySerializer
+
+#     def list(self, request, *args, **kwargs):
+#         queryset = self.filter_queryset(Story.objects.filter(user=))
+
+#         page = self.paginate_queryset(queryset)
+#         if page is not None:
+#             serializer = self.get_serializer(page, many=True)
+#             return self.get_paginated_response(serializer.data)
+
+#         serializer = self.get_serializer(queryset, many=True)
+#         return Response(serializer.data)
     # permission_classes = (IsAuthorOrReadOnly,)

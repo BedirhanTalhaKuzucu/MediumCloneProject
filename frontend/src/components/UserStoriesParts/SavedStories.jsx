@@ -1,6 +1,6 @@
 import ArticleCard from "../UserDashboard/ArticleCard";
 import React, { useEffect, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAppState } from "../../contexts/AppContext";
 import { userDetailsForStories } from "../../helpers/apiRequests";
 import { ListsContainerStyle, ListsStyles } from "./styles/UserListMain.styles";
@@ -25,7 +25,7 @@ const SavedStories = () => {
             return (
               <div key={item.id}>
                 <div>{item.user}</div> <br />
-                <div>{item.title}</div>
+                <Link to="/">{item?.title}</Link>
                 <div>{item.content}</div>
                 <hr />
               </div>
