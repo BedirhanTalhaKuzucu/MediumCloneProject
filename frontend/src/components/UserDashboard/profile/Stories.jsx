@@ -7,23 +7,20 @@ const sectionToBeDisplayed = {
   Draft: () => <Published />,
 };
 
-const DEFAULT_VALUE = () => "Select Status...";
-
 const Stories = () => {
-  const [state, setState] = useState("section_one");
+  const [state, setState] = useState("Published");
 
   const handleSelectChange = (e) => {
     console.log(e.target.value);
     setState(e.target.value);
   };
 
-  const SectionComponent = sectionToBeDisplayed[state] || DEFAULT_VALUE;
+  const SectionComponent = sectionToBeDisplayed[state];
 
   return (
     <div>
       <h3>Stories</h3>
       <select onChange={handleSelectChange} className="form-select mb-3 w-100">
-        <option value="">...</option>
         <option value="Published">Published</option>
         <option value="Draft">Drafts</option>
       </select>
