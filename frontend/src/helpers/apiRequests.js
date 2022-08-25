@@ -241,20 +241,18 @@ export const getStoryDetailsA = (tokenKey, detailsId, setdetaylar) => {
     .catch((error) => console.log("error", error));
 };
 
-export const createStory = (formData, values, resetForm) => {
-  // console.log(formData);
-  // console.log(values)
-
-  // resetForm({values:""})
+export const createStory = (formData, values, resetForm, token) => {
+  
 
   let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Token ${token}`);
 
   let formdata = new FormData();
   formdata.append("title", formData.title);
   formdata.append("content", formData.story);
   formdata.append("image", values.image);
   formdata.append("tag_name", values.tag_name);
-  formdata.append("user_id", "1");
+  formdata.append("user_id", values.user_id );
   formdata.append("status", values.status);
 
   let requestOptions = {

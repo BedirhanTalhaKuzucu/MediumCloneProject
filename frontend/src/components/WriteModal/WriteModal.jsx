@@ -30,12 +30,14 @@ function WriteModal({ show, setShow, formData, formik1, seteditor }) {
             user_id: "1",
         },
         onSubmit: ((values, { resetForm } ) => {
-            // setformData({...formData, tag_name:values.tag_name, status:values.status, user_id:"1", })
-            values.user_id = "1"
+            const creatorInfo = JSON.parse(sessionStorage.getItem("user_info"));
+            const userId = creatorInfo.userInfo.userId
+            values.user_id = userId
+            const token = creatorInfo.key
             console.log(formData);
             formik1.resetForm({values:""})
             seteditor("")
-            createStory(formData, values, resetForm )
+            createStory(formData, values, resetForm, token )
         }),
     });
 

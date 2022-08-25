@@ -72,14 +72,13 @@ class StorySaveSerializer(serializers.ModelSerializer):
 
 class StorySerializer(serializers.ModelSerializer):
 
-    clap_story = StoryClapSerializer(many=True)
+    clap_story = StoryClapSerializer(many=True, read_only=True)
     comments = CommentsSerializer(many=True, read_only=True)
     creatorInfo = serializers.SerializerMethodField('get_creatorInfo')
     tags = serializers.SerializerMethodField('get_tags')
     tag_name = serializers.CharField(write_only=True)
     user_id = serializers.IntegerField(write_only=True)
-    clap_count = serializers.IntegerField(
-        source='clap_story.count', read_only=True)
+    clap_count = serializers.IntegerField(source='clap_story.count', read_only=True)
     comment_count = serializers.IntegerField(
         source='comments.count', read_only=True)
     views = StoryViewSerializer(many=True, read_only=True)
