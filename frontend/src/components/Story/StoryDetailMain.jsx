@@ -5,9 +5,11 @@ import { Tooltip } from "@mui/material";
 import MainFollowingTooltip from "../UserDashboard/MainFollowingTooltip";
 import CommentsModal from "./CommentsModal";
 
-const StoryDetailMain = ({  detaylar }) => {
+const StoryDetailMain = ({ detaylar }) => {
   const [copied, setCopied] = useState(false);
   const [htmlContet, sethtmlContet] = useState("")
+
+  console.log(detaylar);
 
   const copyLink = () => {
     const el = document.createElement("input");
@@ -17,7 +19,7 @@ const StoryDetailMain = ({  detaylar }) => {
     document.execCommand("copy");
     document.body.removeChild(el);
     setCopied(true);
-  }
+  };
 
   let content = detaylar?.content
   let stringToHTML = function ( content ) {
@@ -41,7 +43,11 @@ const StoryDetailMain = ({  detaylar }) => {
         <nav className="authorInf">
           <div>
             <Tooltip
-              title={<MainFollowingTooltip creatorInfo={detaylar ? detaylar.creatorInfo : ""} />}
+              title={
+                <MainFollowingTooltip
+                  creatorInfo={detaylar ? detaylar.creatorInfo : ""}
+                />
+              }
               arrow
               componentsProps={{
                 tooltip: {
@@ -61,11 +67,17 @@ const StoryDetailMain = ({  detaylar }) => {
           <div>
             <div>
               <h5>
-                {detaylar ? detaylar.creatorInfo.first_name + " " + detaylar.creatorInfo.last_name : " " }
+                {detaylar
+                  ? detaylar.creatorInfo.first_name +
+                    " " +
+                    detaylar.creatorInfo.last_name
+                  : " "}
               </h5>
             </div>
             <div className="d-flex fs-6 text-secondary">
-              <div className="me-3">{detaylar ? detaylar.publish_date.split("T")[0] : " "} </div>
+              <div className="me-3">
+                {detaylar ? detaylar.publish_date.split("T")[0] : " "}{" "}
+              </div>
               <div>3 min read</div>
               {/* <button>
                 dinleme çubuğu
@@ -114,6 +126,22 @@ const StoryDetailMain = ({  detaylar }) => {
       </article>
     </Main>
   );
+};
+
+StoryDetailMain.defaultProps = {
+  detaylar: {
+    creatorInfo: {
+      first_name: "",
+      last_name: "",
+      user_img: "",
+    },
+    content: "",
+    clap_count: "",
+    comment_count: "",
+    comments: [],
+    id: "",
+    publish_date: "",
+  },
 };
 
 export default StoryDetailMain;

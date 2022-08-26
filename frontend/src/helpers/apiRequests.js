@@ -77,7 +77,7 @@ export const logInFunction = (
           const user_info = JSON.parse(sessionStorage.getItem("user_info"));
           const userId = user_info.userInfo.userId;
           followedUserStories(setFollowingStories, token);
-          settingUserInfo(setsettingPageInfo, token, userId);;
+          settingUserInfo(setsettingPageInfo, token, userId);
           resetForm({ values: "" });
           navigate("home");
         });
@@ -134,9 +134,15 @@ export const getData = (setData, setTrendList) => {
     .catch((error) => console.log("error", error));
 };
 
-export const settingUserInfo = (setsettingPageInfo, token, userId, values, resetForm ) => {
-
+export const settingUserInfo = (
+  setsettingPageInfo,
+  token,
+  userId,
+  values,
+  resetForm
+) => {
   if (values) {
+    console.log(values);
     let myHeaders = new Headers();
     myHeaders.append("Authorization", `Token ${token}`);
     myHeaders.append(
@@ -149,6 +155,7 @@ export const settingUserInfo = (setsettingPageInfo, token, userId, values, reset
     formdata.append("username", values.username);
     formdata.append("first_name", values.first_name);
     formdata.append("last_name", values.last_name);
+    formdata.append("email", values.email);
     // formdata.append("userfor.profile_photo", fileInput.files[0], values.profil_photo);
     formdata.append("userfor.short_bio", values.short_bio);
 
@@ -191,12 +198,16 @@ export const settingUserInfo = (setsettingPageInfo, token, userId, values, reset
       })
       .catch((error) => console.log("error", error));
   }
-
 };
 
-export const updatedProfilImage = (token, userId, profil_ımage, setsettingPageInfo) => {
+export const updatedProfilImage = (
+  token,
+  userId,
+  profil_ımage,
+  setsettingPageInfo
+) => {
   var myHeaders = new Headers();
-  myHeaders.append( "Authorization", `Token ${token}` );
+  myHeaders.append("Authorization", `Token ${token}`);
   myHeaders.append(
     "Cookie",
     "csrftoken=ELiWUgqxhTQmVoViigupeVDooY7d90qARaohIkvQSS5ZqJy4p26tjhCzRzyCXJRJ"
@@ -212,14 +223,17 @@ export const updatedProfilImage = (token, userId, profil_ımage, setsettingPageI
     redirect: "follow",
   };
 
-  fetch(`http://127.0.0.1:8000/auth/users/settings/image/${userId}/`, requestOptions)
+  fetch(
+    `http://127.0.0.1:8000/auth/users/settings/image/${userId}/`,
+    requestOptions
+  )
     .then((response) => response.json())
     .then((result) => {
-      console.log(result)
-      settingUserInfo(setsettingPageInfo, token, userId,)  
+      console.log(result);
+      settingUserInfo(setsettingPageInfo, token, userId);
     })
     .catch((error) => console.log("error", error));
-}
+};
 
 export const getStoryDetailsA = (tokenKey, detailsId, setdetaylar) => {
   let myHeaders = new Headers();
@@ -333,7 +347,7 @@ export const userDetails = (
       // setFollowingTag(result.user.followed_topics);
       // setFollowingUser(result.user.followed_user);
       setUserDetail(result);
-      console.log(result);
+      // console.log(result);
       // setDetail(result);
     })
     .catch((error) => console.log("error", error));

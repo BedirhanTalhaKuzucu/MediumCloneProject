@@ -14,12 +14,10 @@ import StoryDetail from "../pages/StoryDetail";
 import UserStories from "../pages/UserStories";
 import Drafts from "../components/UserStoriesParts/Drafts";
 import Published from "../components/UserStoriesParts/Published";
-import Responses from "../components/UserStoriesParts/Responses";
 import UserLists from "../pages/UserLists";
 import SavedStories from "../components/UserStoriesParts/SavedStories";
 import TagDetail from "../pages/TagDetail";
 import { memo } from "react";
-
 
 function AppRouter() {
   return (
@@ -45,7 +43,6 @@ function AppRouter() {
           <Route index element={<Drafts />} />
           <Route path="drafts" element={<Drafts />} />
           <Route path="public" element={<Published />} />
-          <Route path="responses" element={<Responses />} />
         </Route>
 
         <Route path="me/lists" element={<UserLists />}>
