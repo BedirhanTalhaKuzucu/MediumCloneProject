@@ -1,5 +1,5 @@
 import Container from 'react-bootstrap/Container';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useFormik } from 'formik';
@@ -8,8 +8,9 @@ import Modal from 'react-bootstrap/Modal';
 import { createStory } from "../../helpers/apiRequests";
 import Card from 'react-bootstrap/Card';
 
-
 function WriteModal({ show, setShow, formData, formik1, seteditor }) {
+
+    let navigate = useNavigate();
 
     const fileHandle = (e) => {
         console.log(e.target);
@@ -27,7 +28,7 @@ function WriteModal({ show, setShow, formData, formik1, seteditor }) {
             image: null,
             tag_name: "",
             status: "",
-            user_id: "1",
+            user_id: "",
         },
         onSubmit: ((values, { resetForm } ) => {
             const creatorInfo = JSON.parse(sessionStorage.getItem("user_info"));
@@ -37,7 +38,7 @@ function WriteModal({ show, setShow, formData, formik1, seteditor }) {
             console.log(formData);
             formik1.resetForm({values:""})
             seteditor("")
-            createStory(formData, values, resetForm, token )
+            createStory(formData, values, resetForm, token, navigate )
         }),
     });
 

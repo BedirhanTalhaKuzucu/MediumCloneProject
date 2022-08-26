@@ -241,7 +241,7 @@ export const getStoryDetailsA = (tokenKey, detailsId, setdetaylar) => {
     .catch((error) => console.log("error", error));
 };
 
-export const createStory = (formData, values, resetForm, token) => {
+export const createStory = (formData, values, resetForm, token, navigate) => {
   
 
   let myHeaders = new Headers();
@@ -250,7 +250,7 @@ export const createStory = (formData, values, resetForm, token) => {
   let formdata = new FormData();
   formdata.append("title", formData.title);
   formdata.append("content", formData.story);
-  formdata.append("image", values.image);
+  values.image && formdata.append("image", values.image);
   formdata.append("tag_name", values.tag_name);
   formdata.append("user_id", values.user_id );
   formdata.append("status", values.status);
@@ -263,11 +263,12 @@ export const createStory = (formData, values, resetForm, token) => {
   };
 
   fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
-    .then((response) => response.text())
+    .then((response) => response.json())
     .then((result) => {
       resetForm({ values: "" });
       // setformData("")
       console.log(result);
+      navigate(`/story/${result.id}`)
     })
     .catch((error) => console.log("error", error));
 };
@@ -337,6 +338,7 @@ export const userDetails = (
     })
     .catch((error) => console.log("error", error));
 };
+
 export const userDetailsForStories = (userId, setUserDetailForStories) => {
   let myHeaders = new Headers();
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ClapsRespond, Header, Main } from "./styles/StoryDetailMain.styles";
 import Images from "../../assets/Images";
 import { Tooltip } from "@mui/material";
@@ -7,6 +7,7 @@ import CommentsModal from "./CommentsModal";
 
 const StoryDetailMain = ({  detaylar }) => {
   const [copied, setCopied] = useState(false);
+  const [htmlContet, sethtmlContet] = useState("")
 
   const copyLink = () => {
     const el = document.createElement("input");
@@ -17,6 +18,22 @@ const StoryDetailMain = ({  detaylar }) => {
     document.body.removeChild(el);
     setCopied(true);
   }
+
+  let content = detaylar?.content
+  let stringToHTML = function ( content ) {
+    let parser = new DOMParser();
+    let doc = parser.parseFromString(content, 'text/html').body;
+    console.log(doc.childNodes[0])
+    return doc.childNodes[0];
+  };
+
+  useEffect(() => {
+    let html = stringToHTML(content)
+    sethtmlContet(html) 
+
+  }, [content])
+
+  // console.log(htmlContet);  
 
   return (
     <Main>
@@ -74,7 +91,10 @@ const StoryDetailMain = ({  detaylar }) => {
         </nav>
       </Header>
       <article className="my-5">
-        <p>{detaylar ? detaylar.content : ""}</p>
+        <p>
+          { detaylar ? detaylar.content : "" }
+          {/* {htmlContet && htmlContet }  */}
+        </p>
         <ClapsRespond>
           <div className="icon">
             <Tooltip title="Clap" arrow placement="top">
