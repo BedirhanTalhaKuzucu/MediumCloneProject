@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { IoIosHeartDislike } from "react-icons/io";
 import { BsBookmarkFill } from "react-icons/bs";
 import { addClapFunction, addSavedFunction } from "../../helpers/apiRequests";
+import PropTypes from "prop-types";
 
 const ArticleCard = ({ data }) => {
   //!okuma süresini hesaplamak için:
@@ -96,10 +97,10 @@ const ArticleCard = ({ data }) => {
 
       <section className="articleInf">
         <nav className="part1">
-          <Link to={`/story/${data.id}`}  className="title">
+          <Link to={`/story/${data.id}`} className="title">
             {data.title.replace(".", "")}
           </Link>{" "}
-          <Link to={`/story/${data.id}`}  className="articlePart">
+          <Link to={`/story/${data.id}`} className="articlePart">
             {data?.content.slice(0, 170) + "..."}
           </Link>
           <div className="specialDetail">
@@ -135,6 +136,22 @@ const ArticleCard = ({ data }) => {
       </section>
     </CardContainer>
   );
+};
+
+ArticleCard.defaultProps = {
+  data: {
+    title: "",
+    content: "",
+    image: "",
+    tags: [],
+    publish_date: "",
+    creatorInfo: {},
+    clap_story: [],
+    saved_users: [],
+  },
+};
+ArticleCard.propTypes = {
+  data: PropTypes.object,
 };
 
 export default ArticleCard;

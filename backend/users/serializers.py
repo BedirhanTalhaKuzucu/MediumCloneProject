@@ -98,11 +98,11 @@ class CustomTokenSerializer(serializers.ModelSerializer):
         return context
 
 
-
 class FollowingSerializer(serializers.ModelSerializer):
 
     follower = serializers.IntegerField(source="user.id",  required=False)
     followedDetails = serializers.SerializerMethodField()
+
     class Meta:
         model = Following
         fields = (
@@ -110,16 +110,16 @@ class FollowingSerializer(serializers.ModelSerializer):
             "followed",
             "followedDetails",
         )
-    
+
     def get_followedDetails(self, obj):
         followedInfo = UserProfile.objects.filter(user=obj.followed).first()
 
         request = self.context.get('request')
         img = followedInfo.profile_photo.url
         img = request.build_absolute_uri(img)
-        
+
         name = followedInfo.user.first_name + followedInfo.user.last_name
-        bio  = followedInfo.short_bio
+        bio = followedInfo.short_bio
         email = followedInfo.user.email
         followedCount = Following.objects.filter(followed=obj.followed).count()
 
@@ -131,7 +131,7 @@ class FollowingSerializer(serializers.ModelSerializer):
             "followedCount": followedCount,
         }
         return context
-    
+
     def create(self, validated_data):
         follower = self.context.get("request").user
         validated_data['follower'] = follower
@@ -142,7 +142,7 @@ class FollowingSerializer(serializers.ModelSerializer):
 class FollowedTopicsSerializer(serializers.ModelSerializer):
     class Meta:
         model = TagFollower
-        fields = ('tag' , 'user',)
+        fields = ('tag', 'user',)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -170,7 +170,6 @@ class UserSerializer(serializers.ModelSerializer):
             'saved_stories_count',
             'saved_stories',
         )
-   
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -181,7 +180,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
 
-        fields =(
+        fields = (
             'user_detail',
             'user',
             'id',
@@ -190,22 +189,19 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'profile_photo',
             'about_text',
             'about_photo',
-            )
-
-
-
+        )
 
 
 class UserProfileSettingSerializer(serializers.ModelSerializer):
 
-    profile_photo =serializers.ImageField(read_only =True )
+    profile_photo = serializers.ImageField(read_only=True)
+
     class Meta:
         model = UserProfile
         fields = (
             "short_bio",
             "profile_photo",
         )
-
 
 
 class UserSettingSerializer(serializers.ModelSerializer):
@@ -220,8 +216,9 @@ class UserSettingSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "userfor",
+            'email',
         )
-    
+
     def update(self, instance, validated_data):
 
         userProfilUpdated = validated_data.pop('userfor')
@@ -230,12 +227,12 @@ class UserSettingSerializer(serializers.ModelSerializer):
         userProfil.short_bio = userProfilUpdated["short_bio"]
         # userProfil.profile_photo = userProfilUpdated["profile_photo"]
 
-        
         userProfil.save()
 
         instance.username = validated_data["username"]
         instance.first_name = validated_data["first_name"]
         instance.last_name = validated_data["last_name"]
+        instance.email = validated_data["email"]
         instance.save()
 
         return instance
@@ -248,10 +245,3 @@ class UserProfileImageUpdateSerializer(serializers.ModelSerializer):
         fields = (
             "profile_photo",
         )
-
-
-
-
-
-   
-            

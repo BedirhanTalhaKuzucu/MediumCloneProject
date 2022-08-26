@@ -77,7 +77,7 @@ export const logInFunction = (
           const user_info = JSON.parse(sessionStorage.getItem("user_info"));
           const userId = user_info.userInfo.userId;
           followedUserStories(setFollowingStories, token);
-          settingUserInfo(setsettingPageInfo, token, userId);;
+          settingUserInfo(setsettingPageInfo, token, userId);
           resetForm({ values: "" });
           navigate("home");
         });
@@ -102,7 +102,7 @@ function getTrending(list) {
     return b.numberofClap - a.numberofClap;
   });
 
-  for (let index = 0; index < 6; index++) {
+  for (let index = 0; index < 5; index++) {
     list.map((item) => {
       if (item.id === numberOfClapsList[index].id) {
         trendingStory.push(item);
@@ -114,6 +114,10 @@ function getTrending(list) {
 }
 
 export const getData = (setData, setTrendList) => {
+
+  let myHeaders = new Headers();
+  myHeaders.append("Cookie", "csrftoken=ELiWUgqxhTQmVoViigupeVDooY7d90qARaohIkvQSS5ZqJy4p26tjhCzRzyCXJRJ");
+
   let requestOptions = {
     method: "GET",
     redirect: "follow",
@@ -122,7 +126,7 @@ export const getData = (setData, setTrendList) => {
   fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
     .then((response) => response.json())
     .then((data) => {
-      // console.log(data);
+      console.log(data);
       const trendList = getTrending(data.results);
       setTrendList(trendList);
       setData(data.results);
@@ -130,9 +134,15 @@ export const getData = (setData, setTrendList) => {
     .catch((error) => console.log("error", error));
 };
 
-export const settingUserInfo = (setsettingPageInfo, token, userId, values, resetForm ) => {
-
+export const settingUserInfo = (
+  setsettingPageInfo,
+  token,
+  userId,
+  values,
+  resetForm
+) => {
   if (values) {
+    console.log(values);
     let myHeaders = new Headers();
     myHeaders.append("Authorization", `Token ${token}`);
     myHeaders.append(
@@ -145,6 +155,7 @@ export const settingUserInfo = (setsettingPageInfo, token, userId, values, reset
     formdata.append("username", values.username);
     formdata.append("first_name", values.first_name);
     formdata.append("last_name", values.last_name);
+    formdata.append("email", values.email);
     // formdata.append("userfor.profile_photo", fileInput.files[0], values.profil_photo);
     formdata.append("userfor.short_bio", values.short_bio);
 
@@ -187,12 +198,16 @@ export const settingUserInfo = (setsettingPageInfo, token, userId, values, reset
       })
       .catch((error) => console.log("error", error));
   }
-
 };
 
-export const updatedProfilImage = (token, userId, profil_ımage, setsettingPageInfo) => {
+export const updatedProfilImage = (
+  token,
+  userId,
+  profil_ımage,
+  setsettingPageInfo
+) => {
   var myHeaders = new Headers();
-  myHeaders.append( "Authorization", `Token ${token}` );
+  myHeaders.append("Authorization", `Token ${token}`);
   myHeaders.append(
     "Cookie",
     "csrftoken=ELiWUgqxhTQmVoViigupeVDooY7d90qARaohIkvQSS5ZqJy4p26tjhCzRzyCXJRJ"
@@ -208,14 +223,17 @@ export const updatedProfilImage = (token, userId, profil_ımage, setsettingPageI
     redirect: "follow",
   };
 
-  fetch(`http://127.0.0.1:8000/auth/users/settings/image/${userId}/`, requestOptions)
+  fetch(
+    `http://127.0.0.1:8000/auth/users/settings/image/${userId}/`,
+    requestOptions
+  )
     .then((response) => response.json())
     .then((result) => {
-      console.log(result)
-      settingUserInfo(setsettingPageInfo, token, userId,)  
+      console.log(result);
+      settingUserInfo(setsettingPageInfo, token, userId);
     })
     .catch((error) => console.log("error", error));
-}
+};
 
 export const getStoryDetailsA = (tokenKey, detailsId, setdetaylar) => {
   let myHeaders = new Headers();
@@ -237,20 +255,18 @@ export const getStoryDetailsA = (tokenKey, detailsId, setdetaylar) => {
     .catch((error) => console.log("error", error));
 };
 
-export const createStory = (formData, values, resetForm) => {
-  // console.log(formData);
-  // console.log(values)
-
-  // resetForm({values:""})
+export const createStory = (formData, values, resetForm, token, navigate) => {
+  
 
   let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Token ${token}`);
 
   let formdata = new FormData();
   formdata.append("title", formData.title);
   formdata.append("content", formData.story);
-  formdata.append("image", values.image);
+  values.image && formdata.append("image", values.image);
   formdata.append("tag_name", values.tag_name);
-  formdata.append("user_id", "1");
+  formdata.append("user_id", values.user_id );
   formdata.append("status", values.status);
 
   let requestOptions = {
@@ -261,11 +277,12 @@ export const createStory = (formData, values, resetForm) => {
   };
 
   fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
-    .then((response) => response.text())
+    .then((response) => response.json())
     .then((result) => {
       resetForm({ values: "" });
       // setformData("")
       console.log(result);
+      navigate(`/story/${result.id}`)
     })
     .catch((error) => console.log("error", error));
 };
@@ -330,11 +347,12 @@ export const userDetails = (
       // setFollowingTag(result.user.followed_topics);
       // setFollowingUser(result.user.followed_user);
       setUserDetail(result);
-      console.log(result);
+      // console.log(result);
       // setDetail(result);
     })
     .catch((error) => console.log("error", error));
 };
+
 export const userDetailsForStories = (userId, setUserDetailForStories) => {
   let myHeaders = new Headers();
 
@@ -413,6 +431,7 @@ export const TopicRecommendedFunc = (setTopics) => {
     })
     .catch((error) => console.log("error", error));
 };
+
 export const UserFollowFunc = (setUsers) => {
   fetch("http://127.0.0.1:8000/auth/users")
     .then((response) => response.json())
