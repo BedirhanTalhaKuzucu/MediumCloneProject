@@ -9,18 +9,19 @@ const Draft = () => {
   const { userInfo } = useAppState();
   const userId = userInfo?.userInfo?.profileInfoId;
 
+  const [userArticle, setUserArticle] = useState();
+
   useEffect(() => {
-    userDetails(setUserDetail, userId);
+    userDetails(setUserDetail, userId, setUserArticle);
     // console.log(userDetail?.user?.user_stories);
   }, []);
-
   return (
     <div>
       {userDetail ? (
-        userDetail.user.user_stories.map((item, key) => (
-          <div>
+        userArticle.map((item) => (
+          <div key={item.id}>
             {item?.status === "Draft" ? (
-              <ArticleCard key={key} data={item} />
+              <ArticleCard key={item.id} data={item} />
             ) : null}
           </div>
         ))

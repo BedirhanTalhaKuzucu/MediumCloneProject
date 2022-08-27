@@ -8,11 +8,11 @@ import Categorys from "../components/Categorys";
 import { useAppState } from "../contexts/AppContext";
 import SignIn from "./SignIn";
 import LogIn from "./LogIn";
-import { useEffect } from "react";
 import Images from "../assets/Images";
 
 function Home() {
   const { data, trendList } = useAppState();
+  // console.log(data);
 
   return (
     <>
@@ -27,7 +27,9 @@ function Home() {
           </Col>
           <Col md={12} lg={{ span: 7, order: "first" }}>
             {data ? (
-              data.map((blogCard) => <Cards blog={blogCard} />)
+              data.map((blogCard) => (
+                <Cards blog={blogCard} key={blogCard.id} />
+              ))
             ) : (
               <div
                 style={{
@@ -47,8 +49,6 @@ function Home() {
 }
 
 export default Home;
-
-
 
 // import React from "react";
 // import { useState, useEffect } from "react";
@@ -84,10 +84,10 @@ export default Home;
 //   return (
 //     <div className="filter-container">
 //       <input role="textbox" onChange={(e) => {e.persist(), handleInputChange(e)} } type="text" />
-      
+
 //       {
 //         renderedData &&
-//         renderedData.map((item, index) => { 
+//         renderedData.map((item, index) => {
 //         return(
 //         <li role="listitem" key= {index} > {item} </li>
 //         )}
@@ -100,11 +100,8 @@ export default Home;
 
 // export default Filter;
 
-
-
 // import data from "../data/users.json"
 // import { useState, useEffect } from "react";
-
 
 // const useFilter = (inputValue) => {
 
@@ -123,7 +120,4 @@ export default Home;
 //   return [selectedValue]
 // };
 
-
-
 // export default useFilter;
-

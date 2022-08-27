@@ -7,9 +7,9 @@ import CommentsModal from "./CommentsModal";
 
 const StoryDetailMain = ({ detaylar }) => {
   const [copied, setCopied] = useState(false);
-  const [htmlContet, sethtmlContet] = useState("")
+  const [htmlContet, sethtmlContet] = useState("");
 
-  console.log(detaylar);
+  // console.log(detaylar);
 
   const copyLink = () => {
     const el = document.createElement("input");
@@ -21,21 +21,20 @@ const StoryDetailMain = ({ detaylar }) => {
     setCopied(true);
   };
 
-  let content = detaylar?.content
-  let stringToHTML = function ( content ) {
+  let content = detaylar?.content;
+  let stringToHTML = function (content) {
     let parser = new DOMParser();
-    let doc = parser.parseFromString(content, 'text/html').body;
-    console.log(doc.childNodes[0])
+    let doc = parser.parseFromString(content, "text/html").body;
+    // console.log(doc.childNodes[0]);
     return doc.childNodes[0];
   };
 
   useEffect(() => {
-    let html = stringToHTML(content)
-    sethtmlContet(html) 
+    let html = stringToHTML(content);
+    sethtmlContet(html);
+  }, [content]);
 
-  }, [content])
-
-  // console.log(htmlContet);  
+  // console.log(htmlContet);
 
   return (
     <Main>
@@ -104,7 +103,7 @@ const StoryDetailMain = ({ detaylar }) => {
       </Header>
       <article className="my-5">
         <p>
-          { detaylar ? detaylar.content : "" }
+          {detaylar ? detaylar.content : ""}
           {/* {htmlContet && htmlContet }  */}
         </p>
         <ClapsRespond>

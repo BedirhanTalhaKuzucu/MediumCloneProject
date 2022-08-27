@@ -1,8 +1,6 @@
-import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
-import Icongif from "../assets/Icongif.png";
 import Navbar from "./Navbar/Navbar";
 import Images from "../assets/Images";
 

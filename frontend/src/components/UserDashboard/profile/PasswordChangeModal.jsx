@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -30,7 +30,7 @@ function PasswordChangeModal() {
 
   const { userInfo } = useAppState();
   const Token = userInfo?.key;
-  console.log(typeof Token);
+  // console.log(typeof Token);
 
   const ref1 = useRef();
   const ref2 = useRef();

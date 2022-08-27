@@ -1,4 +1,4 @@
-import React, { useNavigate } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Images from "../../../assets/Images";
 import { useAppState } from "../../../contexts/AppContext";

@@ -9,7 +9,7 @@ import {
 } from "./styles/UDMain.styles";
 import Tooltip from "@mui/material/Tooltip";
 import MainFollowingTooltip from "./MainFollowingTooltip";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { userDetails } from "../../helpers/apiRequests";
 

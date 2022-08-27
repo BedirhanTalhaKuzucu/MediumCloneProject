@@ -19,10 +19,10 @@ export const signUpFunction = (values, resetForm, setErrorMesage, navigate) => {
 
   fetch("http://127.0.0.1:8000/auth/register/", requestOptions)
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       if (!response.ok) {
         response.json().then((text) => {
-          console.log(text);
+          // console.log(text);
           setErrorMesage(text);
         });
       } else {
@@ -66,7 +66,7 @@ export const logInFunction = (
     .then((response) => {
       if (!response.ok) {
         response.json().then((text) => {
-          console.log(text);
+          // console.log(text);
           handleErrorMesage();
         });
       } else {
@@ -114,9 +114,11 @@ function getTrending(list) {
 }
 
 export const getData = (setData, setTrendList) => {
-
   let myHeaders = new Headers();
-  myHeaders.append("Cookie", "csrftoken=ELiWUgqxhTQmVoViigupeVDooY7d90qARaohIkvQSS5ZqJy4p26tjhCzRzyCXJRJ");
+  myHeaders.append(
+    "Cookie",
+    "csrftoken=ELiWUgqxhTQmVoViigupeVDooY7d90qARaohIkvQSS5ZqJy4p26tjhCzRzyCXJRJ"
+  );
 
   let requestOptions = {
     method: "GET",
@@ -126,7 +128,7 @@ export const getData = (setData, setTrendList) => {
   fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       const trendList = getTrending(data.results);
       setTrendList(trendList);
       setData(data.results);
@@ -142,7 +144,7 @@ export const settingUserInfo = (
   resetForm
 ) => {
   if (values) {
-    console.log(values);
+    // console.log(values);
     let myHeaders = new Headers();
     myHeaders.append("Authorization", `Token ${token}`);
     myHeaders.append(
@@ -172,7 +174,7 @@ export const settingUserInfo = (
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         setsettingPageInfo(result);
       })
       .catch((error) => console.log("error", error));
@@ -194,7 +196,7 @@ export const settingUserInfo = (
       .then((response) => response.json())
       .then((result) => {
         setsettingPageInfo(result);
-        console.log(result);
+        // console.log(result);
       })
       .catch((error) => console.log("error", error));
   }
@@ -229,7 +231,7 @@ export const updatedProfilImage = (
   )
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
+      // console.log(result);
       settingUserInfo(setsettingPageInfo, token, userId);
     })
     .catch((error) => console.log("error", error));
@@ -249,15 +251,13 @@ export const getStoryDetailsA = (tokenKey, detailsId, setdetaylar) => {
   fetch(`http://127.0.0.1:8000/blog/stories/${detailsId}/`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
+      // console.log(result);
       setdetaylar(result);
     })
     .catch((error) => console.log("error", error));
 };
 
 export const createStory = (formData, values, resetForm, token, navigate) => {
-  
-
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Token ${token}`);
 
@@ -266,7 +266,7 @@ export const createStory = (formData, values, resetForm, token, navigate) => {
   formdata.append("content", formData.story);
   values.image && formdata.append("image", values.image);
   formdata.append("tag_name", values.tag_name);
-  formdata.append("user_id", values.user_id );
+  formdata.append("user_id", values.user_id);
   formdata.append("status", values.status);
 
   let requestOptions = {
@@ -281,8 +281,8 @@ export const createStory = (formData, values, resetForm, token, navigate) => {
     .then((result) => {
       resetForm({ values: "" });
       // setformData("")
-      console.log(result);
-      navigate(`/story/${result.id}`)
+      // console.log(result);
+      navigate(`/story/${result.id}`);
     })
     .catch((error) => console.log("error", error));
 };
@@ -301,7 +301,7 @@ export const followedUserStories = (setfollowingStory, token) => {
   fetch("http://127.0.0.1:8000/blog/stories/following", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log("deneme");
+      // console.log("deneme");
       setfollowingStory(result.results);
     })
     .catch((error) => console.log("error", error));
@@ -321,7 +321,7 @@ export const searchBar = (values, setSearching, token) => {
   fetch(url, requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
+      // console.log(result);
       setSearching(result.results);
     })
     .catch((error) => console.log("error", error));
@@ -331,7 +331,8 @@ export const userDetails = (
   // setFollowingTag,
   // setFollowingUser,
   setUserDetail,
-  userId
+  userId,
+  setUserArticle
 ) => {
   let myHeaders = new Headers();
 
@@ -346,6 +347,7 @@ export const userDetails = (
     .then((result) => {
       // setFollowingTag(result.user.followed_topics);
       // setFollowingUser(result.user.followed_user);
+      setUserArticle(result.user.user_stories);
       setUserDetail(result);
       // console.log(result);
       // setDetail(result);
@@ -366,7 +368,7 @@ export const userDetailsForStories = (userId, setUserDetailForStories) => {
     .then((response) => response.json())
     .then((result) => {
       setUserDetailForStories(result);
-      console.log(result);
+      // console.log(result);
     })
     .catch((error) => console.log("error", error));
 };
@@ -393,7 +395,7 @@ export const addClapFunction = (storyId, tokenKey, addClap) => {
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
   } else {
-    console.log("addd");
+    // console.log("addd");
 
     let requestOptions = {
       method: "POST",
@@ -437,7 +439,7 @@ export const UserFollowFunc = (setUsers) => {
     .then((response) => response.json())
     .then(({ results }) => {
       const randomSelection = (n) => {
-        console.log(results);
+        // console.log(results);
         let newArr = [];
         if (n >= results.length) {
           return results;
@@ -512,7 +514,7 @@ export const controlFollowFunction = (
   fetch("http://127.0.0.1:8000/auth/following/", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
+      // console.log(result);
 
       let followedList = [];
       result.results.map((item) => {
