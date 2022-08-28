@@ -6,6 +6,7 @@ import { IoIosHeartDislike } from "react-icons/io";
 import { BsBookmarkFill } from "react-icons/bs";
 import { addClapFunction, addSavedFunction } from "../../helpers/apiRequests";
 import PropTypes from "prop-types";
+import { Helmet } from "react-helmet";
 
 const ArticleCard = ({ data }) => {
   //!okuma süresini hesaplamak için:
@@ -86,6 +87,9 @@ const ArticleCard = ({ data }) => {
 
   return (
     <CardContainer>
+      <Helmet>
+        <title>{data.title.replace(".", "")}</title>
+      </Helmet>
       <section className="authorInf">
         <img src={data.creatorInfo.user_img} alt="" className="pic" />
         <div className="fullName">
@@ -125,8 +129,6 @@ const ArticleCard = ({ data }) => {
                 <img src={Images.clap} alt="icon" onClick={addClapHandle} />
               )}
               <img src={Images.more} alt="icon" />
-              <div></div>
-              <div></div>
             </div>
           </div>
         </nav>

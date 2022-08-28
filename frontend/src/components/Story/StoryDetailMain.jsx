@@ -4,6 +4,7 @@ import Images from "../../assets/Images";
 import { Tooltip } from "@mui/material";
 import MainFollowingTooltip from "../UserDashboard/MainFollowingTooltip";
 import CommentsModal from "./CommentsModal";
+import { Helmet } from "react-helmet";
 
 const StoryDetailMain = ({ detaylar }) => {
   const [copied, setCopied] = useState(false);
@@ -38,6 +39,9 @@ const StoryDetailMain = ({ detaylar }) => {
 
   return (
     <Main>
+      <Helmet>
+        <title>{detaylar?.title}</title>
+      </Helmet>
       <Header>
         <nav className="authorInf">
           <div>
@@ -101,7 +105,17 @@ const StoryDetailMain = ({ detaylar }) => {
           </Tooltip>
         </nav>
       </Header>
-      <article className="my-5">
+      <article className="my-5 d-flex row">
+        <h3 className="mb-4  ">
+          {detaylar ? detaylar?.title?.replace(".", "") : ""}
+        </h3>
+
+        <img
+          src={detaylar.image}
+          alt="article image"
+          className=" mb-4 align-self-center"
+        />
+
         <p>
           {detaylar ? detaylar.content : ""}
           {/* {htmlContet && htmlContet }  */}

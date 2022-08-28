@@ -25,7 +25,9 @@ const Stories = () => {
         <option value="Draft">Drafts</option>
       </select>
       <br />
-      <SectionComponent />
+      <div style={{ width: "100vh" }}>
+        <SectionComponent />
+      </div>
     </div>
   );
 };
