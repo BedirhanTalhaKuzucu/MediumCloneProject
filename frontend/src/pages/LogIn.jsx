@@ -68,7 +68,7 @@ function LogIn() {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>Welcome back.</Modal.Title>
+        <Modal.Title>Welcome Back</Modal.Title>
       </Modal.Header>
       <Form onSubmit={formik.handleSubmit}>
         <Modal.Body>
@@ -116,7 +116,15 @@ function LogIn() {
 
           <p style={{ color: "red" }}>{errorMesage ? errorMesage : ""}</p>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <button className="btn btn-link">
+            <small>Create Account</small>
+          </button>
           <Button variant="warning" type="submit">
             Submit
           </Button>

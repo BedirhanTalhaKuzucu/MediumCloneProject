@@ -24,13 +24,28 @@ function ColorSchemesExample() {
             <img src={logo} style={{ width: "10rem" }} alt="logo" />{" "}
           </Navbar.Brand>
           <Nav className="justify-content-end align-items-center ">
-            <Nav.Link as={NavLink} to="home" className="text-dark me-1">
+            <Nav.Link
+              as={NavLink}
+              to="/"
+              className="text-dark me-1"
+              onClick={() => setLogInShow(true)}
+            >
               Our story
             </Nav.Link>
-            <Nav.Link as={NavLink} to="home" className="text-dark me-1">
+            <Nav.Link
+              as={NavLink}
+              to="/"
+              className="text-dark me-1"
+              onClick={() => setLogInShow(true)}
+            >
               Membership
             </Nav.Link>
-            <Nav.Link as={NavLink} to="home" className="text-dark me-1">
+            <Nav.Link
+              as={NavLink}
+              to="write"
+              className="text-dark me-1"
+              onClick={() => setLogInShow(true)}
+            >
               Write
             </Nav.Link>
             <Nav.Link

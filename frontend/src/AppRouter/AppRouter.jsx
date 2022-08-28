@@ -17,6 +17,7 @@ import Published from "../components/UserStoriesParts/Published";
 import UserLists from "../pages/UserLists";
 import SavedStories from "../components/UserStoriesParts/SavedStories";
 import TagDetail from "../pages/TagDetail";
+import PrivateRouter from "./PrivateRouter";
 import { memo } from "react";
 
 function AppRouter() {
@@ -24,34 +25,50 @@ function AppRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="home" element={<UserDashboard />}>
+
+        <Route path="home" element={<PrivateRouter />}>
+          <Route path="" element={<UserDashboard />} />
+        </Route>
+        <Route path="/home" element={<UserDashboard />}>
           <Route index element={<Following />} />
           <Route path="following" element={<Following />} />
           <Route path="recommended" element={<Recommended />} />
         </Route>
 
-        <Route path="/story/:id" element={<StoryDetail />} />
-
-        <Route path="home/profile" element={<Profile />}>
-          <Route index element={<AboutYou />} />
-          <Route path="about" element={<AboutYou />} />
-          <Route path="stories" element={<Stories />} />
-          <Route path="security" element={<Security />} />
+        <Route path="/story/:id" element={<PrivateRouter />}>
+          <Route path="" element={<StoryDetail />} />
         </Route>
 
-        <Route path="me/stories" element={<UserStories />}>
-          <Route index element={<Drafts />} />
-          <Route path="drafts" element={<Drafts />} />
-          <Route path="public" element={<Published />} />
+        <Route path="home/profile" element={<PrivateRouter />}>
+          <Route path="" element={<Profile />}>
+            <Route index element={<AboutYou />} />
+            <Route path="about" element={<AboutYou />} />
+            <Route path="stories" element={<Stories />} />
+            <Route path="security" element={<Security />} />
+          </Route>
         </Route>
 
-        <Route path="me/lists" element={<UserLists />}>
-          <Route index element={<SavedStories />} />
-          <Route path="save" element={<SavedStories />} />
+        <Route path="me/stories" element={<PrivateRouter />}>
+          <Route path="" element={<UserStories />}>
+            <Route index element={<Drafts />} />
+            <Route path="drafts" element={<Drafts />} />
+            <Route path="public" element={<Published />} />
+          </Route>
         </Route>
 
-        <Route path="tag" element={<TagDetail />} />
-        <Route path="write" element={<Write />} />
+        <Route path="me/lists" element={<PrivateRouter />}>
+          <Route path="" element={<UserLists />}>
+            <Route index element={<SavedStories />} />
+            <Route path="save" element={<SavedStories />} />
+          </Route>
+        </Route>
+
+        <Route path="tag" element={<PrivateRouter />}>
+          <Route path="" element={<TagDetail />} />
+        </Route>
+        <Route path="write" element={<PrivateRouter />}>
+          <Route path="" element={<Write />} />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
