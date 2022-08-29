@@ -96,9 +96,7 @@ const Security = () => {
           </p>
         </div>
         <Buttons>
-          <button>
-            <PasswordChangeModal />
-          </button>
+          <PasswordChangeModal />
         </Buttons>
       </nav>
       <nav className="deleteAcoount">
