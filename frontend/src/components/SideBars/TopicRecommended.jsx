@@ -21,7 +21,7 @@ const TopicRecommended = () => {
               <div key={data.id} className="topicItem">
                 <Link
                   style={{ textDecoration: "none", color: "black" }}
-                  to="/tag"
+                  to={`/tag/${data.id}`}
                   state={{ detail: data }}
                 >
                   {data.tag_name}

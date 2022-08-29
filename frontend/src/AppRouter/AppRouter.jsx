@@ -63,7 +63,7 @@ function AppRouter() {
           </Route>
         </Route>
 
-        <Route path="tag" element={<PrivateRouter />}>
+        <Route path="tag/:id" element={<PrivateRouter />}>
           <Route path="" element={<TagDetail />} />
         </Route>
         <Route path="write" element={<PrivateRouter />}>
