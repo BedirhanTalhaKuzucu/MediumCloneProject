@@ -2,11 +2,11 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
-import { StyledProfilImage } from "./Sidebar.styled";
+import { SideBarStyles, StyledProfilImage } from "./Sidebar.styled";
 
 function Sidebar({ trendList }) {
   return (
-    <>
+    <SideBarStyles>
       <Container
         fluid
         className="border-1 border-bottom border-grey"
@@ -51,7 +51,7 @@ function Sidebar({ trendList }) {
           </Row>
         </Container>
       </Container>
-    </>
+    </SideBarStyles>
   );
 }
 

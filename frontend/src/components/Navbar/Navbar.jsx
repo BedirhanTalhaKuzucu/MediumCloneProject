@@ -6,28 +6,28 @@ import logo from "../../assets/logo.png";
 import Button from "react-bootstrap/Button";
 import { NavLink } from "react-router-dom";
 import { useAppState } from "../../contexts/AppContext";
+import { NavbarStyle } from "./Navbar.styled";
 
 function ColorSchemesExample() {
   const { handleShow, setLogInShow } = useAppState();
 
   return (
-    <>
-      <Navbar
-        bg="warning"
-        variant="light"
-        style={{ height: "4.5rem" }}
-        className="border-1 border-bottom border-dark"
-      >
+    <NavbarStyle>
+      <Navbar>
         <Container>
           <Navbar.Brand as={NavLink} to="home">
-            {" "}
-            <img src={logo} style={{ width: "10rem" }} alt="logo" />{" "}
+            <img
+              src={logo}
+              // style={{ width: "10rem" }}
+              alt="logo"
+              className="logo"
+            />
           </Navbar.Brand>
-          <Nav className="justify-content-end align-items-center ">
+          <Nav className="justify-content-end align-items-center Navbar-Right">
             <Nav.Link
               as={NavLink}
               to="/"
-              className="text-dark me-1"
+              className="text-dark me-1 other"
               onClick={() => setLogInShow(true)}
             >
               Our story
@@ -35,7 +35,7 @@ function ColorSchemesExample() {
             <Nav.Link
               as={NavLink}
               to="/"
-              className="text-dark me-1"
+              className="text-dark me-1 other"
               onClick={() => setLogInShow(true)}
             >
               Membership
@@ -43,7 +43,7 @@ function ColorSchemesExample() {
             <Nav.Link
               as={NavLink}
               to="write"
-              className="text-dark me-1"
+              className="text-dark me-1 other"
               onClick={() => setLogInShow(true)}
             >
               Write
@@ -61,6 +61,7 @@ function ColorSchemesExample() {
                 variant="dark"
                 style={{ borderRadius: "2rem" }}
                 onClick={handleShow}
+                className="getStarted"
               >
                 Get Started
               </Button>
@@ -68,7 +69,7 @@ function ColorSchemesExample() {
           </Nav>
         </Container>
       </Navbar>
-    </>
+    </NavbarStyle>
   );
 }
 

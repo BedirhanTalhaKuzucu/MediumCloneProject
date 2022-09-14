@@ -1,8 +1,32 @@
 import styled from "styled-components";
-import Button from 'react-bootstrap/Button';
-import Nav from 'react-bootstrap/Nav';
-import { NavLink } from "react-router-dom";
 
+export const NavbarStyle = styled.div`
+  border-bottom: 1px solid black;
+  /* height: 4.5rem; */
+  background-color: #ffc107;
+  .logo {
+    width: 10rem;
+  }
+  .Navbar-Right {
+    a {
+      text-decoration: none;
+      padding: 0.5rem;
+    }
+  }
 
-export const StyledNavLink = styled(Nav.Link).attrs({as: "NavLink",})`
-  `;
+  @media only screen and (max-width: 750px) {
+    /* height: 4rem; */
+    .logo {
+      width: 6rem;
+    }
+    .Navbar-Right {
+      .other {
+        display: none;
+      }
+    }
+    .getStarted {
+      /* background-color: red; */
+      font-size: 14px;
+    }
+  }
+`;
