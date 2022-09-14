@@ -6,7 +6,7 @@ export const HomeStyles = styled.div`
   flex-direction: column;
 
   .rowStyle {
-    background-color: pink;
+    /* background-color: pink; */
     display: flex;
     flex-direction: row-reverse;
     margin: 0 5rem;
@@ -16,9 +16,13 @@ export const HomeStyles = styled.div`
   }
   @media only screen and (max-width: 750px) {
     .rowStyle {
-      background-color: pink;
+      /* background-color: pink; */
       display: flex;
       flex-direction: column;
+      margin: 0 1rem;
+      .categories {
+        margin-left: 0;
+      }
     }
   }
 `;

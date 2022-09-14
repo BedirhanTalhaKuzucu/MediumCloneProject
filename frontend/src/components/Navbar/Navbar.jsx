@@ -12,7 +12,7 @@ function ColorSchemesExample() {
   const { handleShow, setLogInShow } = useAppState();
 
   return (
-    <NavbarStyle>
+    <NavbarStyle className="bg-warning">
       <Navbar>
         <Container>
           <Navbar.Brand as={NavLink} to="home">

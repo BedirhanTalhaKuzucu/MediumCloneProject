@@ -9,26 +9,26 @@ function Header() {
     <>
       <Navbar />
       <HeaderStyles className="bg-warning">
-        <Col className="mx-5 texts">
+        <div className=" texts">
           <h1 className="medium pb-3">Stay curious.</h1>
-          <h5 className="pb-5 ">
+          <h6 className="pb-5 ">
             Discover stories, thinking, and expertise from writers on any topic.
-          </h5>
+          </h6>
           <Button
             variant="dark"
             style={{ borderRadius: "2rem", width: "13rem" }}
           >
             Start Reading
           </Button>
-        </Col>
-        <Col className="image">
+        </div>
+        <div className="image">
           <img
             src={Images.Mgif}
             alt=""
-            style={{ width: "%100", height: "70vh" }}
-            className="mx-auto  "
+            // style={{ width: "%100", height: "70vh" }}
+            className="gif"
           />
-        </Col>
+        </div>
       </HeaderStyles>
     </>
   );

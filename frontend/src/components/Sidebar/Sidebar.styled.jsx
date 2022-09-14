@@ -5,10 +5,34 @@ export const SideBarStyles = styled.div`
 `;
 
 export const CardStyled = styled.div`
-  /* background-color: red; */
   display: flex;
+  justify-content: center;
+  align-items: center;
+  .cardText {
+    width: 50%;
+  }
   .image {
-    /* width: 20px; */
+    object-fit: cover;
+  }
+
+  @media only screen and (max-width: 750px) {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    border-bottom: 1px solid grey;
+
+    .cardText {
+      width: 100%;
+    }
+    .image {
+      margin-left: 10px;
+      object-fit: cover;
+    }
+    .card-text {
+      font-size: 18px;
+    }
   }
 `;
 
@@ -25,6 +49,7 @@ export const StyledProfilImage = styled(ProfilImage)`
   img {
     width: 2rem;
     border-radius: 50px;
+    object-fit: cover;
   }
   padding-right: 10px;
 `;
