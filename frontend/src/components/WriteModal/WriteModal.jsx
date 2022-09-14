@@ -77,7 +77,9 @@ function WriteModal({ show, setShow, formData, formik1, seteditor }) {
                                 placeholder="Type to category..."
                                 name="tag_name"
                                 onChange={formik2.handleChange}
-                                value={formik2.values.tag_name} />
+                                value={formik2.values.tag_name}
+                                required
+                            />
 
                             <datalist id="taglistOptions">
                                 <option value="Technology" />
