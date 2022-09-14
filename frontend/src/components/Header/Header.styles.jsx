@@ -5,18 +5,20 @@ export const HeaderStyles = styled.div`
   justify-content: space-between;
   /* background-color: red; */
   align-items: center;
+  padding: 0 3rem;
 
   .texts {
     padding: 1rem 0;
     text-align: center;
-    width: 50%;
+    /* width: 50%; */
   }
   .image {
-    width: 50%;
-    height: 30%;
+    width: auto;
+    height: 35%;
+
     .gif {
       width: auto;
-      height: 20rem;
+      height: 22rem;
       margin: 2rem 0;
     }
   }
