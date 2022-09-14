@@ -38,12 +38,6 @@ INSTALLED_APPS = [
     "corsheaders",
     'django_extensions',
     'django.contrib.sites',
-    # google ile account için
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-
 
     # apps
     'users',

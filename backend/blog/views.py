@@ -153,11 +153,11 @@ class TagListView(generics.ListAPIView):
     serializer_class = TagsSerializer
     # permission_classes = (IsAuthorOrReadOnly,)
 
-    # def paginate_queryset(self, queryset):
-    #     # Return a single page of results, or `None` if pagination is disabled.
-    #     if self.paginator and self.request.query_params.get(self.paginator.default_limit, None) is None:
-    #         return None
-    #     return super().paginate_queryset(queryset)
+    def paginate_queryset(self, queryset):
+        # Return a single page of results, or `None` if pagination is disabled.
+        if self.paginator and self.request.query_params.get(self.paginator.default_limit, None) is None:
+            return None
+        return super().paginate_queryset(queryset)
 
 
 # class SaveStoryListView(generics.ListAPIView):
