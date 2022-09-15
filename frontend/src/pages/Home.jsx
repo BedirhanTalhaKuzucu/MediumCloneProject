@@ -1,33 +1,33 @@
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Cards from "../components/Cards/Cards";
-import Categorys from "../components/Categorys";
+import Categorys from "../components/HomeTags/Categorys";
 import { useAppState } from "../contexts/AppContext";
 import SignIn from "./SignIn";
 import LogIn from "./LogIn";
-import { useEffect } from "react";
 import Images from "../assets/Images";
+import { HomeStyles } from "./styles/Home.styles";
 
 function Home() {
   const { data, trendList } = useAppState();
+  // console.log(data);
 
   return (
     <>
       <SignIn />
       <LogIn />
       <Header />
-      <Sidebar trendList={trendList} />
-      <Container className="mt-5">
-        <Row>
-          <Col md={12} lg={{ span: 5, order: "last" }}>
+      <HomeStyles>
+        <Sidebar trendList={trendList} />
+        <div className="d-flex rowStyle">
+          <div className="categories">
             <Categorys />
-          </Col>
-          <Col md={12} lg={{ span: 7, order: "first" }}>
+          </div>
+          <div className="cards">
             {data ? (
-              data.map((blogCard) => <Cards blog={blogCard} />)
+              data.map((blogCard) => (
+                <Cards blog={blogCard} key={blogCard.id} />
+              ))
             ) : (
               <div
                 style={{
@@ -39,16 +39,14 @@ function Home() {
                 <img src={Images.loading} alt="loading gif" />
               </div>
             )}
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </HomeStyles>
     </>
   );
 }
 
 export default Home;
-
-
 
 // import React from "react";
 // import { useState, useEffect } from "react";
@@ -84,10 +82,10 @@ export default Home;
 //   return (
 //     <div className="filter-container">
 //       <input role="textbox" onChange={(e) => {e.persist(), handleInputChange(e)} } type="text" />
-      
+
 //       {
 //         renderedData &&
-//         renderedData.map((item, index) => { 
+//         renderedData.map((item, index) => {
 //         return(
 //         <li role="listitem" key= {index} > {item} </li>
 //         )}
@@ -100,11 +98,8 @@ export default Home;
 
 // export default Filter;
 
-
-
 // import data from "../data/users.json"
 // import { useState, useEffect } from "react";
-
 
 // const useFilter = (inputValue) => {
 
@@ -123,7 +118,4 @@ export default Home;
 //   return [selectedValue]
 // };
 
-
-
 // export default useFilter;
-

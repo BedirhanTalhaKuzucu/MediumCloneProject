@@ -9,7 +9,7 @@ import {
 } from "./styles/UDMain.styles";
 import Tooltip from "@mui/material/Tooltip";
 import MainFollowingTooltip from "./MainFollowingTooltip";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { userDetails } from "../../helpers/apiRequests";
 
@@ -17,6 +17,8 @@ const UDMain = () => {
   // const [followingTag, setFollowingTag] = useState();
   // const [followingUser, setFollowingUser] = useState();
   const [UserDetail, setUserDetail] = useState();
+  const [userArticle, setUserArticle] = useState();
+  const navigate = useNavigate();
 
   const getUserId = () => {
     const get_session_user_info = JSON.parse(
@@ -28,7 +30,7 @@ const UDMain = () => {
 
   useEffect(() => {
     const userId = getUserId();
-    userDetails(setUserDetail, userId);
+    userDetails(setUserDetail, userId, setUserArticle);
   }, []);
 
   return (
@@ -41,7 +43,7 @@ const UDMain = () => {
               UserDetail?.user?.followed_topics.map((item, key) => {
                 return (
                   <div key={key}>
-                    <button>{item}</button>
+                    <button onClick={() => navigate("/tag")}>{item}</button>
                   </div>
                 );
               })

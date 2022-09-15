@@ -1,4 +1,4 @@
-import React, { useNavigate } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Images from "../../../assets/Images";
 import { useAppState } from "../../../contexts/AppContext";
@@ -14,12 +14,12 @@ const ReadingToday = () => {
         <span></span> What We're Reading Today
       </Link>
       {trendList ? (
-        trendList?.slice(0, 3).map((data, id) => (
+        trendList?.slice(0, 3).map((data) => (
           <Link
-            to="/story"
+            to={`/story/${data.id}`}
             state={{ details: data }}
-            key={id}
-            onClick={() => console.log("Hi!")}
+            key={data.id}
+            // onClick={() => console.log("Hi!")}
           >
             <nav>
               <img src={data?.creatorInfo.user_img} alt="" className="" />{" "}

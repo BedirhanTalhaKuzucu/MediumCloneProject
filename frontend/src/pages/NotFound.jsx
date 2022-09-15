@@ -1,6 +1,5 @@
-
-import { useNavigate } from 'react-router-dom';
-import Images from '../assets/Images';
+import { useNavigate } from "react-router-dom";
+import Images from "../assets/Images";
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -8,7 +7,7 @@ const NotFound = () => {
     <div className="container text-center mt-4">
       <img className="w-50" src={Images[404]} alt="" />
       <div>
-        <button onClick={() => navigate('/')} className="btn btn-success me-5">
+        <button onClick={() => navigate("/")} className="btn btn-success me-5">
           Home
         </button>
         <button onClick={() => navigate(-1)} className="btn btn-warning">

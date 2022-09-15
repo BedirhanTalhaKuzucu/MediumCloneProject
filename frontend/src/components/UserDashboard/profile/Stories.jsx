@@ -11,7 +11,7 @@ const Stories = () => {
   const [state, setState] = useState("Published");
 
   const handleSelectChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setState(e.target.value);
   };
 
@@ -25,7 +25,9 @@ const Stories = () => {
         <option value="Draft">Drafts</option>
       </select>
       <br />
-      <SectionComponent />
+      <div style={{ width: "100vh" }}>
+        <SectionComponent />
+      </div>
     </div>
   );
 };

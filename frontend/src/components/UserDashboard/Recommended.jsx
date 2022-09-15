@@ -15,7 +15,7 @@ const Recommended = () => {
     const getArticles = async () => {
       const res = await fetch(`http://127.0.0.1:8000/blog/stories/?offset=0`);
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       setItems(data.results);
     };
 
@@ -27,7 +27,7 @@ const Recommended = () => {
       `http://127.0.0.1:8000/blog/stories/?offset=${offset}`
     );
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     return data.results;
   };
 
@@ -57,7 +57,7 @@ const Recommended = () => {
           <img src={Images.loading} alt="loading gif" />
         </div>
       }
-      endMessage={<b>Yay! You have seen it all</b>}
+      endMessage={<b>There are no more articles to show here..</b>}
     >
       {items.map((item, index) => {
         return <ArticleCard key={index} data={item} />;
