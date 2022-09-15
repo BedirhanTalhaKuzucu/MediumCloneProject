@@ -4,15 +4,10 @@ import Images from "../../assets/Images";
 import { Tooltip } from "@mui/material";
 import MainFollowingTooltip from "../UserDashboard/MainFollowingTooltip";
 import CommentsModal from "./CommentsModal";
-import ReactDOM from 'react-dom';
 
 const StoryDetailMain = ({ detaylar }) => {
   const [copied, setCopied] = useState(false);
-  const [htmlContet, sethtmlContet] = useState("")
 
-  const ref = useRef();
-
-  // console.log(detaylar);
 
   const copyLink = () => {
     const el = document.createElement("input");
@@ -23,10 +18,6 @@ const StoryDetailMain = ({ detaylar }) => {
     document.body.removeChild(el);
     setCopied(true);
   };
-
-
-
-  
 
 
   return (

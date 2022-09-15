@@ -50,7 +50,7 @@ function AppRouter() {
           <Route path="save" element={<SavedStories />} />
         </Route>
 
-        <Route path="tag" element={<TagDetail />} />
+        <Route path="tag/:id" element={<TagDetail />} />
         <Route path="write" element={<Write />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

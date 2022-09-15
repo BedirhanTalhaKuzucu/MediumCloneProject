@@ -114,9 +114,11 @@ function getTrending(list) {
 }
 
 export const getData = (setData, setTrendList) => {
-
   let myHeaders = new Headers();
-  myHeaders.append("Cookie", "csrftoken=ELiWUgqxhTQmVoViigupeVDooY7d90qARaohIkvQSS5ZqJy4p26tjhCzRzyCXJRJ");
+  myHeaders.append(
+    "Cookie",
+    "csrftoken=ELiWUgqxhTQmVoViigupeVDooY7d90qARaohIkvQSS5ZqJy4p26tjhCzRzyCXJRJ"
+  );
 
   let requestOptions = {
     method: "GET",
@@ -256,8 +258,6 @@ export const getStoryDetailsA = (tokenKey, detailsId, setdetaylar) => {
 };
 
 export const createStory = (formData, values, resetForm, token, navigate) => {
-  
-
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Token ${token}`);
 
@@ -266,7 +266,7 @@ export const createStory = (formData, values, resetForm, token, navigate) => {
   formdata.append("content", formData.story);
   values.image && formdata.append("image", values.image);
   formdata.append("tag_name", values.tag_name);
-  formdata.append("user_id", values.user_id );
+  formdata.append("user_id", values.user_id);
   formdata.append("status", values.status);
 
   let requestOptions = {
@@ -282,7 +282,7 @@ export const createStory = (formData, values, resetForm, token, navigate) => {
       resetForm({ values: "" });
       // setformData("")
       console.log(result);
-      navigate(`/story/${result.id}`)
+      navigate(`/story/${result.id}`);
     })
     .catch((error) => console.log("error", error));
 };
@@ -428,6 +428,17 @@ export const TopicRecommendedFunc = (setTopics) => {
         return newArr;
       };
       setTopics(randomSelection(8));
+    })
+    .catch((error) => console.log("error", error));
+};
+
+export const TagDetailsGet = (setTagDetails, id) => {
+
+  fetch(`http://127.0.0.1:8000/blog/tags/${id}/`)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result)
+      setTagDetails(result)
     })
     .catch((error) => console.log("error", error));
 };

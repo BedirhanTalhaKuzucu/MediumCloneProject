@@ -91,34 +91,6 @@ const Following = () => {
         return <ArticleCard key={index} data={item} />;
       })}
     </InfiniteScroll> )
-  // const [followingStories, setFollowingStories] = useState("");
-  // const { followingStories} = useAppState()
-
-
-  
-
-  // useEffect(() => {
-  // }, [followingStories]);
-
-  // return (
-  //   <div>
-  //     {followingStories ? (
-  //       followingStories.map((item, key) => (
-  //         <ArticleCard key={key} data={item} />
-  //       ))
-  //     ) : (
-  //       <div
-  //         style={{
-  //           display: "flex",
-  //           justifyContent: "center",
-  //           alignItems: "center",
-  //         }}
-  //       >
-  //         <img src={Images.loading} alt="loading gif" />
-  //       </div>
-  //     )}
-  //   </div>
-  // );
 };
 
 export default Following;
