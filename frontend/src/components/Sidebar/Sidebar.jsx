@@ -3,8 +3,24 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import { SideBarStyles, StyledProfilImage } from "./Sidebar.styled";
+import { toast } from "react-hot-toast";
+import { useAppState } from "../../contexts/AppContext";
 
 function Sidebar({ trendList }) {
+  const { userInfo } = useAppState();
+
+  const HandleButton = () => {
+    if (userInfo == "") {
+      toast.error("please login first", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    }
+  };
+
   return (
     <SideBarStyles>
       <Container
@@ -17,7 +33,7 @@ function Sidebar({ trendList }) {
             {" "}
             <TrendingUpOutlinedIcon /> TRENDING ON MEDIUM
           </h6>
-          <Row>
+          <Row onClick={HandleButton} style={{ cursor: "pointer" }}>
             {trendList ? (
               trendList.map((blogCard, index) => (
                 <Col md={6} lg={4} key={index}>

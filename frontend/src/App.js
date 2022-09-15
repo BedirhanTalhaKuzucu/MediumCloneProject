@@ -3,10 +3,12 @@ import "./App.scss";
 import AppRouter from "./AppRouter/AppRouter";
 import { AppStateProvider } from "./contexts/AppContext";
 import { Helmet } from "react-helmet";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <div className="App">
+      <Toaster position="top-right" reverseOrder={false} />
       <AppStateProvider>
         <Helmet>
           <title>Medium Clone</title>

@@ -17,6 +17,7 @@ const Security = () => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
+      ...settingPageInfo,
       email: settingPageInfo ? settingPageInfo.email : "",
     },
 

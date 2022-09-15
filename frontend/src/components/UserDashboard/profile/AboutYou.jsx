@@ -10,6 +10,7 @@ import {
 
 const AboutYou = () => {
   const { settingPageInfo, setsettingPageInfo } = useAppState();
+  // console.log(settingPageInfo.email);
 
   const [edit, setEdit] = useState({
     firstname: true,
@@ -21,6 +22,7 @@ const AboutYou = () => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
+      ...settingPageInfo,
       first_name: settingPageInfo ? settingPageInfo.first_name : "",
       last_name: settingPageInfo ? settingPageInfo.last_name : "",
       short_bio: settingPageInfo ? settingPageInfo.userfor?.short_bio : "",
@@ -28,6 +30,7 @@ const AboutYou = () => {
         ? settingPageInfo.userfor?.profile_photo
         : "",
       username: settingPageInfo ? settingPageInfo.username : "",
+      // email: settingPageInfo ? settingPageInfo.email : settingPageInfo.email,
     },
 
     onSubmit: (values, { resetForm }) => {

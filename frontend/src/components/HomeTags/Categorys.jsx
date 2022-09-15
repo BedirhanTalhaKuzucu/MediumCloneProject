@@ -3,13 +3,29 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { TopicRecommendedFunc } from "../../helpers/apiRequests";
 import { CategoriesStyles } from "./Categories.styles";
+import { toast } from "react-hot-toast";
+import { useAppState } from "../../contexts/AppContext";
 
 function Categorys() {
   const [topics, setTopics] = useState([]);
+  const { userInfo } = useAppState();
+  console.log(userInfo);
 
   useEffect(() => {
     TopicRecommendedFunc(setTopics);
   }, []);
+
+  const HandleButton = () => {
+    if (userInfo == "") {
+      toast.error("please login first", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    }
+  };
 
   return (
     <CategoriesStyles>
@@ -21,6 +37,7 @@ function Categorys() {
               <div key={data.id} className="topicItem">
                 <Button
                   variant="outline-secondary"
+                  onClick={HandleButton}
                   // style={{ textDecoration: "none", color: "black" }}
                   // to={`/tag/${data.id}`}
                   // state={{ detail: data }}

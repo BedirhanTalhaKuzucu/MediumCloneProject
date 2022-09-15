@@ -8,6 +8,7 @@ export const CardStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   .cardText {
     width: 50%;
   }
