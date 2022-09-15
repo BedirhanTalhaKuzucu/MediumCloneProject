@@ -88,6 +88,7 @@ function WriteModal({ show, setShow, formData, formik1, seteditor }) {
                 name="tag_name"
                 onChange={formik2.handleChange}
                 value={formik2.values.tag_name}
+                required
               />
 
               <datalist id="taglistOptions">

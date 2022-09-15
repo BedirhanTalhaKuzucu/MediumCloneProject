@@ -1,12 +1,9 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 import { TagSideBarPartStyle } from "./styles/TagSideBarUserInfo.styles";
 
-const TagSideBarUserInfo = () => {
-  let data = useLocation();
-  // console.log(data);
-  data = data.state.detail;
-  console.log(data);
+const TagSideBarUserInfo = ({ tagDetails }) => {
+  let data = tagDetails;
+
   return (
     <TagSideBarPartStyle>
       <section className="tagInfoCounter">

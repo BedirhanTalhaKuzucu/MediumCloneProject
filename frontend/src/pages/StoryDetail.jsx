@@ -10,7 +10,6 @@ const StoryDetail = () => {
   const [detaylar, setdetaylar] = useState();
   const { id } = useParams()
 
-
   const get_token = () => {
     const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
     let tokenKey = get_session_user_info.key
@@ -30,7 +29,7 @@ const StoryDetail = () => {
     return () => {
       setsideBarEffect(false);
     };
-  }, []);
+  }, [id]);
 
   return (
     <div className="d-flex">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ClapsRespond, Header, Main } from "./styles/StoryDetailMain.styles";
 import Images from "../../assets/Images";
 import { Tooltip } from "@mui/material";
@@ -8,9 +8,6 @@ import { Helmet } from "react-helmet";
 
 const StoryDetailMain = ({ detaylar }) => {
   const [copied, setCopied] = useState(false);
-  const [htmlContet, sethtmlContet] = useState("");
-
-  // console.log(detaylar);
 
   const copyLink = () => {
     const el = document.createElement("input");
@@ -21,21 +18,6 @@ const StoryDetailMain = ({ detaylar }) => {
     document.body.removeChild(el);
     setCopied(true);
   };
-
-  let content = detaylar?.content;
-  let stringToHTML = function (content) {
-    let parser = new DOMParser();
-    let doc = parser.parseFromString(content, "text/html").body;
-    // console.log(doc.childNodes[0]);
-    return doc.childNodes[0];
-  };
-
-  useEffect(() => {
-    let html = stringToHTML(content);
-    sethtmlContet(html);
-  }, [content]);
-
-  // console.log(htmlContet);
 
   return (
     <Main>
@@ -105,21 +87,21 @@ const StoryDetailMain = ({ detaylar }) => {
           </Tooltip>
         </nav>
       </Header>
-      <article className="my-5 d-flex row">
-        <h3 className="mb-4  ">
-          {detaylar ? detaylar?.title?.replace(".", "") : ""}
-        </h3>
+      <article className="my-5">
+        {detaylar ? (
+          <div dangerouslySetInnerHTML={{ __html: detaylar.content }} />
+        ) : (
+          ""
+        )}
 
-        <img
-          src={detaylar.image}
-          alt="article image"
-          className=" mb-4 align-self-center"
-        />
+        {/* { detaylar ? detaylar.content : "" } */}
+        {/* {htmlContet ? htmlContet.map(item =>  ( 
+          <>
+            {item.outerHTML}
+          </>  )) 
+          :
+          ""}  */}
 
-        <p>
-          {detaylar ? detaylar.content : ""}
-          {/* {htmlContet && htmlContet }  */}
-        </p>
         <ClapsRespond>
           <div className="icon">
             <Tooltip title="Clap" arrow placement="top">
@@ -139,22 +121,6 @@ const StoryDetailMain = ({ detaylar }) => {
       </article>
     </Main>
   );
-};
-
-StoryDetailMain.defaultProps = {
-  detaylar: {
-    creatorInfo: {
-      first_name: "",
-      last_name: "",
-      user_img: "",
-    },
-    content: "",
-    clap_count: "",
-    comment_count: "",
-    comments: [],
-    id: "",
-    publish_date: "",
-  },
 };
 
 export default StoryDetailMain;

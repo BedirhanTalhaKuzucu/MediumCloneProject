@@ -5,6 +5,8 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register('stories', StoryList)
 router.register('save', StorySaveListView)
+router.register('tags', TagListView)
+
 
 
 urlpatterns = [
@@ -15,7 +17,7 @@ urlpatterns = [
     path('stories/search', SearchBarView.as_view()),
     path('stories/addclap', AddClapStoryView.as_view()),
     path('stories/deleteclap', DeleteClapStoryView.as_view()),
-    path('tags', TagListView.as_view()),
+    # path('tags', TagListView.as_view()),
     # path('stories/save/<int:id>/', SaveStoryListView.as_view(), name='save-story'),
 
 ]

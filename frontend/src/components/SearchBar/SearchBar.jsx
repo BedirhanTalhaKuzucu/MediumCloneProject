@@ -5,10 +5,12 @@ import { searchBar } from "../../helpers/apiRequests"
 import {StyledProfilImage, SearchInputStyle } from "./SearchBar.styles"
 import Dropdown from 'react-bootstrap/Dropdown';
 import { ImPriceTag } from "react-icons/im";
-
+import { useNavigate } from 'react-router-dom';
 
 function SearchBar() {
 
+    const navigate = useNavigate();
+    
     const [searching, setSearching] = useState({
         Story: [],
         Tag: [],
@@ -16,6 +18,11 @@ function SearchBar() {
     })
     
     const [openSearchBar, setopenSearchBar] = useState(false)
+
+    const handleClick = (storyId) => {
+      // console.log(storyId)
+      navigate(`/story/${storyId}`)
+    }
 
     const getToken = () => {
       const get_session_user_info = JSON.parse(sessionStorage.getItem("user_info"))
@@ -62,7 +69,9 @@ function SearchBar() {
                 {item.first_name}  {item.last_name}
               </Dropdown.Item>
             )
-            ) : ""}
+            ) : 
+            ""
+          }
 
 
           {searching.Story.length ?
@@ -72,7 +81,7 @@ function SearchBar() {
             </> : ""}
           {searching.Story.length ?
             searching.Story.map((item, key) => (
-              <Dropdown.Item eventKey="1" key={key}>
+              <Dropdown.Item eventKey="1" key={key} onClick={ () => navigate(`/story/${item.id}`) } >
                   < StyledProfilImage image={item.image} />
                   {item.title}
               </Dropdown.Item>
@@ -88,7 +97,7 @@ function SearchBar() {
             </> : ""}
           {searching.Tag.length ?
             searching.Tag.map((item, key) => (
-              <Dropdown.Item eventKey="1" key={key}> 
+              <Dropdown.Item eventKey="1" key={key} onClick={ () => navigate(`/tag/${item.id}`) } > 
                 <ImPriceTag className="mx-2" />
                 {item.tag_name} 
               </Dropdown.Item>

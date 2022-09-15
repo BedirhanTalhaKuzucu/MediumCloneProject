@@ -4,11 +4,11 @@ import Images from "../../assets/Images";
 import ArticleCard from "../UserDashboard/ArticleCard";
 import { MainStyle } from "./styles/TagDetailMain.styles";
 
-const TagDetailMain = () => {
-  let data = useLocation();
-  data = data.state.detail;
+const TagDetailMain = ({tagDetails}) => {
+  console.log(tagDetails)
+  let data = tagDetails;
   const navigate = useNavigate();
-  console.log(data);
+  
   return (
     <MainStyle>
       <div className="tagmain">
