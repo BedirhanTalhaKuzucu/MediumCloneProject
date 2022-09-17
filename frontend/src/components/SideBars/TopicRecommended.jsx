@@ -15,24 +15,26 @@ const TopicRecommended = () => {
   return (
     <div>
       <TopicListStyle>
-        <h5>Recommended topics</h5> <br />
-        {topics ? (
-          topics?.map((data) => {
-            return (
-              <div key={data.id} className="topicItem">
-                <Link
-                  style={{ textDecoration: "none", color: "black" }}
-                  to={`/tag/${data.id}`}
-                  state={{ detail: data }}
-                >
-                  {data.tag_name}
-                </Link>
-              </div>
-            );
-          })
-        ) : (
-          <img src={Images.loading} alt="loading gif" />
-        )}
+        <h5>Recommended topics</h5>
+        <div className="d-flex flex-wrap">
+          {topics ? (
+            topics?.map((data) => {
+              return (
+                <div key={data.id} className="topicItem">
+                  <Link
+                    style={{ textDecoration: "none", color: "black" }}
+                    to={`/tag/${data.id}`}
+                    state={{ detail: data }}
+                  >
+                    {data.tag_name}
+                  </Link>
+                </div>
+              );
+            })
+          ) : (
+            <img src={Images.loading} alt="loading gif" />
+          )}
+        </div>
       </TopicListStyle>
     </div>
   );
