@@ -148,7 +148,7 @@ class DeleteClapStoryView(generics.DestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class TagListView(generics.ListAPIView):
+class TagListView(viewsets.ReadOnlyModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagsSerializer
     # permission_classes = (IsAuthorOrReadOnly,)

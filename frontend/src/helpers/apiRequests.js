@@ -281,7 +281,7 @@ export const createStory = (formData, values, resetForm, token, navigate) => {
     .then((result) => {
       resetForm({ values: "" });
       // setformData("")
-      // console.log(result);
+      console.log(result);
       navigate(`/story/${result.id}`);
     })
     .catch((error) => console.log("error", error));
@@ -432,6 +432,16 @@ export const TopicRecommendedFunc = (setTopics) => {
         return newArr;
       };
       setTopics(randomSelection(10));
+    })
+    .catch((error) => console.log("error", error));
+};
+
+export const TagDetailsGet = (setTagDetails, id) => {
+  fetch(`http://127.0.0.1:8000/blog/tags/${id}/`)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+      setTagDetails(result);
     })
     .catch((error) => console.log("error", error));
 };

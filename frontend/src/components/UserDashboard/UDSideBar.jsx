@@ -8,16 +8,23 @@ import {
 import ReadingToday from "./UDSideBarParts/ReadingToday";
 import UserProfile from "../UserDashboard/UDSideBarParts/UserProfile";
 import WhoToFollow from "./UDSideBarParts/WhoToFollow";
+import { useNavigate } from "react-router-dom";
 
-const UDSlideBar = ({ sideBarEffect,  authorInfo, updateDetails }) => {
+const UDSlideBar = ({ sideBarEffect, authorInfo, updateDetails }) => {
+  const navigate = useNavigate();
   return (
     <SideBarContainerStyle>
-      <UnlimitedButtonStyle>Get unlimited access</UnlimitedButtonStyle>
+      <UnlimitedButtonStyle onClick={() => navigate("/contributors")}>
+        CONTRIBUTORS
+      </UnlimitedButtonStyle>
 
       <SearchBar />
 
       {sideBarEffect ? (
-        <UserProfile updateDetails = {updateDetails} authorInfo = {authorInfo ? authorInfo : "" }  />
+        <UserProfile
+          updateDetails={updateDetails}
+          authorInfo={authorInfo ? authorInfo : ""}
+        />
       ) : (
         <ReadingToday />
       )}

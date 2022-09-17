@@ -8,14 +8,14 @@ import {
 import WhoToFollow from "../UserDashboard/UDSideBarParts/WhoToFollow";
 import TopicRecommended from "./TopicRecommended";
 
-const TagDetailSideBar = () => {
+const TagDetailSideBar = ({tagDetails}) => {
   return (
     <SideBarContainerStyle>
       <UnlimitedButtonStyle>Get unlimited access</UnlimitedButtonStyle>
 
       <SearchBar />
 
-      <TagSideBarUserInfo />
+      <TagSideBarUserInfo tagDetails = {tagDetails} />
 
       <TopicRecommended />
       <WhoToFollow />

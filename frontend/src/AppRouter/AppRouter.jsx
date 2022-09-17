@@ -19,6 +19,7 @@ import SavedStories from "../components/UserStoriesParts/SavedStories";
 import TagDetail from "../pages/TagDetail";
 import PrivateRouter from "./PrivateRouter";
 import { memo } from "react";
+import Contributors from "../pages/Contributors";
 
 function AppRouter() {
   return (
@@ -63,12 +64,10 @@ function AppRouter() {
           </Route>
         </Route>
 
-        <Route path="tag/:id" element={<PrivateRouter />}>
-          <Route path="" element={<TagDetail />} />
-        </Route>
-        <Route path="write" element={<PrivateRouter />}>
-          <Route path="" element={<Write />} />
-        </Route>
+        <Route path="tag/:id" element={<TagDetail />} />
+        <Route path="write" element={<Write />} />
+        <Route path="/contributors" element={<Contributors />} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
