@@ -415,7 +415,7 @@ export const TopicRecommendedFunc = (setTopics) => {
   fetch("http://127.0.0.1:8000/blog/tags")
     .then((response) => response.json())
     .then((results) => {
-      console.log(results);
+      // console.log(results);
       // setTopics(results);
       const randomSelection = (n) => {
         let newArr = [];
@@ -599,7 +599,7 @@ export const commentCreateFunc = (comment, storyId, Token) => {
   };
 
   fetch(
-    `http://127.0.0.1:8000/blog/stories/${storyId}/comment-create/`,
+    `http://127.0.0.1:8000/blog/stories/${storyId}/comment-create`,
     requestOptions
   )
     .then((response) => response.json())

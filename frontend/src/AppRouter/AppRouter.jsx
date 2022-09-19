@@ -36,9 +36,9 @@ function AppRouter() {
           <Route path="recommended" element={<Recommended />} />
         </Route>
 
-        <Route path="/story/:id" element={<PrivateRouter />}>
-          <Route path="" element={<StoryDetail />} />
-        </Route>
+        {/* <Route path="/story/:id" element={<PrivateRouter />}> */}
+        <Route path="/story/:id" element={<StoryDetail />} />
+        {/* </Route> */}
 
         <Route path="home/profile" element={<PrivateRouter />}>
           <Route path="" element={<Profile />}>

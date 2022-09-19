@@ -11,7 +11,7 @@ const TopicRecommended = () => {
     TopicRecommendedFunc(setTopics);
   }, []);
 
-  console.log(topics);
+  // console.log(topics);
   return (
     <div>
       <TopicListStyle>
