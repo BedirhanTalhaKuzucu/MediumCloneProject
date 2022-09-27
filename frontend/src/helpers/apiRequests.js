@@ -415,7 +415,7 @@ export const TopicRecommendedFunc = (setTopics) => {
   fetch("http://127.0.0.1:8000/blog/tags")
     .then((response) => response.json())
     .then((results) => {
-      console.log(results);
+      // console.log(results);
       // setTopics(results);
       const randomSelection = (n) => {
         let newArr = [];
@@ -599,7 +599,7 @@ export const commentCreateFunc = (comment, storyId, Token) => {
   };
 
   fetch(
-    `http://127.0.0.1:8000/blog/stories/${storyId}/comment-create/`,
+    `http://127.0.0.1:8000/blog/stories/${storyId}/comment-create`,
     requestOptions
   )
     .then((response) => response.json())
@@ -626,6 +626,36 @@ export const changePasswordFunc = (values, Token) => {
 
   fetch(`http://127.0.0.1:8000/auth/password/change/`, requestOptions)
     .then((response) => response.json())
+    .then((result) => console.log(result))
+    .catch((error) => console.log("error", error));
+};
+
+export const userProfileDelete = (Token, settingPageInfo, userId) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Token ${Token}`);
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    id: settingPageInfo.id,
+    username: settingPageInfo.username,
+    first_name: settingPageInfo.first_name,
+    last_name: settingPageInfo.lastName,
+    userfor: {
+      short_bio: settingPageInfo.short_bio,
+      profile_photo: settingPageInfo.profile_photo,
+    },
+    email: settingPageInfo.email,
+  });
+
+  var requestOptions = {
+    method: "DELETE",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch(`http://127.0.0.1:8000/auth/users/${userId}/`, requestOptions)
+    .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.log("error", error));
 };

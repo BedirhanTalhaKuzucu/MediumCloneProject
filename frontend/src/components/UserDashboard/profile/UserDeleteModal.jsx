@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import { ModalStyle } from "../styles/profile/PasswordChangeModal.style";
 import { useNavigate } from "react-router-dom";
+import { useAppState } from "../../../contexts/AppContext";
+import { userProfileDelete } from "../../../helpers/apiRequests";
 const customStyles = {
   content: {
     top: "50%",
@@ -15,8 +17,11 @@ const customStyles = {
 
 function UserDeleteModal() {
   const [modalIsOpen, setIsOpen] = useState(false);
-  // const [values, setValues] = useState({});
   const navigate = useNavigate();
+
+  const { userInfo, settingPageInfo } = useAppState();
+  const userId = userInfo.userInfo.profileInfoId;
+  const Token = userInfo.key;
 
   function openModal() {
     setIsOpen(true);
@@ -26,39 +31,8 @@ function UserDeleteModal() {
     setIsOpen(false);
   }
 
-  //delete account
-
-  const deleteUser = async () => {
-    var myHeaders = new Headers();
-    myHeaders.append(
-      "Authorization",
-      "Token f6fd2cd183916a329ab23c9b5599265662dc350b"
-    );
-    myHeaders.append(
-      "Cookie",
-      "csrftoken=mhsVqsCpf1A01i0bMgwskqORFNu3bQlvawfLBOkYNwjA0CZBSaW0ZA4SAYg5rQNP"
-    );
-
-    var raw = "";
-
-    var requestOptions = {
-      method: "DELETE",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch("http://127.0.0.1:8000/auth/users/22", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-  };
-
-  //   useEffect(() => {}, []);
-
   const handleFormSubmit = () => {
-    console.log("tamam");
-    deleteUser();
+    userProfileDelete(Token, settingPageInfo, userId);
     navigate("/");
     alert("Your account has been successfully deleted.");
   };

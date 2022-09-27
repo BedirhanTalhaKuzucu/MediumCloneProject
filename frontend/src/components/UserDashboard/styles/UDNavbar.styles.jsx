@@ -12,6 +12,7 @@ export const LeftSideBar = styled.nav`
   height: 100vh;
   width: 5.2rem;
   border-right: 1px solid #f1eee9;
+  background-color: white;
 
   @media (max-width: 768px) {
     /* background-color: red; */
