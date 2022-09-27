@@ -105,7 +105,8 @@ const ArticleCard = ({ data }) => {
             {data.title.replace(".", "")}
           </Link>{" "}
           <Link to={`/story/${data.id}`} className="articlePart">
-            {data?.content.slice(0, 170) + "..."}
+            <div dangerouslySetInnerHTML={{ __html: data?.content.slice(0, 170) + "..." }} />
+            {/* {data?.content.slice(0, 170) + "..."} */}
           </Link>
           <div className="specialDetail">
             <div>
