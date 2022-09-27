@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     "corsheaders",
     'django_extensions',
-
+    'django.contrib.sites',
 
     # apps
     'users',
@@ -159,3 +159,28 @@ CORS_ALLOW_METHODS = [
 #         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
 #     ]
 # }
+
+# google account için:
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

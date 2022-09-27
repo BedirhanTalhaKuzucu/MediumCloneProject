@@ -35,6 +35,7 @@ export const CardContainer = styled.div`
       color: black;
     }
     .part1 {
+      width: 100%;
       .title {
         font-weight: bold;
         font-size: 1.3rem;

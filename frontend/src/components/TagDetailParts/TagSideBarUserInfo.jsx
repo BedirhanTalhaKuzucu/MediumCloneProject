@@ -1,7 +1,7 @@
 import React from "react";
 import { TagSideBarPartStyle } from "./styles/TagSideBarUserInfo.styles";
 
-const TagSideBarUserInfo = ({tagDetails}) => {
+const TagSideBarUserInfo = ({ tagDetails }) => {
   let data = tagDetails;
 
   return (
@@ -13,56 +13,24 @@ const TagSideBarUserInfo = ({tagDetails}) => {
         </nav>
         <nav className="nav2">
           <h3>{data.tag_follower_count}</h3>
-          <p>Writers</p>
+          <p>Followers</p>
         </nav>
       </section>
+
       <section className="users">
-        <img
-          src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-          alt=""
-        />
-        <img
-          src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-          alt=""
-        />
-        <img
-          src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-          alt=""
-        />
-        <img
-          src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-          alt=""
-        />
-        <img
-          src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-          alt=""
-        />
-        <img
-          src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-          alt=""
-        />
-        <img
-          src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-          alt=""
-        />
-        <img
-          src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-          alt=""
-        />
-        <img
-          src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-          alt=""
-        />
-        <img
-          src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-          alt=""
-        />
-      </section>
-      {/* <section className="users">
         {data?.tag_follower?.map((item) => {
-          return <div key={item.id}> {item.user}</div>;
+          return (
+            <img
+              key={item.id}
+              src={
+                item?.tag_follower?.userImage ||
+                "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
+              }
+              alt=""
+            />
+          );
         })}
-      </section> */}
+      </section>
     </TagSideBarPartStyle>
   );
 };

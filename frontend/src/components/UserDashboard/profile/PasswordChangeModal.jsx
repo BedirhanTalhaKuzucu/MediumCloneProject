@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -8,6 +8,7 @@ import { ModalStyle } from "../styles/profile/PasswordChangeModal.style";
 import { changePasswordFunc } from "../../../helpers/apiRequests";
 import { useAppState } from "../../../contexts/AppContext";
 import { useRef } from "react";
+import validator from "validator";
 const customStyles = {
   content: {
     top: "50%",
@@ -27,10 +28,11 @@ function PasswordChangeModal() {
     showPassword1: false,
     showPassword2: false,
   });
+  const [errorMessage, setErrorMessage] = useState("");
 
   const { userInfo } = useAppState();
   const Token = userInfo?.key;
-  console.log(typeof Token);
+  // console.log(typeof Token);
 
   const ref1 = useRef();
   const ref2 = useRef();
@@ -66,27 +68,40 @@ function PasswordChangeModal() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
-    if (values.password1 === values.password2) {
-      console.log("password match");
-      setValues({
-        password1: ref1.current.value,
-        password2: ref1.current.value,
-        ...values,
-      });
-      console.log(values);
-      changePasswordFunc(values, Token);
-      closeModal();
+    if (
+      validator.isStrongPassword(values.password1, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+    ) {
+      setErrorMessage("Is Strong Password");
+      if (values.password1 === values.password2) {
+        console.log("password match");
+        setValues({
+          password1: ref1.current.value,
+          password2: ref1.current.value,
+          ...values,
+        });
+        console.log(values);
+        changePasswordFunc(values, Token);
+        closeModal();
+        alert("Your password has been successfully changed");
+      } else {
+        setErrorMessage("password not match");
+      }
     } else {
-      alert("password not match");
+      setErrorMessage("Is Not Strong Password");
     }
   };
 
   return (
     <div>
-      <button onClick={openModal} className="btn">
+      <div className="pt-2" style={{ cursor: "pointer" }} onClick={openModal}>
         Edit
-      </button>
+      </div>
       <ModalStyle>
         <Modal
           isOpen={modalIsOpen}
@@ -136,6 +151,14 @@ function PasswordChangeModal() {
                   </InputAdornment>
                 }
               />
+              <div
+                style={{
+                  fontWeight: "bold",
+                  color: "red",
+                }}
+              >
+                {errorMessage}
+              </div>
             </div>
             <div class="form-outline mb-4">
               <label

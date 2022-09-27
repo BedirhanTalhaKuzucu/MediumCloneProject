@@ -11,6 +11,7 @@ const TopicRecommended = () => {
     TopicRecommendedFunc(setTopics);
   }, []);
 
+  console.log(topics);
   return (
     <div>
       <TopicListStyle>
@@ -21,7 +22,7 @@ const TopicRecommended = () => {
               <div key={data.id} className="topicItem">
                 <Link
                   style={{ textDecoration: "none", color: "black" }}
-                  to= {`/tag/${data.id}`}
+                  to={`/tag/${data.id}`}
                   state={{ detail: data }}
                 >
                   {data.tag_name}

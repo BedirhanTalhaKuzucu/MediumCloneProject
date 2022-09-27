@@ -78,7 +78,8 @@ class StorySerializer(serializers.ModelSerializer):
     tags = serializers.SerializerMethodField('get_tags')
     tag_name = serializers.CharField(write_only=True)
     user_id = serializers.IntegerField(write_only=True)
-    clap_count = serializers.IntegerField(source='clap_story.count', read_only=True)
+    clap_count = serializers.IntegerField(
+        source='clap_story.count', read_only=True)
     comment_count = serializers.IntegerField(
         source='comments.count', read_only=True)
     views = StoryViewSerializer(many=True, read_only=True)
@@ -210,10 +211,24 @@ class AddStoryClapSerializer(serializers.ModelSerializer):
 
 class TagFollowerSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
+    userImage = serializers.SerializerMethodField('get_userImage')
 
     class Meta:
         model = TagFollower
-        fields = '__all__'
+        fields = ('id', 'user', 'userImage', 'tag')
+
+    def get_userImage(self, obj):
+
+        user_img = UserProfile.objects.filter(user=obj.user).first()
+
+        request = self.context.get('request')
+        user_img = user_img.profile_photo.url
+        user_img = request.build_absolute_uri(user_img)
+        print(user_img)
+        # context = {
+        #     "user_img": user_img,
+        # }
+        return user_img
 
 
 class StoryTagSerializer(serializers.ModelSerializer):

@@ -1,14 +1,13 @@
-import React from 'react'
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import {StyledCard} from './Cards.styled.jsx'
+import React from "react";
+import Container from "react-bootstrap/Container";
+import { StyledCard } from "./Cards.styled.jsx";
 
-function Cards({blog}) {
+function Cards({ blog }) {
   return (
-    <Container  className="mt-5" >
-        <StyledCard blog= {blog} />    
-    </Container>  
-  )
+    <Container className="mt-5">
+      <StyledCard blog={blog} />
+    </Container>
+  );
 }
 
-export default Cards
+export default Cards;

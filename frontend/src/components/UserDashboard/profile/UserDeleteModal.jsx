@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import { ModalStyle } from "../styles/profile/PasswordChangeModal.style";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ const customStyles = {
 
 function UserDeleteModal() {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [values, setValues] = useState({});
+  // const [values, setValues] = useState({});
   const navigate = useNavigate();
 
   function openModal() {

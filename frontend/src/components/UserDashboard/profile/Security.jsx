@@ -17,6 +17,7 @@ const Security = () => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
+      ...settingPageInfo,
       email: settingPageInfo ? settingPageInfo.email : "",
     },
 
@@ -96,9 +97,7 @@ const Security = () => {
           </p>
         </div>
         <Buttons>
-          <button>
-            <PasswordChangeModal />
-          </button>
+          <PasswordChangeModal />
         </Buttons>
       </nav>
       <nav className="deleteAcoount">

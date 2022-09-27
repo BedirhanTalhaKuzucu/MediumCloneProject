@@ -1,12 +1,8 @@
 import React from "react";
 import ArticleCard from "./ArticleCard";
-import { followedUserStories } from "../../helpers/apiRequests";
 import { useEffect, useState } from "react";
 import Images from "../../assets/Images";
-import { useAppState } from "../../contexts/AppContext";
 import InfiniteScroll from "react-infinite-scroll-component";
-
-
 
 const Following = () => {
   const [items, setItems] = useState([]);
@@ -20,7 +16,7 @@ const Following = () => {
       sessionStorage.getItem("user_info")
     );
     const token = get_session_user_info?.key;
-    
+
     let myHeaders = new Headers();
     myHeaders.append("Authorization", `Token ${token}`);
     let requestOptions = {
@@ -29,9 +25,12 @@ const Following = () => {
       redirect: "follow",
     };
     const getArticles = async () => {
-      const res = await fetch(`http://127.0.0.1:8000/blog/stories/following?limit=5&offset=0`, requestOptions);
+      const res = await fetch(
+        `http://127.0.0.1:8000/blog/stories/following?limit=5&offset=0`,
+        requestOptions
+      );
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       setItems(data.results);
     };
 
@@ -52,10 +51,11 @@ const Following = () => {
       redirect: "follow",
     };
     const res = await fetch(
-      `http://127.0.0.1:8000/blog/stories/following?limit=5&offset=${offset}`, requestOptions
+      `http://127.0.0.1:8000/blog/stories/following?limit=5&offset=${offset}`,
+      requestOptions
     );
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     return data.results;
   };
 
@@ -85,12 +85,13 @@ const Following = () => {
           <img src={Images.loading} alt="loading gif" />
         </div>
       }
-      endMessage={<b>Yay! You have seen it all</b>}
+      endMessage={<b>There are no more articles to show here..</b>}
     >
       {items.map((item, index) => {
         return <ArticleCard key={index} data={item} />;
       })}
-    </InfiniteScroll> )
+    </InfiniteScroll>
+  );
 };
 
 export default Following;

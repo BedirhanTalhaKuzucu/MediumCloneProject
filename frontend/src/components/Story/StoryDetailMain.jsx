@@ -4,10 +4,10 @@ import Images from "../../assets/Images";
 import { Tooltip } from "@mui/material";
 import MainFollowingTooltip from "../UserDashboard/MainFollowingTooltip";
 import CommentsModal from "./CommentsModal";
+import { Helmet } from "react-helmet";
 
 const StoryDetailMain = ({ detaylar }) => {
   const [copied, setCopied] = useState(false);
-
 
   const copyLink = () => {
     const el = document.createElement("input");
@@ -19,9 +19,11 @@ const StoryDetailMain = ({ detaylar }) => {
     setCopied(true);
   };
 
-
   return (
     <Main>
+      <Helmet>
+        <title>{detaylar?.title}</title>
+      </Helmet>
       <Header>
         <nav className="authorInf">
           <div>
@@ -86,15 +88,14 @@ const StoryDetailMain = ({ detaylar }) => {
         </nav>
       </Header>
       <article className="my-5">
+        {detaylar ? (
+          <div dangerouslySetInnerHTML={{ __html: detaylar.content }} />
+        ) : (
+          ""
+        )}
 
-        { detaylar ? 
-          <div  dangerouslySetInnerHTML={{__html: detaylar.content }} /> 
-          :
-          "" 
-        }
-        
-          {/* { detaylar ? detaylar.content : "" } */}
-          {/* {htmlContet ? htmlContet.map(item =>  ( 
+        {/* { detaylar ? detaylar.content : "" } */}
+        {/* {htmlContet ? htmlContet.map(item =>  ( 
           <>
             {item.outerHTML}
           </>  )) 

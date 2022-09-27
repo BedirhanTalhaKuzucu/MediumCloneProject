@@ -1,17 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Images from "../../../assets/Images";
-import { UserFollowFunc } from "../../../helpers/apiRequests";
 import { UserFollowStyle } from "./styles/WhoToFollow.styles";
 import { useAppState } from "../../../contexts/AppContext";
 
 const WhoToFollow = () => {
-  const { users} = useAppState()
-
-
-  // useEffect(() => {
-  //   UserFollowFunc(setUsers);
-  //   console.log(users);
-  // }, []);
+  const { users } = useAppState();
 
   return (
     <UserFollowStyle>
@@ -20,7 +13,7 @@ const WhoToFollow = () => {
       {users ? (
         users?.map((data) => {
           return (
-            <div className="user">
+            <div className="user" key={data.id}>
               <img src={data.profile_photo} alt="" />
               <div className="name-shortBio">
                 <div className="name">
