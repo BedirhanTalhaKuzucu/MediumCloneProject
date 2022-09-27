@@ -12,6 +12,7 @@ import MainFollowingTooltip from "./MainFollowingTooltip";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { userDetails } from "../../helpers/apiRequests";
+import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
 const UDMain = () => {
   // const [followingTag, setFollowingTag] = useState();
@@ -34,7 +35,7 @@ const UDMain = () => {
   }, []);
 
   return (
-    <MainContainer>
+    <MainContainer id="pageTop">
       <MainHeader>
         <TopicsStyle>
           <p>YOUR TOPICS</p>
@@ -105,6 +106,7 @@ const UDMain = () => {
         </NavLink>
       </ArticlesStyle>
       <Outlet />
+      <ScrollToTop />
     </MainContainer>
   );
 };

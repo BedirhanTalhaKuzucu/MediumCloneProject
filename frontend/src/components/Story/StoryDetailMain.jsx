@@ -19,6 +19,8 @@ const StoryDetailMain = ({ detaylar }) => {
     setCopied(true);
   };
 
+  useEffect(() => {}, [detaylar?.comments]);
+
   return (
     <Main>
       <Helmet>

@@ -4,15 +4,14 @@ import Modal from "react-bootstrap/Modal";
 import Images from "../../assets/Images";
 import { useAppState } from "../../contexts/AppContext";
 import { commentCreateFunc } from "../../helpers/apiRequests";
-import {
-  CommentsStyles,
-  ModalStyles,
-  OpenButtonStyle,
-} from "./styles/CommentsModel.styles";
+import { CommentsStyles, OpenButtonStyle } from "./styles/CommentsModel.styles";
 
-function CommentsModal({ commentCounts, comments, commentID, details }) {
+function CommentsModal({ commentCounts, comments, details }) {
   const { userInfo } = useAppState();
   const ref = useRef(null);
+  // const [commentList, setCommentList] = useState([...comments]);
+  // console.log(commentList);
+  // console.log(comments);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -22,20 +21,25 @@ function CommentsModal({ commentCounts, comments, commentID, details }) {
 
   const Token = userInfo?.key;
 
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState({
+    comment: "",
+  });
 
   const handleComment = (e) => {
     e.preventDefault();
-    setComment(ref?.current?.value);
-    console.log(comment);
+    // console.log(ref.current.value);
+    setComment(ref.current.value);
     commentCreateFunc(comment, storyId, Token);
+    // setCommentList([...commentList, { comment: comment }]);
+    // console.log(commentList);
   };
 
   useEffect(() => {
     if (commentCounts === 0) {
       setShow(false);
     }
-  }, [commentCounts]);
+    setShow(false);
+  }, [comments]);
 
   return (
     <>
