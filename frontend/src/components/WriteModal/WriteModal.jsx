@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import { useFormik } from "formik";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { createStory } from "../../helpers/apiRequests";
+import { createStory } from "../../helpers/stories";
 import Card from "react-bootstrap/Card";
 
 function WriteModal({ show, setShow, formData, formik1, seteditor }) {

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Images from "../../assets/Images";
 import { useAppState } from "../../contexts/AppContext";
-import { commentCreateFunc } from "../../helpers/apiRequests";
+import { commentCreateFunc } from "../../helpers/clapsAndCommnets";
 import { CommentsStyles, OpenButtonStyle } from "./styles/CommentsModel.styles";
 
 function CommentsModal({ commentCounts, comments, details }) {

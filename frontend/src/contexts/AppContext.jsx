@@ -1,10 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
-import {
-  getData,
-  UserFollowFunc,
-  followedUserStories,
-  settingUserInfo,
-} from "../helpers/apiRequests";
+import { settingUserInfo } from "../helpers/userProfileInfo";
+import { followedUserStories, UserFollowFunc } from "../helpers/stories";
+
+import { getData } from "../helpers/trendList";
 
 const AppStateContext = React.createContext();
 

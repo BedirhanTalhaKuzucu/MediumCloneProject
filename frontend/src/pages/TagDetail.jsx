@@ -2,21 +2,19 @@ import React, { useEffect, useState } from "react";
 import TagDetailSideBar from "../components/SideBars/TagDetailSideBar";
 import TagDetailMain from "../components/TagDetailParts/TagDetailMain";
 import UDNavbar from "../components/UserDashboard/UDNavbar";
-import { useParams } from 'react-router-dom';
-import { TagDetailsGet } from "../helpers/apiRequests";
-
+import { useParams } from "react-router-dom";
+import { TagDetailsGet } from "../helpers/tags";
 
 const TagDetail = () => {
-
-  const { id } = useParams()
+  const { id } = useParams();
 
   const [tagDetails, setTagDetails] = useState("");
 
   useEffect(() => {
-    TagDetailsGet(setTagDetails, id)
+    TagDetailsGet(setTagDetails, id);
   }, [id]);
 
-  console.log(id)
+  console.log(id);
 
   return (
     <div className="d-flex">
