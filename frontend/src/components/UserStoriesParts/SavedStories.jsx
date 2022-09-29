@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppState } from "../../contexts/AppContext";
-import { userDetailsForStories } from "../../helpers/apiRequests";
+import { userDetailsForStories } from "../../helpers/userProfileInfo";
 import { SavedStyles } from "./styles/SavedStories.styles";
 
 const SavedStories = () => {

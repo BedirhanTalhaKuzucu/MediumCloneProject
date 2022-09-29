@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
-import { TopicRecommendedFunc } from "../../helpers/apiRequests";
+import { TopicRecommendedFunc } from "../../helpers/tags";
 import { CategoriesStyles } from "./Categories.styles";
 import { toast } from "react-hot-toast";
 import { useAppState } from "../../contexts/AppContext";

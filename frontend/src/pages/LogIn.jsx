@@ -6,7 +6,7 @@ import { useAppState } from "../contexts/AppContext";
 import { useFormik } from "formik";
 import { validationSchemaLogIn } from "../helpers/formValidations";
 import { useState } from "react";
-import { logInFunction } from "../helpers/apiRequests";
+import { logInFunction } from "../helpers/userValidation";
 import { useNavigate } from "react-router-dom";
 
 function LogIn() {

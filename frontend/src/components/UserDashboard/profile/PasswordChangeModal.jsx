@@ -5,7 +5,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { IconButton, Input } from "@mui/material";
 import Modal from "react-modal";
 import { ModalStyle } from "../styles/profile/PasswordChangeModal.style";
-import { changePasswordFunc } from "../../../helpers/apiRequests";
+import { changePasswordFunc } from "../../../helpers/userProfileInfo";
 import { useAppState } from "../../../contexts/AppContext";
 import { useRef } from "react";
 import validator from "validator";

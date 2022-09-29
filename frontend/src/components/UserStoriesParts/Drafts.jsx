@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ArticleCard from "../UserDashboard/ArticleCard";
-import { userDetails } from "../../helpers/apiRequests";
+import { userDetails } from "../../helpers/userProfileInfo";
 import { useAppState } from "../../contexts/AppContext";
 import Images from "../../assets/Images";
 
