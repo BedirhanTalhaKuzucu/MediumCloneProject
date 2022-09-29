@@ -13,12 +13,12 @@ export function useAppState() {
 }
 
 export function AppStateProvider({ children }) {
-  //for sigup page
+  //for signUp page
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
-  //for sigup page
+  //for signUp page
   const [logInShow, setLogInShow] = useState(false);
 
   //followingcommopent data
@@ -82,9 +82,8 @@ export function AppStateProvider({ children }) {
   };
 
   return (
-    <AppStateContext.Provider value={value}>
-      {" "}
-      {children}{" "}
+    <AppStateContext.Provider value= {value}>
+      {children}
     </AppStateContext.Provider>
   );
 }
