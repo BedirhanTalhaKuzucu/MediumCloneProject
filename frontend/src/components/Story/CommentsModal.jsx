@@ -2,12 +2,12 @@ import { Tooltip } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Images from "../../assets/Images";
-import { useAppState } from "../../contexts/AppContext";
+import { useAuthStates } from "../../contexts/AuthContext";
 import { commentCreateFunc } from "../../helpers/clapsAndCommnets";
 import { CommentsStyles, OpenButtonStyle } from "./styles/CommentsModel.styles";
 
 function CommentsModal({ commentCounts, comments, details }) {
-  const { userInfo } = useAppState();
+  const { userInfo } = useAuthStates();
   const ref = useRef(null);
   // const [commentList, setCommentList] = useState([...comments]);
   // console.log(commentList);

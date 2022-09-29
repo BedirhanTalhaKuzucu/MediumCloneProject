@@ -4,12 +4,11 @@ import Button from "react-bootstrap/Button";
 import { TopicRecommendedFunc } from "../../helpers/tags";
 import { CategoriesStyles } from "./Categories.styles";
 import { toast } from "react-hot-toast";
-import { useAppState } from "../../contexts/AppContext";
+import { useAuthStates } from "../../contexts/AuthContext";
 
 function Categorys() {
   const [topics, setTopics] = useState([]);
-  const { userInfo } = useAppState();
-  console.log(userInfo);
+  const { userInfo } = useAuthStates();
 
   useEffect(() => {
     TopicRecommendedFunc(setTopics);

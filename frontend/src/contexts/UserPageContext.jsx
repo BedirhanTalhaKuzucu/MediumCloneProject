@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useMemo } from "react";
 
 
 const UserPageContext = React.createContext();
@@ -10,17 +10,18 @@ export function UserPageState() {
 
 export function UserPageStateProvider({ children }) {
 
+    //followingcommopent data
     const [followingStories, setFollowingStories] = useState("");
-    
+
 
     const value = useMemo(
         () => ({
-          name: "ProviderWithMemo",
-          counter,
-          increment: () => setCounter((c) => c + 1)
+            name: "ProviderWithMemo",
+            followingStories,
+            setFollowingStories
         }),
-        [counter]
-      );
+        [followingStories]
+    );
 
     return (
         <UserPageContext.Provider value={value}>

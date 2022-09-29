@@ -6,7 +6,7 @@ import { useAppState } from "../contexts/AppContext";
 import { useAuthStates } from "../contexts/AuthContext";
 import { useFormik } from "formik";
 import { validationSchemaLogIn } from "../helpers/formValidations";
-import { useState } from "react";
+import { useState, memo } from "react";
 import { logInFunction } from "../helpers/userValidation";
 import { useNavigate } from "react-router-dom";
 
@@ -15,13 +15,9 @@ function LogIn() {
 
   const [errorMesage, setErrorMesage] = useState(false);
   const navigate = useNavigate();
-  const {
-    setFollowingStories,
-    getToken,
-    setsettingPageInfo,
-  } = useAppState();
+  const { getToken, setsettingPageInfo } = useAppState();
 
-  const {logInShow, setLogInShow } = useAuthStates();
+  const {logInShow, setLogInShow, setFollowingStories } = useAuthStates();
 
   const formik = useFormik({
     initialValues: {
@@ -128,4 +124,4 @@ function LogIn() {
   );
 }
 
-export default LogIn;
+export default memo(LogIn);

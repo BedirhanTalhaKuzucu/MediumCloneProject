@@ -7,10 +7,16 @@ import SignIn from "./SignIn";
 import LogIn from "./LogIn";
 import Images from "../assets/Images";
 import { HomeStyles } from "./styles/Home.styles";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useState, memo } from "react";
+import { getData, scroolGetData } from "../helpers/trendList";
+
 
 function Home() {
-  const { data, trendList } = useAppState();
-  // console.log(data);
+  const { data, trendList, setData,  } = useAppState();
+
+  const [offset, setoffset] = useState(5);
+  const [hasMore, sethasMore] = useState(true);
 
   return (
     <>
@@ -24,21 +30,36 @@ function Home() {
             <Categorys />
           </div>
           <div className="cards">
-            {data ? (
-              data.map((blogCard) => (
-                <Cards blog={blogCard} key={blogCard.id} />
-              ))
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <img src={Images.loading} alt="loading gif" />
-              </div>
-            )}
+            {data ?
+              (
+                <InfiniteScroll
+                  dataLength={data.length} //This is important field to render the next data
+                  next={() => scroolGetData (setData, data, sethasMore, offset, setoffset )}
+                  hasMore={hasMore}
+                  loader={
+                    <div style={{ display: "flex", justifyContent: "center",  alignItems: "center", }} >
+                      <img src={Images.loading} alt="loading gif" />
+                    </div>
+                  }
+                  endMessage={<b>There are no more articles to show here..</b>}
+                >
+                  {data.map((item) => {
+                    return <Cards blog={item} key={item.id} />;
+                  })}
+                </InfiniteScroll>
+              )
+
+              : (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img src={Images.loading} alt="loading gif" />
+                </div>
+              )}
           </div>
         </div>
       </HomeStyles>
@@ -46,5 +67,5 @@ function Home() {
   );
 }
 
-export default Home;
+export default memo(Home);
 

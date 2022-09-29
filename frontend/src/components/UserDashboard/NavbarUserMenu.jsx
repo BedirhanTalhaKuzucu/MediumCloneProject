@@ -7,11 +7,12 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
-import { useAppState } from "../../contexts/AppContext";
+// import { useAppState } from "../../contexts/AppContext";
+import { useAuthStates } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export default function AccountMenu() {
-  const { userInfo, get_user_info } = useAppState();
+  const { userInfo, get_user_info } = useAuthStates();
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -4,13 +4,13 @@ import Col from "react-bootstrap/Col";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import { SideBarStyles, StyledProfilImage } from "./Sidebar.styled";
 import { toast } from "react-hot-toast";
-import { useAppState } from "../../contexts/AppContext";
+import { useAuthStates } from "../../contexts/AuthContext";
 
 function Sidebar({ trendList }) {
-  const { userInfo } = useAppState();
+  const { userInfo } = useAuthStates();
 
   const HandleButton = () => {
-    if (userInfo == "") {
+    if (userInfo === "") {
       toast.error("please login first", {
         style: {
           borderRadius: "10px",

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ArticleCard from "../UserDashboard/ArticleCard";
 import { userDetails } from "../../helpers/userProfileInfo";
-import { useAppState } from "../../contexts/AppContext";
+import { useAuthStates } from "../../contexts/AuthContext";
 import Images from "../../assets/Images";
 
 const Published = () => {
   const [userDetail, setUserDetail] = useState();
-  const { userInfo } = useAppState();
+  const { userInfo } = useAuthStates();
   const userId = userInfo?.userInfo?.profileInfoId;
 
   const [userArticle, setUserArticle] = useState();

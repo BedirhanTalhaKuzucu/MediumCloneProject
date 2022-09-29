@@ -21,7 +21,6 @@ function SignIn() {
   const [errorMesage, setErrorMesage] = useState(errorMesageTemplate);
   const navigate = useNavigate();
   const { show, handleClose } = useAuthStates();
-  console.log(show)
 
   const formik = useFormik({
     initialValues: {

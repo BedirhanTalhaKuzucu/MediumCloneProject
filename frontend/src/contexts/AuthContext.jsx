@@ -10,6 +10,15 @@ export function useAuthStates() {
 
 export function AuthStateProvider({ children }) {
 
+    const [userInfo, setUserInfo] = useState("");
+
+    const get_user_info = () => {
+        const get_session_user_info = JSON.parse(
+          sessionStorage.getItem("user_info")
+        );
+        setUserInfo(get_session_user_info);
+    };
+
     //for signUp page
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
@@ -24,6 +33,8 @@ export function AuthStateProvider({ children }) {
         show,
         logInShow,
         setLogInShow,
+        userInfo,
+        get_user_info,
     }
 
 

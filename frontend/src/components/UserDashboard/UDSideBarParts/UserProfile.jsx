@@ -7,7 +7,7 @@ import {
   controlFollowFunction,
   add_deleteFollowHandle,
 } from "../../../helpers/saveAndDeleteButtons";
-import { followedUserStories } from "../../../helpers/stories";
+// import { followedUserStories } from "../../../helpers/stories";
 
 const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
   const [followOrFollowing, setfollowOrFollowing] = useState(false);
@@ -15,7 +15,7 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
     name: "",
     img: "",
   });
-  const { setFollowingStories } = useAppState();
+  // const { setFollowingStories } = useAppState();
 
   useEffect(() => {
     sideBarInfoGet();
@@ -42,12 +42,12 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
       add_deleteFollowHandle(followOrFollowing, tokenKey, userId);
       setfollowOrFollowing(false);
       updateDetails();
-      followedUserStories(setFollowingStories, tokenKey);
+      // followedUserStories(setFollowingStories, tokenKey);
     } else {
       add_deleteFollowHandle(followOrFollowing, tokenKey, userId);
       setfollowOrFollowing(true);
       updateDetails();
-      followedUserStories(setFollowingStories, tokenKey);
+      // followedUserStories(setFollowingStories, tokenKey);
     }
   };
 
