@@ -18,7 +18,7 @@ export const TopicRecommendedFunc = (setTopics) => {
         }
         return newArr;
       };
-      setTopics(randomSelection(10));
+      setTopics(randomSelection(7));
     })
     .catch((error) => console.log("error", error));
 };

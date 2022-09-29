@@ -5,17 +5,21 @@ import { TopicRecommendedFunc } from "../../helpers/tags";
 import { CategoriesStyles } from "./Categories.styles";
 import { toast } from "react-hot-toast";
 import { useAuthStates } from "../../contexts/AuthContext";
+import { UserPageState } from "../../contexts/UserPageContext";
+
 
 function Categorys() {
-  const [topics, setTopics] = useState([]);
+  // const [topics, setTopics] = useState([]);
   const { userInfo } = useAuthStates();
+  const { topics, setTopics } = UserPageState();
+
 
   useEffect(() => {
     TopicRecommendedFunc(setTopics);
   }, []);
 
   const HandleButton = () => {
-    if (userInfo == "") {
+    if (userInfo === "") {
       toast.error("please login first", {
         style: {
           borderRadius: "10px",

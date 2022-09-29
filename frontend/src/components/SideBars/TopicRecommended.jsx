@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import Images from "../../assets/Images";
 import { TopicRecommendedFunc } from "../../helpers/tags";
 import { TopicListStyle } from "../UserDashboard/styles/UDSideBar.styles";
 import { Link } from "react-router-dom";
+import { UserPageState } from "../../contexts/UserPageContext";
 
 const TopicRecommended = () => {
-  const [topics, setTopics] = useState([]);
+  const { topics, setTopics } = UserPageState();
 
   useEffect(() => {
     TopicRecommendedFunc(setTopics);
   }, []);
 
-  // console.log(topics);
   return (
     <div>
       <TopicListStyle>
@@ -40,4 +40,4 @@ const TopicRecommended = () => {
   );
 };
 
-export default TopicRecommended;
+export default memo(TopicRecommended);

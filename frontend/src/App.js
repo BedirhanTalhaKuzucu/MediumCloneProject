@@ -3,6 +3,7 @@ import "./App.scss";
 import AppRouter from "./AppRouter/AppRouter";
 import { AppStateProvider } from "./contexts/AppContext";
 import { AuthStateProvider } from "./contexts/AuthContext";
+import { UserPageStateProvider } from "./contexts/UserPageContext";
 import { Helmet } from "react-helmet";
 import { Toaster } from "react-hot-toast";
 
@@ -12,12 +13,14 @@ function App() {
       <Toaster position="top-right" reverseOrder={false} />
       <AuthStateProvider>
         <AppStateProvider>
-          <Helmet>
-            <title>Medium Clone</title>
-            <meta name="description" content="App Description" />
-            <meta name="theme-color" content="#008f68" />
-          </Helmet>
-          <AppRouter />
+          <UserPageStateProvider>
+            <Helmet>
+              <title>Medium Clone</title>
+              <meta name="description" content="App Description" />
+              <meta name="theme-color" content="#008f68" />
+            </Helmet>
+            <AppRouter />
+          </UserPageStateProvider>
         </AppStateProvider>
       </AuthStateProvider>
     </div>

@@ -13,14 +13,18 @@ export function UserPageStateProvider({ children }) {
     //followingcommopent data
     const [followingStories, setFollowingStories] = useState("");
 
+    const [topics, setTopics] = useState([]);
+
 
     const value = useMemo(
         () => ({
             name: "ProviderWithMemo",
             followingStories,
-            setFollowingStories
+            setFollowingStories,
+            topics, 
+            setTopics
         }),
-        [followingStories]
+        [followingStories, topics]
     );
 
     return (
