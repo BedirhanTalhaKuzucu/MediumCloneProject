@@ -3,6 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useAppState } from "../contexts/AppContext";
+import { useAuthStates } from "../contexts/AuthContext";
 import { useFormik } from "formik";
 import { validationSchemaLogIn } from "../helpers/formValidations";
 import { useState } from "react";
@@ -10,24 +11,17 @@ import { logInFunction } from "../helpers/userValidation";
 import { useNavigate } from "react-router-dom";
 
 function LogIn() {
-  // const errorMesageTemplate = {
-  //     email: '',
-  //     firstName: "",
-  //     lastName: "",
-  //     password: "",
-  //     password2: "",
-  // }
-  // console.log(Boolean(errorMesageTemplate))
+
 
   const [errorMesage, setErrorMesage] = useState(false);
   const navigate = useNavigate();
   const {
-    logInShow,
-    setLogInShow,
     setFollowingStories,
     getToken,
     setsettingPageInfo,
   } = useAppState();
+
+  const {logInShow, setLogInShow } = useAuthStates();
 
   const formik = useFormik({
     initialValues: {
@@ -104,7 +98,7 @@ function LogIn() {
               isInvalid={
                 formik.touched.password
                   ? Boolean(formik.errors.password) ||
-                    Boolean(errorMesage.password)
+                  Boolean(errorMesage.password)
                   : false
               }
             />

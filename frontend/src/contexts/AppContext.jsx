@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { settingUserInfo } from "../helpers/userProfileInfo";
 import { followedUserStories, UserFollowFunc } from "../helpers/stories";
-
 import { getData } from "../helpers/trendList";
 
 const AppStateContext = React.createContext();
@@ -11,14 +10,6 @@ export function useAppState() {
 }
 
 export function AppStateProvider({ children }) {
-  //for signUp page
-  const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
-
-  //for signUp page
-  const [logInShow, setLogInShow] = useState(false);
-
   //followingcommopent data
   const [followingStories, setFollowingStories] = useState("");
 
@@ -56,21 +47,17 @@ export function AppStateProvider({ children }) {
     if (get_session_user_info) {
       const token = get_session_user_info?.key;
       const userId = get_session_user_info?.userInfo?.userId;
-      followedUserStories(setFollowingStories, token);
+      // followedUserStories(setFollowingStories, token);
+      console.log("app context kaç kere çalışacak acabaaaaaaaaaaaaaaaaaaa")
       settingUserInfo(setsettingPageInfo, token, userId);
     }
   }, []);
 
   const value = {
-    handleShow,
-    handleClose,
-    show,
     data,
     trendList,
     userInfo,
     get_user_info,
-    logInShow,
-    setLogInShow,
     setFollowingStories,
     followingStories,
     getToken,
@@ -80,7 +67,7 @@ export function AppStateProvider({ children }) {
   };
 
   return (
-    <AppStateContext.Provider value= {value}>
+    <AppStateContext.Provider value={value}>
       {children}
     </AppStateContext.Provider>
   );
