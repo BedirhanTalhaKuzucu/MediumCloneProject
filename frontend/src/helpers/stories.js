@@ -84,7 +84,6 @@ export const followedUserStories = (
         if (result.results.length === 0 ) {
           sethasMore(false);
         }else{
-          console.log("deneee")
           setoffset(offset + 5);
         }
       }
