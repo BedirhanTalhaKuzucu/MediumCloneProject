@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import { Container } from "./styles/UserProfile.styles";
 import { useState, useEffect } from "react";
-import { useAppState } from "../../../contexts/AppContext";
+import { UserPageState } from "../../../contexts/UserPageContext";
 import Button from "react-bootstrap/Button";
 import {
   controlFollowFunction,
   add_deleteFollowHandle,
 } from "../../../helpers/saveAndDeleteButtons";
-// import { followedUserStories } from "../../../helpers/stories";
+import { followedUserStories } from "../../../helpers/stories";
+
 
 const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
   const [followOrFollowing, setfollowOrFollowing] = useState(false);
@@ -16,8 +17,11 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
     img: "",
   });
   // const { setFollowingStories } = useAppState();
+  const { followingStories, setFollowingStories, offsetforFollowing, setoffsetforFollowing } = UserPageState();
+
 
   useEffect(() => {
+    console.log(followingStories);
     sideBarInfoGet();
     if (authorInfo) {
       let userId = authorInfo.userProfilId;
@@ -39,15 +43,18 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
     let userId = authorInfo.userProfilId;
 
     if (followOrFollowing) {
+      //for DELETE
       add_deleteFollowHandle(followOrFollowing, tokenKey, userId);
       setfollowOrFollowing(false);
       updateDetails();
-      // followedUserStories(setFollowingStories, tokenKey);
+      console.log(authorInfo.userId );
+      setFollowingStories( followingStories.filter((item) => item.creatorInfo.userId !== authorInfo.userId ) )
     } else {
-      add_deleteFollowHandle(followOrFollowing, tokenKey, userId);
+      //for ADD
+      add_deleteFollowHandle(followOrFollowing, tokenKey, userId, followedUserStories, setFollowingStories );
       setfollowOrFollowing(true);
       updateDetails();
-      // followedUserStories(setFollowingStories, tokenKey);
+      setoffsetforFollowing(5)
     }
   };
 

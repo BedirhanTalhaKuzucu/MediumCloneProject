@@ -78,9 +78,10 @@ export const followedUserStories = (
       if (setoffset === "a") {
         // console.log("deneme");
         setfollowingStory(result.results);
+        console.log(result.results)
       } else {
         setfollowingStory([...followingStories, ...result.results]);
-        if (result.results.length === 0 || result.results.length < 5) {
+        if (result.results.length === 0 ) {
           sethasMore(false);
         }else{
           console.log("deneee")

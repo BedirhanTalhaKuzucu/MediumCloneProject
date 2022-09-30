@@ -9,7 +9,6 @@ import { useAuthStates } from "../../contexts/AuthContext";
 
 const Following = () => {
 
-  const [offset, setoffset] = useState(5);
 
   const [hasMore, sethasMore] = useState(true);
   const [TOKEN, setTOKEN] = useState()
@@ -24,6 +23,8 @@ const Following = () => {
     const token = getToken()
     setTOKEN(token)
     console.log(offsetforFollowing)
+    console.log(followingStories)
+
 
     if (followingStories?.length === 0) {
       setoffsetforFollowing(5)
