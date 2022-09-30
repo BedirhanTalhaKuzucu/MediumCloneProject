@@ -9,7 +9,9 @@ const TopicRecommended = () => {
   const { topics, setTopics } = UserPageState();
 
   useEffect(() => {
-    TopicRecommendedFunc(setTopics);
+    if (topics?.length === 0) {
+      TopicRecommendedFunc(setTopics);
+    }
   }, []);
 
   return (

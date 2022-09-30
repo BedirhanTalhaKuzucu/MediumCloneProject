@@ -23,16 +23,9 @@ export function AppStateProvider({ children }) {
 
   
 
-  const getToken = () => {
-    const get_session_user_info = JSON.parse(
-      sessionStorage.getItem("user_info")
-    );
-    const token = get_session_user_info?.key;
-    return token;
-  };
+ 
 
   useEffect(() => {
-    console.log("denemeeeeeeeeeeeeeee")
     getData(setData, setTrendList);
     UserFollowFunc(setUsers);
     const get_session_user_info = JSON.parse(
@@ -52,7 +45,6 @@ export function AppStateProvider({ children }) {
       data,
       setData,
       trendList,
-      getToken,
       users,
       settingPageInfo,
       setsettingPageInfo,

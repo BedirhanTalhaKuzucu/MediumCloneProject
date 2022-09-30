@@ -15,9 +15,9 @@ function LogIn() {
 
   const [errorMesage, setErrorMesage] = useState(false);
   const navigate = useNavigate();
-  const { getToken, setsettingPageInfo } = useAppState();
+  const { setsettingPageInfo } = useAppState();
 
-  const {logInShow, setLogInShow, setFollowingStories } = useAuthStates();
+  const {logInShow, setLogInShow, setFollowingStories, getToken } = useAuthStates();
 
   const formik = useFormik({
     initialValues: {

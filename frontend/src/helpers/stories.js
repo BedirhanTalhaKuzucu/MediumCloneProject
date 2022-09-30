@@ -49,7 +49,15 @@ export const createStory = (formData, values, resetForm, token, navigate) => {
 };
 
 //! Following Stories List
-export const followedUserStories = (setfollowingStory, token) => {
+export const followedUserStories = (
+  setfollowingStory,
+  token,
+  offset = 0,
+  followingStories = "a",
+  setoffset = "a",
+  sethasMore = "a"
+) => {
+
   let myHeaders = new Headers();
 
   myHeaders.append("Authorization", `Token ${token}`);
@@ -60,11 +68,25 @@ export const followedUserStories = (setfollowingStory, token) => {
     redirect: "follow",
   };
 
-  fetch("http://127.0.0.1:8000/blog/stories/following", requestOptions)
+  fetch(
+    `http://127.0.0.1:8000/blog/stories/following?limit=5&offset=${offset}`,
+    requestOptions
+  )
     .then((response) => response.json())
     .then((result) => {
-      // console.log("deneme");
-      setfollowingStory(result.results);
+      console.log(followingStories);
+      if (setoffset === "a") {
+        // console.log("deneme");
+        setfollowingStory(result.results);
+      } else {
+        setfollowingStory([...followingStories, ...result.results]);
+        if (result.results.length === 0 || result.results.length < 5) {
+          sethasMore(false);
+        }else{
+          console.log("deneee")
+          setoffset(offset + 5);
+        }
+      }
     })
     .catch((error) => console.log("error", error));
 };

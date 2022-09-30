@@ -14,10 +14,24 @@ export function AuthStateProvider({ children }) {
 
     const get_user_info = () => {
         const get_session_user_info = JSON.parse(
-          sessionStorage.getItem("user_info")
+            sessionStorage.getItem("user_info")
         );
         setUserInfo(get_session_user_info);
     };
+
+    const getToken = () => {
+        const get_session_user_info = JSON.parse(
+            sessionStorage.getItem("user_info")
+        );
+        const token = get_session_user_info?.key;
+        return token;
+    };
+
+    useEffect(() => {
+        get_user_info()
+        let token = getToken()
+    }, [])
+
 
     //for signUp page
     const [show, setShow] = useState(false);
@@ -35,6 +49,7 @@ export function AuthStateProvider({ children }) {
         setLogInShow,
         userInfo,
         get_user_info,
+        getToken,
     }
 
 

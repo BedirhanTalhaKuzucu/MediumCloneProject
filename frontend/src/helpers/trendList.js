@@ -40,7 +40,6 @@ export const getData = (setData, setTrendList) => {
   fetch(`http://127.0.0.1:8000/blog/stories/?limit=5`, requestOptions)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       const trendList = getTrending(data.results);
       setTrendList(trendList);
       setData(data.results);
@@ -52,7 +51,6 @@ export const getData = (setData, setTrendList) => {
 
 
 export const scroolGetData = (setData, data, sethasMore, offset, setoffset) => {
-  console.log(offset)
   let myHeaders = new Headers();
   myHeaders.append(
     "Cookie",
