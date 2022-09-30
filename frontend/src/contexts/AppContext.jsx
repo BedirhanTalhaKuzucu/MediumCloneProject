@@ -15,8 +15,10 @@ export function AppStateProvider({ children }) {
   //whotofollow data
   const [users, setUsers] = useState([]);
 
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
   const [trendList, setTrendList] = useState("");
+  const [offsetforRecommend, setoffsetforRecommend] = useState(5)
+
 
   //setting page user data
   const [settingPageInfo, setsettingPageInfo] = useState();
@@ -26,6 +28,7 @@ export function AppStateProvider({ children }) {
  
 
   useEffect(() => {
+    console.log("app")
     getData(setData, setTrendList);
     UserFollowFunc(setUsers);
     const get_session_user_info = JSON.parse(
@@ -48,8 +51,10 @@ export function AppStateProvider({ children }) {
       users,
       settingPageInfo,
       setsettingPageInfo,
+      offsetforRecommend,
+      setoffsetforRecommend
     }),
-    [data, users, settingPageInfo ]
+    [data, users, settingPageInfo, offsetforRecommend ]
 );  
 
   return (

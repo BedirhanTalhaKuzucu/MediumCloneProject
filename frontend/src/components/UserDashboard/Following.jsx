@@ -22,9 +22,6 @@ const Following = () => {
 
     const token = getToken()
     setTOKEN(token)
-    console.log(offsetforFollowing)
-    console.log(followingStories)
-
 
     if (followingStories?.length === 0) {
       setoffsetforFollowing(5)
@@ -33,7 +30,7 @@ const Following = () => {
       }
     }
 
-  }, [offsetforFollowing]);
+  }, []);
 
   const nextList = () => {
     if (TOKEN) {

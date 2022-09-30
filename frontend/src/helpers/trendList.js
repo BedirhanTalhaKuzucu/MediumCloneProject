@@ -50,7 +50,8 @@ export const getData = (setData, setTrendList) => {
 
 
 
-export const scroolGetData = (setData, data, sethasMore, offset, setoffset) => {
+export const scroolGetData = (setData, data, sethasMore, offset = 0, setoffset) => {
+  console.log(offset)
   let myHeaders = new Headers();
   myHeaders.append(
     "Cookie",
@@ -68,10 +69,11 @@ export const scroolGetData = (setData, data, sethasMore, offset, setoffset) => {
       console.log(data);
       
       setData([...data, ...lastData.results])
-      if (lastData.results.length === 0 || lastData.results.length < 5) {
+      if (lastData.results.length === 0 ) {
         sethasMore(false);
+      }else{
+        setoffset(offset + 5);
       }
-      setoffset(offset + 5);
     })
     .catch((error) => console.log("error", error));
 };

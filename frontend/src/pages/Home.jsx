@@ -13,9 +13,9 @@ import { getData, scroolGetData } from "../helpers/trendList";
 
 
 function Home() {
-  const { data, trendList, setData,  } = useAppState();
+  const { data, trendList, setData, offsetforRecommend, setoffsetforRecommend  } = useAppState();
 
-  const [offset, setoffset] = useState(5);
+  // const [offset, setoffset] = useState(5);
   const [hasMore, sethasMore] = useState(true);
 
   return (
@@ -34,7 +34,7 @@ function Home() {
               (
                 <InfiniteScroll
                   dataLength={data.length} //This is important field to render the next data
-                  next={() => scroolGetData (setData, data, sethasMore, offset, setoffset )}
+                  next={() => scroolGetData (setData, data, sethasMore, offsetforRecommend, setoffsetforRecommend )}
                   hasMore={hasMore}
                   loader={
                     <div style={{ display: "flex", justifyContent: "center",  alignItems: "center", }} >
