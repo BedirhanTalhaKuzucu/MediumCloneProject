@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, {  memo } from "react";
 import ArticleCard from "../UserDashboard/ArticleCard";
-import { userDetails } from "../../helpers/userProfileInfo";
-import { useAuthStates } from "../../contexts/AuthContext";
 import Images from "../../assets/Images";
 import { UserPageState } from "../../contexts/UserPageContext";
 
 const Published = () => {
-  
-  const {userArticle, setUserArticle, userDetail, setUserDetail} = UserPageState();
+
+  const {userArticle,  userDetail, } = UserPageState();
 
   return (
     <div>
@@ -34,4 +32,4 @@ const Published = () => {
   );
 };
 
-export default Published;
+export default memo(Published);
