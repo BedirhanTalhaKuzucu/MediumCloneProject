@@ -99,6 +99,20 @@ class CustomTokenSerializer(serializers.ModelSerializer):
         return context
 
 
+class FollowerSerializer(serializers.ModelSerializer):
+
+    followed = serializers.IntegerField(source="user.id",  required=False)
+    # followedDetails = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Following
+        fields = (
+            "follower",
+            "followed",
+        )
+
+    
+
 class FollowingSerializer(serializers.ModelSerializer):
 
     follower = serializers.IntegerField(source="user.id",  required=False)
@@ -148,6 +162,7 @@ class FollowedTopicsSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     followed_user = FollowingSerializer(many=True, read_only=True)
+    follower_user = FollowerSerializer(many=True, read_only=True)
     # followed_topics = FollowedTopicsSerializer(many=True, read_only=True)
     followed_topics = serializers.StringRelatedField(many=True)
     user_stories = StorySerializer(many=True, read_only=True)
@@ -165,6 +180,7 @@ class UserSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "followed_user",
+            "follower_user",
             'followed_topics',
             'user_stories',
             'user_stories_count',

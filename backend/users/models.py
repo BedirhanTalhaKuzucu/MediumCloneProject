@@ -22,7 +22,7 @@ class UserProfile(models.Model):
 class Following(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
     follower=models.ForeignKey(User,on_delete=models.CASCADE,related_name='followed_user')
-    followed=models.ForeignKey(User,on_delete=models.CASCADE)
+    followed=models.ForeignKey(User,on_delete=models.CASCADE, related_name='follower_user')
     timeStamp = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f'takip eden => {self.follower}- takip edilen =>{self.followed}'

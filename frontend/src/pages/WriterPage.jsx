@@ -37,7 +37,7 @@ const WriterPage = () => {
         <div className="d-flex">
             <UDNavbar />
             <WriterStoriesMain authorInfo={authorInfo} />
-            <WriterPageSideBar authorInfo={authorInfo} />
+            <WriterPageSideBar authorInfo={writerDetail ? writerDetail?.user : "" }  />
         </div>
     );
 };
