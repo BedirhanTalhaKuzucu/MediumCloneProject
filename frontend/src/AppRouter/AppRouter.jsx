@@ -20,6 +20,7 @@ import TagDetail from "../pages/TagDetail";
 import PrivateRouter from "./PrivateRouter";
 import { memo } from "react";
 import Contributors from "../pages/Contributors";
+import WriterPage from "../pages/WriterPage";
 
 function AppRouter() {
   return (
@@ -63,6 +64,10 @@ function AppRouter() {
             <Route path="save" element={<SavedStories />} />
           </Route>
         </Route>
+
+        {/* <Route path="writer/stories" element={<PrivateRouter />}> */}
+          <Route path="writer/stories" element={<WriterPage /> } />
+        {/* </Route> */}
 
         <Route path="tag/:id" element={<TagDetail />} />
         <Route path="write" element={<Write />} />

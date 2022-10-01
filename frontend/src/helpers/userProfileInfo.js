@@ -127,6 +127,24 @@ export const userDetails = (
     .catch((error) => console.log("error", error));
 };
 
+export const writerDetails = ( setWriterDetail, userId ) => {
+  console.log(userId)
+  let myHeaders = new Headers();
+
+  let requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  fetch(`http://127.0.0.1:8000/auth/users/${userId}`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      setWriterDetail(result);
+    })
+    .catch((error) => console.log("error", error));
+};
+
 export const userDetailsForStories = (userId, setUserDetailForStories) => {
   let myHeaders = new Headers();
 
