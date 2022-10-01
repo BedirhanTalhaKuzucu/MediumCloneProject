@@ -6,21 +6,8 @@ import Images from "../../assets/Images";
 import { UserPageState } from "../../contexts/UserPageContext";
 
 const Published = () => {
-  // const [userDetail, setUserDetail] = useState();
-  // const { userInfo } = useAuthStates();
-  // const userId = userInfo?.userInfo?.profileInfoId;
-
-  // const [userArticle, setUserArticle] = useState();
-
+  
   const {userArticle, setUserArticle, userDetail, setUserDetail} = UserPageState();
-
-
-  useEffect(() => {
-    // userDetails(setUserDetail, userId, setUserArticle);
-    // console.log(userDetail?.user?.user_stories);
-  }, []);
-
-  // console.log(userArticle);
 
   return (
     <div>

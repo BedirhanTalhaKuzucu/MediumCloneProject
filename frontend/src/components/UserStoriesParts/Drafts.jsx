@@ -7,19 +7,9 @@ import { UserPageState } from "../../contexts/UserPageContext";
 
 
 const Draft = () => {
-  // const [userDetail, setUserDetail] = useState();
-  // const { userInfo } = useAuthStates();
-  // const userId = userInfo?.userInfo?.profileInfoId;
-
-  // const [userArticle, setUserArticle] = useState();
 
   const {userArticle, setUserArticle, userDetail, setUserDetail} = UserPageState();
 
-
-  useEffect(() => {
-    // userDetails(setUserDetail, userId, setUserArticle);
-    // console.log(userDetail?.user?.user_stories);
-  }, []);
   return (
     <div>
       {userDetail ? (
