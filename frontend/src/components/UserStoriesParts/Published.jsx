@@ -3,16 +3,20 @@ import ArticleCard from "../UserDashboard/ArticleCard";
 import { userDetails } from "../../helpers/userProfileInfo";
 import { useAuthStates } from "../../contexts/AuthContext";
 import Images from "../../assets/Images";
+import { UserPageState } from "../../contexts/UserPageContext";
 
 const Published = () => {
-  const [userDetail, setUserDetail] = useState();
-  const { userInfo } = useAuthStates();
-  const userId = userInfo?.userInfo?.profileInfoId;
+  // const [userDetail, setUserDetail] = useState();
+  // const { userInfo } = useAuthStates();
+  // const userId = userInfo?.userInfo?.profileInfoId;
 
-  const [userArticle, setUserArticle] = useState();
+  // const [userArticle, setUserArticle] = useState();
+
+  const {userArticle, setUserArticle, userDetail, setUserDetail} = UserPageState();
+
 
   useEffect(() => {
-    userDetails(setUserDetail, userId, setUserArticle);
+    // userDetails(setUserDetail, userId, setUserArticle);
     // console.log(userDetail?.user?.user_stories);
   }, []);
 

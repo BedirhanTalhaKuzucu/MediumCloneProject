@@ -17,6 +17,8 @@ export function UserPageStateProvider({ children }) {
 
     const [topics, setTopics] = useState([]);
 
+    const [userDetail, setUserDetail] = useState();
+    const [userArticle, setUserArticle] = useState();
 
     const value = useMemo(
         () => ({
@@ -26,9 +28,13 @@ export function UserPageStateProvider({ children }) {
             offsetforFollowing,
             setoffsetforFollowing,
             topics, 
-            setTopics
+            setTopics,
+            userDetail, 
+            setUserDetail,
+            userArticle, 
+            setUserArticle
         }),
-        [followingStories, topics, offsetforFollowing]
+        [followingStories, topics, offsetforFollowing, userDetail, userArticle, ]
     );
 
     return (

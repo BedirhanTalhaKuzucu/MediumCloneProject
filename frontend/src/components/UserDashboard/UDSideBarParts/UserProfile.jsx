@@ -16,12 +16,10 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
     name: "",
     img: "",
   });
-  // const { setFollowingStories } = useAppState();
   const { followingStories, setFollowingStories, offsetforFollowing, setoffsetforFollowing } = UserPageState();
 
 
   useEffect(() => {
-    console.log(followingStories);
     sideBarInfoGet();
     if (authorInfo) {
       let userId = authorInfo.userProfilId;
