@@ -18,7 +18,6 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
   });
   const { followingStories, setFollowingStories, offsetforFollowing, setoffsetforFollowing } = UserPageState();
 
-
   useEffect(() => {
     sideBarInfoGet();
     if (authorInfo) {
@@ -26,6 +25,7 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
       let tokenKey = get_token();
       controlFollowFunction(setfollowOrFollowing, userId, tokenKey);
     }
+    
   }, [authorInfo]);
 
   const get_token = () => {
@@ -74,7 +74,7 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
       // userDetails(setcompanentInfoData, userId )
 
       setcompanentInfoData({
-        name: authorInfo.first_name + " " + authorInfo.last_name,
+        name: authorInfo.first_name+ " " + authorInfo.last_name,
         img: authorInfo.user_img,
         bio: authorInfo.short_bio,
         followedCount: authorInfo.followedCount,

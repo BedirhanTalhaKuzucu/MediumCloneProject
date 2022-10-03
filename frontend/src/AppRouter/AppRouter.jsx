@@ -65,8 +65,8 @@ function AppRouter() {
           </Route>
         </Route>
 
-        {/* <Route path="writer/stories" element={<PrivateRouter />}> */}
-          <Route path="writer/stories" element={<WriterPage /> } />
+        {/* <Route path="writer/stories/:id" element={<PrivateRouter />}> */}
+          <Route path="writer/stories/:id" element={<WriterPage /> } />
         {/* </Route> */}
 
         <Route path="tag/:id" element={<TagDetail />} />

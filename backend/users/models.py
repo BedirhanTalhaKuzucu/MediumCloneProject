@@ -30,3 +30,5 @@ class Following(models.Model):
     class Meta:
         verbose_name_plural = "Following"
         unique_together = ('follower', 'followed')
+
+        

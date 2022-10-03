@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import UserListsAndStoriesSideBar from "../components/SideBars/UserListsAndStoriesSideBar";
 import WriterPageSideBar from "../components/SideBars/WriterPageSideBar";
 import UDNavbar from "../components/UserDashboard/UDNavbar";
-import YourStoriesMain from "../components/UserStoriesParts/YourStoriesMain";
 import WriterStoriesMain from "../components/WriterStoriesParts/WriterStories";
 import { useAuthStates } from "../contexts/AuthContext";
 import { writerDetails } from "../helpers/userProfileInfo";
+import Images from "../assets/Images";
+import { useParams } from "react-router-dom";
+
+
 
 const authorInfo = {
     first_name: "ferdi",
@@ -19,25 +21,31 @@ const authorInfo = {
 const WriterPage = () => {
 
     const { userInfo } = useAuthStates()
-    const [writerDetail, setWriterDetail] = useState()
+    const [authorDetail, setAuthorDetail] = useState()
+    const [storiesDetail, setStoriesDetail] = useState()
+    const { id } = useParams();
+
 
     useEffect(() => {
-        const userId = userInfo?.userInfo?.profileInfoId;
-        console.log(userId)
-        if (userId) {
-            writerDetails(setWriterDetail, userId,)
+        // const userId = userInfo?.userInfo?.profileInfoId;
+        if (id) {
+            console.log(id)
+            writerDetails(setAuthorDetail, setStoriesDetail, id)
         }
 
-
-    }, [userInfo])
-
-    console.log(writerDetail)
+    }, [id])
 
     return (
         <div className="d-flex">
             <UDNavbar />
-            <WriterStoriesMain authorInfo={authorInfo} />
-            <WriterPageSideBar authorInfo={writerDetail ? writerDetail?.user : "" }  />
+            {authorDetail ?
+                <WriterStoriesMain authorInfo={authorDetail} storiesDetail={storiesDetail} />
+                :
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", }} >
+                    <img src={Images.loading} alt="loading gif" />
+                </div>
+            }
+            {authorDetail ? <WriterPageSideBar authorInfo={authorDetail ? authorDetail : "" } /> :  ""}
         </div>
     );
 };

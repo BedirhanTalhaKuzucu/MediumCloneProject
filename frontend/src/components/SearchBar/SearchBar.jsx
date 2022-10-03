@@ -7,6 +7,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { ImPriceTag } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 
+
 function SearchBar() {
   const navigate = useNavigate();
 
@@ -67,11 +68,12 @@ function SearchBar() {
           )}
           {searching.User.length
             ? searching.User.map((item, key) => (
-                <Dropdown.Item eventKey="1" key={key}>
-                  <StyledProfilImage image={item.userImage} />
-                  {item.first_name} {item.last_name}
-                </Dropdown.Item>
-              ))
+              <Dropdown.Item eventKey="1" key={key}
+                onClick={() => navigate(`/writer/stories/${item.userProfilId}`)}  >
+                <StyledProfilImage image={item.userImage} />
+                {item.first_name} {item.last_name}
+              </Dropdown.Item>
+            ))
             : ""}
 
           {searching.Story.length ? (
@@ -84,15 +86,15 @@ function SearchBar() {
           )}
           {searching.Story.length
             ? searching.Story.map((item, key) => (
-                <Dropdown.Item
-                  eventKey="1"
-                  key={key}
-                  onClick={() => navigate(`/story/${item.id}`)}
-                >
-                  <StyledProfilImage image={item.image} />
-                  {item.title}
-                </Dropdown.Item>
-              ))
+              <Dropdown.Item
+                eventKey="1"
+                key={key}
+                onClick={() => navigate(`/story/${item.id}`)}
+              >
+                <StyledProfilImage image={item.image} />
+                {item.title}
+              </Dropdown.Item>
+            ))
             : ""}
 
           {searching.Tag.length ? (
@@ -105,15 +107,15 @@ function SearchBar() {
           )}
           {searching.Tag.length
             ? searching.Tag.map((item, key) => (
-                <Dropdown.Item
-                  eventKey="1"
-                  key={key}
-                  onClick={() => navigate(`/tag/${item.id}`)}
-                >
-                  <ImPriceTag className="mx-2" />
-                  {item.tag_name}
-                </Dropdown.Item>
-              ))
+              <Dropdown.Item
+                eventKey="1"
+                key={key}
+                onClick={() => navigate(`/tag/${item.id}`)}
+              >
+                <ImPriceTag className="mx-2" />
+                {item.tag_name}
+              </Dropdown.Item>
+            ))
             : ""}
         </Dropdown.Menu>
       </form>
