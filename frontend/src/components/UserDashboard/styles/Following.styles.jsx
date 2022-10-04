@@ -33,6 +33,8 @@ export const CardContainer = styled.div`
     .articlePart {
       text-decoration: none;
       color: black;
+      word-break: break-all;
+      word-wrap: break-word;
     }
     .part1 {
       width: 100%;
