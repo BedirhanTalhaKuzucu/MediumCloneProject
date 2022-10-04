@@ -2,7 +2,7 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useAppState } from "../contexts/AppContext";
+import { useAuthStates } from "../contexts/AuthContext";
 import { useFormik } from "formik";
 import { validationSchema } from "../helpers/formValidations";
 import { useState } from "react";
@@ -20,7 +20,7 @@ function SignIn() {
 
   const [errorMesage, setErrorMesage] = useState(errorMesageTemplate);
   const navigate = useNavigate();
-  const { show, handleClose } = useAppState();
+  const { show, handleClose } = useAuthStates();
 
   const formik = useFormik({
     initialValues: {

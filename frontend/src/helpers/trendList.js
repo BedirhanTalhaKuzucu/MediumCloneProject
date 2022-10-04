@@ -37,13 +37,43 @@ export const getData = (setData, setTrendList) => {
     redirect: "follow",
   };
 
-  fetch("http://127.0.0.1:8000/blog/stories/", requestOptions)
+  fetch(`http://127.0.0.1:8000/blog/stories/?limit=5`, requestOptions)
     .then((response) => response.json())
     .then((data) => {
-      // console.log(data);
       const trendList = getTrending(data.results);
       setTrendList(trendList);
       setData(data.results);
+    })
+    .catch((error) => console.log("error", error));
+};
+
+
+
+
+export const scroolGetData = (setData, data, sethasMore, offset = 0, setoffset) => {
+  console.log(offset)
+  let myHeaders = new Headers();
+  myHeaders.append(
+    "Cookie",
+    "csrftoken=ELiWUgqxhTQmVoViigupeVDooY7d90qARaohIkvQSS5ZqJy4p26tjhCzRzyCXJRJ"
+  );
+
+  let requestOptions = {
+    method: "GET",
+    redirect: "follow",
+  };
+
+  fetch(`http://127.0.0.1:8000/blog/stories/?limit=5&offset=${offset}`, requestOptions)
+    .then((response) => response.json())
+    .then((lastData) => {
+      console.log(data);
+      
+      setData([...data, ...lastData.results])
+      if (lastData.results.length === 0 ) {
+        sethasMore(false);
+      }else{
+        setoffset(offset + 5);
+      }
     })
     .catch((error) => console.log("error", error));
 };

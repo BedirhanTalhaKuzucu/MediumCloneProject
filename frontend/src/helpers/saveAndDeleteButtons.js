@@ -30,7 +30,7 @@ export const addSavedFunction = (storyId, tokenKey, addSave) => {
     };
 
     fetch("http://127.0.0.1:8000/blog/save/", requestOptions)
-      .then((response) => response.text())
+      .then((response) => {response.text()})
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
   }
@@ -70,7 +70,7 @@ export const controlFollowFunction = (
     .catch((error) => console.log("error", error));
 };
 
-export const add_deleteFollowHandle = (followOrFollowing, tokenKey, userId) => {
+export const add_deleteFollowHandle = (followOrFollowing, tokenKey, userId, followedUserStories, setFollowingStories ) => {
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Token ${tokenKey}`);
   myHeaders.append("Content-Type", "application/json");
@@ -105,7 +105,10 @@ export const add_deleteFollowHandle = (followOrFollowing, tokenKey, userId) => {
 
     fetch("http://127.0.0.1:8000/auth/following/", requestOptions)
       .then((response) => response.text())
-      .then((result) => console.log(result))
+      .then((result) => {
+        console.log(result)
+        followedUserStories(setFollowingStories, tokenKey)
+      })
       .catch((error) => console.log("error", error));
   }
 };

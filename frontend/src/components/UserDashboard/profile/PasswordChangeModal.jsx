@@ -6,7 +6,7 @@ import { IconButton, Input } from "@mui/material";
 import Modal from "react-modal";
 import { ModalStyle } from "../styles/profile/PasswordChangeModal.style";
 import { changePasswordFunc } from "../../../helpers/userProfileInfo";
-import { useAppState } from "../../../contexts/AppContext";
+import { useAuthStates } from "../../../contexts/AuthContext";
 import { useRef } from "react";
 import validator from "validator";
 const customStyles = {
@@ -30,7 +30,7 @@ function PasswordChangeModal() {
   });
   const [errorMessage, setErrorMessage] = useState("");
 
-  const { userInfo } = useAppState();
+  const { userInfo } = useAuthStates();
   const Token = userInfo?.key;
   // console.log(typeof Token);
 

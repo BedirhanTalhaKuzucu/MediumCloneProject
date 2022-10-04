@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Container } from "./styles/UserProfile.styles";
 import { useState, useEffect } from "react";
-import { useAppState } from "../../../contexts/AppContext";
+import { UserPageState } from "../../../contexts/UserPageContext";
 import Button from "react-bootstrap/Button";
 import {
   controlFollowFunction,
@@ -9,13 +9,14 @@ import {
 } from "../../../helpers/saveAndDeleteButtons";
 import { followedUserStories } from "../../../helpers/stories";
 
+
 const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
   const [followOrFollowing, setfollowOrFollowing] = useState(false);
   const [companentInfoData, setcompanentInfoData] = useState({
     name: "",
     img: "",
   });
-  const { setFollowingStories } = useAppState();
+  const { followingStories, setFollowingStories, offsetforFollowing, setoffsetforFollowing } = UserPageState();
 
   useEffect(() => {
     sideBarInfoGet();
@@ -24,6 +25,7 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
       let tokenKey = get_token();
       controlFollowFunction(setfollowOrFollowing, userId, tokenKey);
     }
+    
   }, [authorInfo]);
 
   const get_token = () => {
@@ -39,15 +41,18 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
     let userId = authorInfo.userProfilId;
 
     if (followOrFollowing) {
+      //for DELETE
       add_deleteFollowHandle(followOrFollowing, tokenKey, userId);
       setfollowOrFollowing(false);
       updateDetails();
-      followedUserStories(setFollowingStories, tokenKey);
+      console.log(authorInfo.userId );
+      setFollowingStories( followingStories.filter((item) => item.creatorInfo.userId !== authorInfo.userId ) )
     } else {
-      add_deleteFollowHandle(followOrFollowing, tokenKey, userId);
+      //for ADD
+      add_deleteFollowHandle(followOrFollowing, tokenKey, userId, followedUserStories, setFollowingStories );
       setfollowOrFollowing(true);
       updateDetails();
-      followedUserStories(setFollowingStories, tokenKey);
+      setoffsetforFollowing(5)
     }
   };
 
@@ -69,7 +74,7 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
       // userDetails(setcompanentInfoData, userId )
 
       setcompanentInfoData({
-        name: authorInfo.first_name + " " + authorInfo.last_name,
+        name: authorInfo.first_name+ " " + authorInfo.last_name,
         img: authorInfo.user_img,
         bio: authorInfo.short_bio,
         followedCount: authorInfo.followedCount,

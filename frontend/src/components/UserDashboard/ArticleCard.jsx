@@ -94,7 +94,6 @@ const ArticleCard = ({ data }) => {
       <section className="authorInf">
         <img src={data.creatorInfo.user_img} alt="" className="pic" />
         <div className="fullName">
-          {" "}
           {data.creatorInfo.first_name} {data.creatorInfo.last_name}{" "}
         </div>
         <div className="createdDate">{data.publish_date.split("T")[0]} </div>
@@ -111,7 +110,6 @@ const ArticleCard = ({ data }) => {
                 __html: data?.content.slice(0, 170) + "...",
               }}
             />
-            {/* {data?.content.slice(0, 170) + "..."} */}
           </Link>
           <div className="specialDetail">
             <div>

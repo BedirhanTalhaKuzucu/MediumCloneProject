@@ -4,17 +4,15 @@ import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import { useAppState } from "../../contexts/AppContext";
+// import { useAppState } from "../../contexts/AppContext";
+import { useAuthStates } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export default function AccountMenu() {
-  const { userInfo, get_user_info } = useAppState();
+  const { userInfo, get_user_info } = useAuthStates();
   const navigate = useNavigate();
 
   useEffect(() => {

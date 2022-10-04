@@ -7,10 +7,16 @@ import SignIn from "./SignIn";
 import LogIn from "./LogIn";
 import Images from "../assets/Images";
 import { HomeStyles } from "./styles/Home.styles";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useState, memo } from "react";
+import { getData, scroolGetData } from "../helpers/trendList";
+
 
 function Home() {
-  const { data, trendList } = useAppState();
-  // console.log(data);
+  const { data, trendList, setData, offsetforRecommend, setoffsetforRecommend  } = useAppState();
+
+  // const [offset, setoffset] = useState(5);
+  const [hasMore, sethasMore] = useState(true);
 
   return (
     <>
@@ -24,21 +30,36 @@ function Home() {
             <Categorys />
           </div>
           <div className="cards">
-            {data ? (
-              data.map((blogCard) => (
-                <Cards blog={blogCard} key={blogCard.id} />
-              ))
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <img src={Images.loading} alt="loading gif" />
-              </div>
-            )}
+            {data ?
+              (
+                <InfiniteScroll
+                  dataLength={data.length} //This is important field to render the next data
+                  next={() => scroolGetData (setData, data, sethasMore, offsetforRecommend, setoffsetforRecommend )}
+                  hasMore={hasMore}
+                  loader={
+                    <div style={{ display: "flex", justifyContent: "center",  alignItems: "center", }} >
+                      <img src={Images.loading} alt="loading gif" />
+                    </div>
+                  }
+                  endMessage={<b>There are no more articles to show here..</b>}
+                >
+                  {data.map((item) => {
+                    return <Cards blog={item} key={item.id} />;
+                  })}
+                </InfiniteScroll>
+              )
+
+              : (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img src={Images.loading} alt="loading gif" />
+                </div>
+              )}
           </div>
         </div>
       </HomeStyles>
@@ -46,76 +67,5 @@ function Home() {
   );
 }
 
-export default Home;
+export default memo(Home);
 
-// import React from "react";
-// import { useState, useEffect } from "react";
-// import useFilter from "../../hooks/useFilter"
-// import data from "../../data/users.json"
-
-// const Filter = () => {
-
-//   const [inputValue, setinputValue] = useState();
-//   const [renderedData, setrenderedData] = useState(data.name);
-//   const  [selectedValue] = useFilter(inputValue)
-
-//   useEffect(() => {
-//     console.log(selectedValue)
-//     setrenderedData(selectedValue)
-//   }, [inputValue]);
-
-//   const debounce = (func, delay) => {
-//     let debounceTimer;
-//     return function () {
-//       const context = this;
-//       const args = arguments;
-//       clearTimeout(debounceTimer);
-//       debounceTimer = setTimeout(() => func.apply(context, args), delay);
-//     };
-//   };
-
-//   const handleInputChange = debounce(function (e) {
-//     console.log(e.target.value)
-//     setinputValue(e.target.value)
-//   }, 1000);
-
-//   return (
-//     <div className="filter-container">
-//       <input role="textbox" onChange={(e) => {e.persist(), handleInputChange(e)} } type="text" />
-
-//       {
-//         renderedData &&
-//         renderedData.map((item, index) => {
-//         return(
-//         <li role="listitem" key= {index} > {item} </li>
-//         )}
-//         )
-//       }
-
-//     </div>
-//   );
-// };
-
-// export default Filter;
-
-// import data from "../data/users.json"
-// import { useState, useEffect } from "react";
-
-// const useFilter = (inputValue) => {
-
-//   const [selectedValue, setselectedValue] = useState([]);
-
-//   useEffect(() => {
-//     setselectedValue([])
-//     // console.log(inputValue)
-//     data.map((item, index) => {
-//       if (item.name.toLowerCase().includes(inputValue)) {
-//         return selectedValue.push(item.name)
-//       }
-//     })
-//   }, [inputValue]);
-
-//   return [selectedValue]
-// };
-
-// export default useFilter;

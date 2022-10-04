@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
-import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { TopicRecommendedFunc } from "../../helpers/tags";
 import { CategoriesStyles } from "./Categories.styles";
 import { toast } from "react-hot-toast";
-import { useAppState } from "../../contexts/AppContext";
+import { useAuthStates } from "../../contexts/AuthContext";
+import { UserPageState } from "../../contexts/UserPageContext";
+
 
 function Categorys() {
-  const [topics, setTopics] = useState([]);
-  const { userInfo } = useAppState();
-  console.log(userInfo);
+  // const [topics, setTopics] = useState([]);
+  const { userInfo } = useAuthStates();
+  const { topics, setTopics } = UserPageState();
+
 
   useEffect(() => {
     TopicRecommendedFunc(setTopics);
   }, []);
 
   const HandleButton = () => {
-    if (userInfo == "") {
+    if (userInfo === "") {
       toast.error("please login first", {
         style: {
           borderRadius: "10px",

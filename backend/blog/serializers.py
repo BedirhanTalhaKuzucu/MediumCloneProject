@@ -178,10 +178,11 @@ class SearchBarUserSerializer(serializers.ModelSerializer):
 
     # userfor = SearchBarUserProfilSerializer(many=True)
     userImage = serializers.SerializerMethodField('get_userImage')
+    userProfilId = serializers.SerializerMethodField('get_userProfilId')
 
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'userImage', )
+        fields = ('id', 'first_name', 'last_name', 'userImage', 'userProfilId' )
 
     def get_userImage(self, obj):
 
@@ -196,6 +197,11 @@ class SearchBarUserSerializer(serializers.ModelSerializer):
         # }
         return user_img
 
+    def get_userProfilId(self, obj):
+
+        userProfilId = UserProfile.objects.filter(user=obj.id).first()
+        userProfilId = userProfilId.id
+        return userProfilId
 
 class AddStoryClapSerializer(serializers.ModelSerializer):
     class Meta:

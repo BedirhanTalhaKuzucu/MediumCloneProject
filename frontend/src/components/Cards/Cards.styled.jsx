@@ -2,13 +2,13 @@ import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import { CardStyled, StyledProfilImage } from "../Sidebar/Sidebar.styled";
 import { toast } from "react-hot-toast";
-import { useAppState } from "../../contexts/AppContext";
+import { useAuthStates } from "../../contexts/AuthContext";
 
 const CardComp = ({ className, blog }) => {
-  const { userInfo } = useAppState();
+  const { userInfo } = useAuthStates();
 
   const HandleButton = () => {
-    if (userInfo == "") {
+    if (userInfo === "") {
       toast.error("please login first", {
         style: {
           borderRadius: "10px",

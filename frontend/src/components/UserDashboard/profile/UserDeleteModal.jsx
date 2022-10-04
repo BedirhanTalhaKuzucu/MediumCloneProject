@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import { ModalStyle } from "../styles/profile/PasswordChangeModal.style";
 import { useNavigate } from "react-router-dom";
 import { useAppState } from "../../../contexts/AppContext";
+import { useAuthStates } from "../../../contexts/AuthContext";
 import { userProfileDelete } from "../../../helpers/userProfileInfo";
 const customStyles = {
   content: {
@@ -19,7 +20,9 @@ function UserDeleteModal() {
   const [modalIsOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const { userInfo, settingPageInfo } = useAppState();
+  const { settingPageInfo } = useAppState();
+  const { userInfo } = useAuthStates();
+
   const userId = userInfo.userInfo.profileInfoId;
   const Token = userInfo.key;
 

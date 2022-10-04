@@ -12,7 +12,6 @@ export const searchBar = (values, setSearching, token) => {
   fetch(url, requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      // console.log(result);
       setSearching(result.results);
     })
     .catch((error) => console.log("error", error));

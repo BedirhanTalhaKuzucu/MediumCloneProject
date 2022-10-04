@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppState } from "../../contexts/AppContext";
+import { useAuthStates } from "../../contexts/AuthContext";
 import { userDetailsForStories } from "../../helpers/userProfileInfo";
 import { SavedStyles } from "./styles/SavedStories.styles";
 
 const SavedStories = () => {
-  const { userInfo } = useAppState();
+  const { userInfo } = useAuthStates();
   const [userDetailForStories, setUserDetailForStories] = useState();
 
   useEffect(() => {

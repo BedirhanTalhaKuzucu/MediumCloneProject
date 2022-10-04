@@ -1,78 +1,48 @@
 import React from "react";
 import ArticleCard from "./ArticleCard";
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo  } from "react";
 import Images from "../../assets/Images";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { followedUserStories } from "../../helpers/stories";
+import { UserPageState } from "../../contexts/UserPageContext";
+import { useAuthStates } from "../../contexts/AuthContext";
 
 const Following = () => {
-  const [items, setItems] = useState([]);
 
-  const [offset, setoffset] = useState(0);
 
   const [hasMore, sethasMore] = useState(true);
+  const [TOKEN, setTOKEN] = useState()
+
+  const { followingStories, setFollowingStories, offsetforFollowing, setoffsetforFollowing } = UserPageState();
+  const { getToken } = useAuthStates();
+
+
 
   useEffect(() => {
-    const get_session_user_info = JSON.parse(
-      sessionStorage.getItem("user_info")
-    );
-    const token = get_session_user_info?.key;
 
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization", `Token ${token}`);
-    let requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-    const getArticles = async () => {
-      const res = await fetch(
-        `http://127.0.0.1:8000/blog/stories/following?limit=5&offset=0`,
-        requestOptions
-      );
-      const data = await res.json();
-      // console.log(data);
-      setItems(data.results);
-    };
+    const token = getToken()
+    setTOKEN(token)
 
-    getArticles();
+    if (followingStories?.length === 0) {
+      setoffsetforFollowing(5)
+      if (token) {
+        followedUserStories(setFollowingStories, token)
+      }
+    }
+
   }, []);
 
-  const fetchArticleCards = async () => {
-    const get_session_user_info = JSON.parse(
-      sessionStorage.getItem("user_info")
-    );
-    const token = get_session_user_info?.key;
-
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization", `Token ${token}`);
-    let requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-    const res = await fetch(
-      `http://127.0.0.1:8000/blog/stories/following?limit=5&offset=${offset}`,
-      requestOptions
-    );
-    const data = await res.json();
-    // console.log(data);
-    return data.results;
-  };
-
-  const fetchData = async () => {
-    const commentsFormServer = await fetchArticleCards();
-
-    setItems([...items, ...commentsFormServer]);
-    if (commentsFormServer.length === 0 || commentsFormServer.length < 5) {
-      sethasMore(false);
+  const nextList = () => {
+    if (TOKEN) {
+      followedUserStories(setFollowingStories, TOKEN, offsetforFollowing, followingStories, setoffsetforFollowing, sethasMore)
     }
-    setoffset(offset + 5);
-  };
+  }
+
 
   return (
     <InfiniteScroll
-      dataLength={items.length} //This is important field to render the next data
-      next={fetchData}
+      dataLength={followingStories?.length} //This is important field to render the next data
+      next={() => { nextList() }}
       hasMore={hasMore}
       loader={
         <div
@@ -87,11 +57,15 @@ const Following = () => {
       }
       endMessage={<b>There are no more articles to show here..</b>}
     >
-      {items.map((item, index) => {
-        return <ArticleCard key={index} data={item} />;
-      })}
+      {followingStories ?
+        followingStories?.map((item, index) => {
+          return <ArticleCard key={index} data={item} />;
+        })
+        :
+        ""
+      }
     </InfiniteScroll>
   );
 };
 
-export default Following;
+export default memo(Following);

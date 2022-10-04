@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import Images from "../../../assets/Images";
 import { useAppState } from "../../../contexts/AppContext";
@@ -41,4 +41,4 @@ const ReadingToday = () => {
   );
 };
 
-export default ReadingToday;
+export default memo(ReadingToday);

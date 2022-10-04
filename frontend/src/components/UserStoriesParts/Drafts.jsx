@@ -1,20 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { memo } from "react";
 import ArticleCard from "../UserDashboard/ArticleCard";
-import { userDetails } from "../../helpers/userProfileInfo";
-import { useAppState } from "../../contexts/AppContext";
 import Images from "../../assets/Images";
+import { UserPageState } from "../../contexts/UserPageContext";
+
 
 const Draft = () => {
-  const [userDetail, setUserDetail] = useState();
-  const { userInfo } = useAppState();
-  const userId = userInfo?.userInfo?.profileInfoId;
 
-  const [userArticle, setUserArticle] = useState();
+  const {userArticle, setUserArticle, userDetail, setUserDetail} = UserPageState();
 
-  useEffect(() => {
-    userDetails(setUserDetail, userId, setUserArticle);
-    // console.log(userDetail?.user?.user_stories);
-  }, []);
   return (
     <div>
       {userDetail ? (
@@ -40,4 +33,4 @@ const Draft = () => {
   );
 };
 
-export default Draft;
+export default memo(Draft);

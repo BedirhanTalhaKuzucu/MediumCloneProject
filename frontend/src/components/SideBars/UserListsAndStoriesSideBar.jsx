@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import {
   SideBarContainerStyle,
@@ -9,9 +10,12 @@ import WhoToFollow from "../UserDashboard/UDSideBarParts/WhoToFollow";
 import TopicRecommended from "./TopicRecommended";
 
 const UserListsAndStoriesSideBar = () => {
+  const navigate = useNavigate();
   return (
     <SideBarContainerStyle>
-      <UnlimitedButtonStyle>Get unlimited access</UnlimitedButtonStyle>
+      <UnlimitedButtonStyle onClick={() => navigate("/contributors")}>
+        CONTRIBUTORS
+      </UnlimitedButtonStyle>
       <SearchBar />
       <UserProfile editOrFollowButton={true} />
 

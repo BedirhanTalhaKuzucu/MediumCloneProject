@@ -5,11 +5,11 @@ import Navbar from "react-bootstrap/Navbar";
 import logo from "../../assets/logo.png";
 import Button from "react-bootstrap/Button";
 import { NavLink } from "react-router-dom";
-import { useAppState } from "../../contexts/AppContext";
+import { useAuthStates } from "../../contexts/AuthContext";
 import { NavbarStyle } from "./Navbar.styled";
 
 function ColorSchemesExample() {
-  const { handleShow, setLogInShow } = useAppState();
+  const { handleShow, setLogInShow } = useAuthStates();
 
   return (
     <NavbarStyle className="bg-warning">

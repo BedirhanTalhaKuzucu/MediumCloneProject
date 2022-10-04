@@ -11,7 +11,7 @@ from rest_framework.permissions import IsAdminUser
 
 from blog.models import Story
 from .models import Following, UserProfile
-from.serializers import RegisterSerializer, UserBlogsSerializer, UserProfileSerializer, FollowingSerializer, UserSettingSerializer, UserProfileImageUpdateSerializer
+from.serializers import FollowerSerializer, RegisterSerializer, UserBlogsSerializer, UserProfileSerializer, FollowingSerializer, UserSettingSerializer, UserProfileImageUpdateSerializer
 
 
 class RegisterView(CreateAPIView):
@@ -65,6 +65,25 @@ class UserFollowListView(viewsets.ModelViewSet):
         instance = Following.objects.get(follower=follower, followed=followed)
         instance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class FollowerListView(ListAPIView):
+    queryset = Following.objects.all()
+    serializer_class = FollowerSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(
+            Following.objects.filter(followed=self.request.user))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
 
 
 class UserSettingInfoView(RetrieveUpdateDestroyAPIView):
