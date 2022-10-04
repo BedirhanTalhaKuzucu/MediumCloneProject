@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SecurityContainer } from "../styles/profile/Security.styles";
 import { Buttons } from "../styles/profile/AboutYou.styles";
 import PasswordChangeModal from "./PasswordChangeModal";
-import { settingUserInfo } from "../../../helpers/apiRequests";
+import { settingUserInfo } from "../../../helpers/userProfileInfo";
 import UserDeleteModal from "./UserDeleteModal";
 import { useAppState } from "../../../contexts/AppContext";
 import { useFormik } from "formik";

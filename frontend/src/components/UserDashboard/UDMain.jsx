@@ -11,7 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MainFollowingTooltip from "./MainFollowingTooltip";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { userDetails } from "../../helpers/apiRequests";
+import { userDetails } from "../../helpers/userProfileInfo";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
 const UDMain = () => {

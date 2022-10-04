@@ -4,7 +4,8 @@ import Images from "../../assets/Images";
 import { Link } from "react-router-dom";
 import { IoIosHeartDislike } from "react-icons/io";
 import { BsBookmarkFill } from "react-icons/bs";
-import { addClapFunction, addSavedFunction } from "../../helpers/apiRequests";
+import { addSavedFunction } from "../../helpers/saveAndDeleteButtons";
+import { addClapFunction } from "../../helpers/clapsAndCommnets";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 
@@ -105,7 +106,11 @@ const ArticleCard = ({ data }) => {
             {data.title.replace(".", "")}
           </Link>{" "}
           <Link to={`/story/${data.id}`} className="articlePart">
-            <div dangerouslySetInnerHTML={{ __html: data?.content.slice(0, 170) + "..." }} />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: data?.content.slice(0, 170) + "...",
+              }}
+            />
             {/* {data?.content.slice(0, 170) + "..."} */}
           </Link>
           <div className="specialDetail">

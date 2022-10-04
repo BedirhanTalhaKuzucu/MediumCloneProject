@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Images from "../../assets/Images";
-import { TopicRecommendedFunc } from "../../helpers/apiRequests";
+import { TopicRecommendedFunc } from "../../helpers/tags";
 import { TopicListStyle } from "../UserDashboard/styles/UDSideBar.styles";
 import { Link } from "react-router-dom";
 

@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import { ModalStyle } from "../styles/profile/PasswordChangeModal.style";
 import { useNavigate } from "react-router-dom";
 import { useAppState } from "../../../contexts/AppContext";
-import { userProfileDelete } from "../../../helpers/apiRequests";
+import { userProfileDelete } from "../../../helpers/userProfileInfo";
 const customStyles = {
   content: {
     top: "50%",

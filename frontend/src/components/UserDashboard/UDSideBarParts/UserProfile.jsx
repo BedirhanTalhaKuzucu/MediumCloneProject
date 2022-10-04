@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Images from "../../../assets/Images";
 import { Container } from "./styles/UserProfile.styles";
 import { useState, useEffect } from "react";
 import { useAppState } from "../../../contexts/AppContext";
@@ -7,8 +6,8 @@ import Button from "react-bootstrap/Button";
 import {
   controlFollowFunction,
   add_deleteFollowHandle,
-  followedUserStories,
-} from "../../../helpers/apiRequests";
+} from "../../../helpers/saveAndDeleteButtons";
+import { followedUserStories } from "../../../helpers/stories";
 
 const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
   const [followOrFollowing, setfollowOrFollowing] = useState(false);

@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import {
   settingUserInfo,
   updatedProfilImage,
-} from "../../../helpers/apiRequests";
+} from "../../../helpers/userProfileInfo";
 
 const AboutYou = () => {
   const { settingPageInfo, setsettingPageInfo } = useAppState();
