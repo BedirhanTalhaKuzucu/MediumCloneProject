@@ -1,12 +1,18 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAppState } from "../contexts/AppContext";
 import { useAuthStates } from "../contexts/AuthContext";
 
-
 const PrivateRouter = () => {
   const { userInfo } = useAuthStates();
+  const location = useLocation();
 
-  return userInfo ? <Outlet /> : <Navigate to="/" />;
+  if (userInfo === undefined) return null;
+
+  return userInfo ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/" replace state={{ from: location }} />
+  );
 };
 
 export default PrivateRouter;
