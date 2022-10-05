@@ -128,7 +128,7 @@ class FollowingSerializer(serializers.ModelSerializer):
 
     def get_followedDetails(self, obj):
         followedInfo = UserProfile.objects.filter(user=obj.followed).first()
-
+        userProfilId = followedInfo.id
         request = self.context.get('request')
         img = followedInfo.profile_photo.url
         img = request.build_absolute_uri(img)
@@ -144,6 +144,7 @@ class FollowingSerializer(serializers.ModelSerializer):
             "image": img,
             "email": email,
             "followedCount": followedCount,
+            "userProfilId" : userProfilId,
         }
         return context
 
