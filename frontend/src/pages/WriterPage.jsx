@@ -8,19 +8,8 @@ import Images from "../assets/Images";
 import { useParams } from "react-router-dom";
 
 
-
-const authorInfo = {
-    first_name: "ferdi",
-    last_name: "tayfur",
-    user_img: "https://www.biyografi.info/personpicture-fb/ferditayfur.jpg",
-    short_bio: "ses zanaatkarı",
-    followedCount: 50,
-    userId: 22
-}
-
 const WriterPage = () => {
 
-    const { userInfo } = useAuthStates()
     const [authorDetail, setAuthorDetail] = useState()
     const [storiesDetail, setStoriesDetail] = useState()
     const { id } = useParams();
@@ -35,6 +24,10 @@ const WriterPage = () => {
 
     }, [id])
 
+    const updateDetails = () => {
+        writerDetails(setAuthorDetail, setStoriesDetail, id);
+      };
+
     return (
         <div className="d-flex">
             <UDNavbar />
@@ -45,7 +38,7 @@ const WriterPage = () => {
                     <img src={Images.loading} alt="loading gif" />
                 </div>
             }
-            {authorDetail ? <WriterPageSideBar authorInfo={authorDetail ? authorDetail : "" } /> :  ""}
+            {authorDetail ? <WriterPageSideBar updateDetails= {updateDetails} authorInfo={authorDetail } /> :  ""}
         </div>
     );
 };
