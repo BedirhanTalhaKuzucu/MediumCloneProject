@@ -1,7 +1,7 @@
 import { followedUserStories } from "./stories";
 import { settingUserInfo } from "./userProfileInfo";
 
-export const signUpFunction = (values, resetForm, setErrorMesage, navigate) => {
+export const signUpFunction = (values, resetForm, setErrorMesage, navigate, setsettingPageInfo ) => {
   let myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -32,6 +32,10 @@ export const signUpFunction = (values, resetForm, setErrorMesage, navigate) => {
         response.text().then((result) => {
           setErrorMesage("");
           sessionStorage.setItem("user_info", result);
+          const user_info = JSON.parse(sessionStorage.getItem("user_info"));
+          const userId = user_info.userInfo.userId;
+          let token = user_info.key;
+          settingUserInfo(setsettingPageInfo, token, userId);
           resetForm({ values: "" });
           navigate("home");
         });

@@ -3,6 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useAuthStates } from "../contexts/AuthContext";
+import { useAppState } from "../contexts/AppContext";
 import { useFormik } from "formik";
 import { validationSchema } from "../helpers/formValidations";
 import { useState } from "react";
@@ -21,6 +22,8 @@ function SignIn() {
   const [errorMesage, setErrorMesage] = useState(errorMesageTemplate);
   const navigate = useNavigate();
   const { show, handleClose } = useAuthStates();
+  const { setsettingPageInfo } = useAppState();
+
 
   const formik = useFormik({
     initialValues: {
@@ -32,7 +35,7 @@ function SignIn() {
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
-      signUpFunction(values, resetForm, setErrorMesage, navigate);
+      signUpFunction(values, resetForm, setErrorMesage, navigate, setsettingPageInfo);
     },
   });
 
