@@ -5,9 +5,22 @@ import { Tooltip } from "@mui/material";
 import MainFollowingTooltip from "../UserDashboard/MainFollowingTooltip";
 import CommentsModal from "./CommentsModal";
 import { Helmet } from "react-helmet";
+import { useAuthStates } from "../../contexts/AuthContext";
+import { storyDeleteFunc } from "../../helpers/stories";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const StoryDetailMain = ({ detaylar }) => {
   const [copied, setCopied] = useState(false);
+  const { userInfo } = useAuthStates();
+  const navigate = useNavigate();
+
+  const tokenKey = userInfo?.key;
+  const storyId = detaylar?.id;
+
+  const userId = userInfo?.userInfo?.profileInfoId;
+  const storyCreaterId = detaylar?.creatorInfo?.userId;
+  // console.log(userId, storyCreaterId);
 
   const copyLink = () => {
     const el = document.createElement("input");
@@ -20,6 +33,13 @@ const StoryDetailMain = ({ detaylar }) => {
   };
 
   useEffect(() => {}, [detaylar?.comments]);
+
+  const handleArticleDelete = () => {
+    storyDeleteFunc(tokenKey, storyId);
+    toast.success("Story successfully deleted!");
+    navigate("/me/stories");
+  };
+  const handleArticleUpdate = () => {};
 
   return (
     <Main>
@@ -66,9 +86,6 @@ const StoryDetailMain = ({ detaylar }) => {
                 {detaylar ? detaylar.publish_date.split("T")[0] : " "}{" "}
               </div>
               <div>3 min read</div>
-              {/* <button>
-                dinleme çubuğu
-              </button> */}
             </div>
           </div>
         </nav>
@@ -96,13 +113,24 @@ const StoryDetailMain = ({ detaylar }) => {
           ""
         )}
 
-        {/* { detaylar ? detaylar.content : "" } */}
-        {/* {htmlContet ? htmlContet.map(item =>  ( 
-          <>
-            {item.outerHTML}
-          </>  )) 
-          :
-          ""}  */}
+        {storyCreaterId === userId ? (
+          <div className="buttons mt-5 mb-5 d-flex  justify-content-around">
+            <button
+              className="btn btn-outline-danger"
+              onClick={handleArticleDelete}
+            >
+              Delete
+            </button>
+            <button
+              className="btn btn-outline-info"
+              onClick={handleArticleUpdate}
+            >
+              Update
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
 
         <ClapsRespond>
           <div className="icon">

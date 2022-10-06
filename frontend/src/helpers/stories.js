@@ -17,6 +17,25 @@ export const getStoryDetailsA = (tokenKey, detailsId, setdetaylar) => {
     })
     .catch((error) => console.log("error", error));
 };
+export const storyDeleteFunc = (tokenKey, storyId, navigate) => {
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Token ${tokenKey}`);
+  myHeaders.append("Content-Type", "application/json");
+
+  let requestOptions = {
+    method: "DELETE",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  fetch(`http://127.0.0.1:8000/blog/stories/${storyId}/`, requestOptions)
+    .then((response) => response.text())
+    .then((result) => {
+      console.log(result);
+      navigate("/me/stories");
+    })
+    .catch((error) => console.log("error", error));
+};
 
 export const createStory = (formData, values, resetForm, token, navigate) => {
   let myHeaders = new Headers();
@@ -57,7 +76,6 @@ export const followedUserStories = (
   setoffset = "a",
   sethasMore = "a"
 ) => {
-
   let myHeaders = new Headers();
 
   myHeaders.append("Authorization", `Token ${token}`);
@@ -78,12 +96,12 @@ export const followedUserStories = (
       if (setoffset === "a") {
         // console.log("deneme");
         setfollowingStory(result.results);
-        console.log(result.results)
+        console.log(result.results);
       } else {
         setfollowingStory([...followingStories, ...result.results]);
-        if (result.results.length === 0 ) {
+        if (result.results.length === 0) {
           sethasMore(false);
-        }else{
+        } else {
           setoffset(offset + 5);
         }
       }
