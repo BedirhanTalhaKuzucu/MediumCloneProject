@@ -79,6 +79,7 @@ export const followedUserStories = (
         // console.log("deneme");
         setfollowingStory(result.results);
         console.log(result.results)
+        if (result.results.length === 0 ) { sethasMore(false);}
       } else {
         setfollowingStory([...followingStories, ...result.results]);
         if (result.results.length === 0 ) {

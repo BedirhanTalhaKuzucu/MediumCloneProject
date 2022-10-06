@@ -26,7 +26,7 @@ const Following = () => {
     if (followingStories?.length === 0) {
       setoffsetforFollowing(5)
       if (token) {
-        followedUserStories(setFollowingStories, token)
+        followedUserStories(setFollowingStories, token, undefined, undefined, undefined, sethasMore )
       }
     }
 
