@@ -17,6 +17,7 @@ const StoryDetailMain = ({ detaylar }) => {
 
   const tokenKey = userInfo?.key;
   const storyId = detaylar?.id;
+  // console.log(detaylar);
 
   const userId = userInfo?.userInfo?.profileInfoId;
   const storyCreaterId = detaylar?.creatorInfo?.userId;
@@ -32,11 +33,23 @@ const StoryDetailMain = ({ detaylar }) => {
     setCopied(true);
   };
 
+  //!okuma süresini hesaplamak için:
+  const text = detaylar?.content;
+  const wpm = 190; // ortalama dakikada okunan kelime sayısı
+  const words = text?.trim().split(" ").length;
+  const time = Math.ceil(words / wpm);
+  //!
+
   useEffect(() => {}, [detaylar?.comments]);
 
   const handleArticleDelete = () => {
     storyDeleteFunc(tokenKey, storyId);
-    toast.success("Story successfully deleted!");
+    toast.success("Story successfully deleted!", {
+      style: {
+        background: "#333",
+        color: "#fff",
+      },
+    });
     navigate("/me/stories");
   };
   const handleArticleUpdate = () => {};
@@ -85,7 +98,7 @@ const StoryDetailMain = ({ detaylar }) => {
               <div className="me-3">
                 {detaylar ? detaylar.publish_date.split("T")[0] : " "}{" "}
               </div>
-              <div>3 min read</div>
+              <div>{time} min read</div>
             </div>
           </div>
         </nav>
@@ -108,12 +121,23 @@ const StoryDetailMain = ({ detaylar }) => {
       </Header>
       <article className="my-5">
         {detaylar ? (
-          <div dangerouslySetInnerHTML={{ __html: detaylar.content }} />
+          <div className="d-flex flex-column justify-content-center align-items-center">
+            <h3 style={{ textTransform: "capitalize", marginBottom: "1.5rem" }}>
+              {detaylar.title}
+            </h3>
+            <img
+              src={detaylar.image}
+              alt=""
+              style={{ width: "75%", height: "75%" }}
+              className="mb-4"
+            />
+            <div dangerouslySetInnerHTML={{ __html: detaylar.content }} />
+          </div>
         ) : (
           ""
         )}
 
-        {storyCreaterId === userId ? (
+        {storyCreaterId === userId && (
           <div className="buttons mt-5 mb-5 d-flex  justify-content-around">
             <button
               className="btn btn-outline-danger"
@@ -128,8 +152,6 @@ const StoryDetailMain = ({ detaylar }) => {
               Update
             </button>
           </div>
-        ) : (
-          ""
         )}
 
         <ClapsRespond>
