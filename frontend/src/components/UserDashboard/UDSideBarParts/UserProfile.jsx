@@ -16,7 +16,7 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
     name: "",
     img: "",
   });
-  const { followingStories, setFollowingStories, offsetforFollowing, setoffsetforFollowing } = UserPageState();
+  const { followingStories, setFollowingStories, setoffsetforFollowing } = UserPageState();
 
   useEffect(() => {
     sideBarInfoGet();
