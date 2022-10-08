@@ -61,7 +61,6 @@ export const createStory = (formData, values, resetForm, token, navigate) => {
     .then((response) => response.json())
     .then((result) => {
       resetForm({ values: "" });
-      // setformData("")
       console.log(result);
       navigate(`/story/${result.id}`);
     })
@@ -78,7 +77,6 @@ export const updateStory = (
 ) => {
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Token ${token}`);
-  myHeaders.append("Content-Type", "application/json");
 
   let formdata = new FormData();
   formdata.append("title", formData.title);
@@ -91,7 +89,7 @@ export const updateStory = (
   let requestOptions = {
     method: "PUT",
     headers: myHeaders,
-    body: formData,
+    body: formdata,
     redirect: "follow",
   };
 
@@ -99,7 +97,6 @@ export const updateStory = (
     .then((response) => response.json())
     .then((result) => {
       resetForm({ values: "" });
-      // setformData("")
       console.log(result);
       navigate(`/story/${storyId}`);
     })
@@ -135,7 +132,7 @@ export const followedUserStories = (
       if (setoffset === "a") {
         // console.log("deneme");
         setfollowingStory(result.results);
-        console.log(result.results);
+        // console.log(result.results);
       } else {
         setfollowingStory([...followingStories, ...result.results]);
         if (result.results.length === 0) {

@@ -11,7 +11,7 @@ import Button from "react-bootstrap/Button";
 import WriteModal from "../components/WriteModal/WriteModal";
 import StoryUpdateModal from "../components/StoryUpdateModal/StoryUpdateModal";
 
-function Write() {
+function StoryUpdate() {
   const [formData, setformData] = useState("");
   const location = useLocation();
   console.log(location.state);
@@ -65,9 +65,13 @@ function Write() {
               onClick={handleSubmit}
               size="sm"
             >
-              Publish
+              Update
             </Button>
-            <Nav.Link as={NavLink} to="home" className="text-dark me-1">
+            <Nav.Link
+              as={NavLink}
+              to="/home/profile"
+              className="text-dark me-1"
+            >
               Profil
             </Nav.Link>
           </Nav>
@@ -119,4 +123,4 @@ function Write() {
   );
 }
 
-export default Write;
+export default StoryUpdate;

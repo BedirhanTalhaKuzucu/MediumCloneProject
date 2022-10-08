@@ -8,7 +8,7 @@ import Modal from "react-bootstrap/Modal";
 import { createStory, updateStory } from "../../helpers/stories";
 import Card from "react-bootstrap/Card";
 
-function WriteModal({
+function StoryUpdateModal({
   show,
   setShow,
   formData,
@@ -18,7 +18,7 @@ function WriteModal({
 }) {
   let navigate = useNavigate();
   const storyId = detailValue?.id;
-  console.log(formData);
+  console.log(detailValue);
 
   const fileHandle = (e) => {
     console.log(e.target);
@@ -31,7 +31,7 @@ function WriteModal({
 
   const formik2 = useFormik({
     initialValues: {
-      image: null,
+      image: detailValue.image.slice(39),
       tag_name: detailValue.tags[0].tag_name,
       status: detailValue.status,
       user_id: detailValue.creatorInfo.userId,
@@ -64,6 +64,7 @@ function WriteModal({
                 placeholder="Image"
                 // value={formik2.values.image}
                 onChange={(e) => fileHandle(e)}
+                required
               />
             </Form.Group>
 
@@ -125,7 +126,7 @@ function WriteModal({
               </Form.Select>
             </Form.Group>
             <Button variant="success" type="submit" size="sm">
-              Publish
+              Update
             </Button>
           </Container>
         </Form>
@@ -134,4 +135,4 @@ function WriteModal({
   );
 }
 
-export default WriteModal;
+export default StoryUpdateModal;
