@@ -8,26 +8,25 @@ import Form from "react-bootstrap/Form";
 import { Editor } from "react-bootstrap-editor";
 import { useFormik } from "formik";
 import Button from "react-bootstrap/Button";
-import WriteModal from "../components/WriteModal/WriteModal";
 import StoryUpdateModal from "../components/StoryUpdateModal/StoryUpdateModal";
 
 function StoryUpdate() {
   const [formData, setformData] = useState("");
   const location = useLocation();
-  console.log(location.state);
-  const detailValue = location?.state;
+  // console.log(location.state);
+  const detailvalue = location?.state;
 
   const [editor, seteditor] = useState("");
   const [show, setShow] = useState(false);
 
   const formik1 = useFormik({
     initialValues: {
-      title: detailValue.title,
-      story: detailValue.content,
+      title: detailvalue.title,
+      story: detailvalue.content,
     },
     onSubmit: (values, { resetForm }) => {
       values.story = editor;
-      console.log(values);
+      // console.log(values);
       setformData(values);
     },
   });
@@ -38,8 +37,12 @@ function StoryUpdate() {
   };
 
   const handleSubmit = () => {
-    formik1.handleSubmit();
-    setShow(true);
+    if (formik1.values.story !== "") {
+      formik1.handleSubmit();
+      setShow(true);
+    } else {
+      alert("Please update the content of the article");
+    }
   };
 
   return (
@@ -104,11 +107,9 @@ function StoryUpdate() {
                 editorHandle(e);
               }}
               value={formik1.values.story}
+              detailvalue={formik1.values.story}
             />
           </Form.Group>
-          {/* <Button variant="warning" type="submit"  >
-                        Submit
-                    </Button> */}
         </Form>
       </Container>
       <StoryUpdateModal
@@ -117,7 +118,7 @@ function StoryUpdate() {
         formik1={formik1}
         formData={formData}
         seteditor={seteditor}
-        detailValue={detailValue}
+        detailvalue={detailvalue}
       />
     </div>
   );

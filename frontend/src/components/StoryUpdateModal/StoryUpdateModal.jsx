@@ -5,8 +5,9 @@ import Form from "react-bootstrap/Form";
 import { useFormik } from "formik";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { createStory, updateStory } from "../../helpers/stories";
+import { updateStory } from "../../helpers/stories";
 import Card from "react-bootstrap/Card";
+import { toast } from "react-hot-toast";
 
 function StoryUpdateModal({
   show,
@@ -14,27 +15,24 @@ function StoryUpdateModal({
   formData,
   formik1,
   seteditor,
-  detailValue,
+  detailvalue,
 }) {
   let navigate = useNavigate();
-  const storyId = detailValue?.id;
-  console.log(detailValue);
+  const storyId = detailvalue?.id;
+  // console.log(detailvalue);
 
   const fileHandle = (e) => {
-    console.log(e.target);
-    console.log(e.target.files[0]);
-
-    // setformData({...formData, image: e.target.files[0] })
-    // console.log(formData);
+    // console.log(e.target);
+    // console.log(e.target.files[0]);
     formik2.values.image = e.target.files[0];
   };
 
   const formik2 = useFormik({
     initialValues: {
-      image: detailValue.image.slice(39),
-      tag_name: detailValue.tags[0].tag_name,
-      status: detailValue.status,
-      user_id: detailValue.creatorInfo.userId,
+      image: detailvalue.image.slice(39),
+      tag_name: detailvalue.tags[0].tag_name,
+      status: detailvalue.status,
+      user_id: detailvalue.creatorInfo.userId,
     },
     onSubmit: (values, { resetForm }) => {
       const creatorInfo = JSON.parse(sessionStorage.getItem("user_info"));
@@ -45,6 +43,12 @@ function StoryUpdateModal({
       updateStory(formData, values, resetForm, token, navigate, storyId);
       formik1.resetForm({ values: "" });
       seteditor("");
+      toast.success("Story successfully deleted!", {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
     },
   });
 
@@ -81,7 +85,6 @@ function StoryUpdateModal({
               <Card.Body>
                 <Card.Text>
                   <div dangerouslySetInnerHTML={{ __html: formData.story }} />
-                  {/* <div>{formData.story} story bilgisi</div> */}
                 </Card.Text>
               </Card.Body>
             </Card>
