@@ -52,7 +52,9 @@ const StoryDetailMain = ({ detaylar }) => {
     });
     navigate("/me/stories");
   };
-  const handleArticleUpdate = () => {};
+  const handleArticleUpdate = () => {
+    navigate(`/story/update/${storyId}`, { state: detaylar });
+  };
 
   return (
     <Main>

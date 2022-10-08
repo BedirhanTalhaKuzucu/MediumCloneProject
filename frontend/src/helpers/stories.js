@@ -17,6 +17,7 @@ export const getStoryDetailsA = (tokenKey, detailsId, setdetaylar) => {
     })
     .catch((error) => console.log("error", error));
 };
+
 export const storyDeleteFunc = (tokenKey, storyId, navigate) => {
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Token ${tokenKey}`);
@@ -63,6 +64,44 @@ export const createStory = (formData, values, resetForm, token, navigate) => {
       // setformData("")
       console.log(result);
       navigate(`/story/${result.id}`);
+    })
+    .catch((error) => console.log("error", error));
+};
+
+export const updateStory = (
+  formData,
+  values,
+  resetForm,
+  token,
+  navigate,
+  storyId
+) => {
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Token ${token}`);
+  myHeaders.append("Content-Type", "application/json");
+
+  let formdata = new FormData();
+  formdata.append("title", formData.title);
+  formdata.append("content", formData.story);
+  values.image && formdata.append("image", values.image);
+  formdata.append("tag_name", values.tag_name);
+  formdata.append("user_id", values.user_id);
+  formdata.append("status", values.status);
+
+  let requestOptions = {
+    method: "PUT",
+    headers: myHeaders,
+    body: formData,
+    redirect: "follow",
+  };
+
+  fetch(`http://127.0.0.1:8000/blog/stories/${storyId}/`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      resetForm({ values: "" });
+      // setformData("")
+      console.log(result);
+      navigate(`/story/${storyId}`);
     })
     .catch((error) => console.log("error", error));
 };
