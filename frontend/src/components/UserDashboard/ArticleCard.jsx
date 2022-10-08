@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CardContainer } from "./styles/Following.styles";
 import Images from "../../assets/Images";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoIosHeartDislike } from "react-icons/io";
 import { BsBookmarkFill } from "react-icons/bs";
 import { addSavedFunction } from "../../helpers/saveAndDeleteButtons";
@@ -20,6 +20,7 @@ const ArticleCard = ({ data }) => {
   const [addSave, setaddSave] = useState(false);
   const [addClap, setAddClap] = useState(false);
   const [authUser, setauthUser] = useState("");
+  const navigate = useNavigate();
 
   const addClapHandle = () => {
     const tokenKey = authUser.key;
@@ -86,6 +87,12 @@ const ArticleCard = ({ data }) => {
     }
   };
 
+  const tagDetailFunc = () => {
+    // console.log(data?.tags[0]);
+    const tagDetail = data?.tags[0];
+    navigate(`/tag/${tagDetail?.id}`);
+  };
+
   return (
     <CardContainer>
       <Helmet>
@@ -113,7 +120,9 @@ const ArticleCard = ({ data }) => {
           </Link>
           <div className="specialDetail">
             <div>
-              <div className="tag">{data?.tags[0]?.tag_name}</div>
+              <div className="tag" onClick={() => tagDetailFunc()}>
+                {data?.tags[0]?.tag_name}
+              </div>
               <div className="readTime">{time} min</div>
               {/* <div className="desc">Based on your following</div> */}
             </div>
