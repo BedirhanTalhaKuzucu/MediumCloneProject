@@ -47,11 +47,14 @@ export const getData = (setData, setTrendList) => {
     .catch((error) => console.log("error", error));
 };
 
-
-
-
-export const scroolGetData = (setData, data, sethasMore, offset = 0, setoffset) => {
-  console.log(offset)
+export const scroolGetData = (
+  setData,
+  data,
+  sethasMore,
+  offset = 0,
+  setoffset
+) => {
+  console.log(offset);
   let myHeaders = new Headers();
   myHeaders.append(
     "Cookie",
@@ -63,15 +66,21 @@ export const scroolGetData = (setData, data, sethasMore, offset = 0, setoffset) 
     redirect: "follow",
   };
 
-  fetch(`http://127.0.0.1:8000/blog/stories/?limit=5&offset=${offset}`, requestOptions)
+  fetch(
+    `http://127.0.0.1:8000/blog/stories/?limit=5&offset=${offset}`,
+    requestOptions
+  )
     .then((response) => response.json())
     .then((lastData) => {
       console.log(data);
-      
-      setData([...data, ...lastData.results])
-      if (lastData.results.length === 0 ) {
+
+      setData([
+        ...data.filter((item) => item.status === "Published"),
+        ...lastData.results.filter((item) => item.status === "Published"),
+      ]);
+      if (lastData.results.length === 0) {
         sethasMore(false);
-      }else{
+      } else {
         setoffset(offset + 5);
       }
     })

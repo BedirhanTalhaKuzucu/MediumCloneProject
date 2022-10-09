@@ -129,12 +129,21 @@ export const followedUserStories = (
     .then((response) => response.json())
     .then((result) => {
       console.log(followingStories);
+      console.log(result);
       if (setoffset === "a") {
         // console.log("deneme");
-        setfollowingStory(result.results);
+        setfollowingStory(
+          result.results.filter((item) => item.status === "Published")
+        );
         // console.log(result.results);
+        console.log(followingStories);
       } else {
-        setfollowingStory([...followingStories, ...result.results]);
+        setfollowingStory([
+          ...followingStories,
+          ...result.results.filter((item) => item.status === "Published"),
+        ]);
+        console.log(followingStories);
+
         if (result.results.length === 0) {
           sethasMore(false);
         } else {
