@@ -10,9 +10,10 @@ import Logout from "@mui/icons-material/Logout";
 // import { useAppState } from "../../contexts/AppContext";
 import { useAuthStates } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { LogOutFunction } from "../../helpers/userValidation";
 
 export default function AccountMenu() {
-  const { userInfo, get_user_info } = useAuthStates();
+  const { userInfo, get_user_info, setActivate } = useAuthStates();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,36 +27,6 @@ export default function AccountMenu() {
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const LogOutFunction = () => {
-    get_user_info({
-      key: "",
-      userInfo: {
-        first_name: "",
-        last_name: "",
-        email: "",
-      },
-    });
-
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = "";
-
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch("http://127.0.0.1:8000/auth/logout/", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-
-    navigate("/");
   };
 
   return (
@@ -116,7 +87,9 @@ export default function AccountMenu() {
           Profile / Settings
         </MenuItem>
 
-        <MenuItem onClick={() => LogOutFunction()}>
+        <MenuItem
+          onClick={() => LogOutFunction(get_user_info, navigate, setActivate)}
+        >
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

@@ -48,7 +48,8 @@ export const logInFunction = (
   setErrorMesage,
   setFollowingStories,
   getToken,
-  setsettingPageInfo
+  setsettingPageInfo,
+  setActivate
 ) => {
   let myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -81,10 +82,44 @@ export const logInFunction = (
           const userId = user_info.userInfo.userId;
           followedUserStories(setFollowingStories, token);
           settingUserInfo(setsettingPageInfo, token, userId);
+          setActivate(true);
           resetForm({ values: "" });
           navigate("home");
         });
       }
     })
     .catch((error) => console.log(error));
+};
+
+export const LogOutFunction = (get_user_info, navigate, setActivate) => {
+  get_user_info({
+    key: "",
+    userInfo: {
+      first_name: "",
+      last_name: "",
+      email: "",
+    },
+  });
+
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = "";
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch("http://127.0.0.1:8000/auth/logout/", requestOptions)
+    .then((response) => response.text())
+    .then((result) => {
+      console.log(result);
+      setActivate(false);
+    })
+    .catch((error) => console.log("error", error));
+
+  navigate("/");
 };

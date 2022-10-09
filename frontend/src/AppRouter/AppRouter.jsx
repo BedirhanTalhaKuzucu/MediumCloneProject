@@ -70,8 +70,9 @@ function AppRouter() {
         {/* <Route path="writer/stories/:id" element={<PrivateRouter />}> */}
         <Route path="writer/stories/:id" element={<WriterPage />} />
         {/* </Route> */}
-
-        <Route path="tag/:id" element={<TagDetail />} />
+        <Route path="tag/:id" element={<PrivateRouter />}>
+          <Route path="" element={<TagDetail />} />
+        </Route>
         <Route path="write" element={<Write />} />
         <Route path="/contributors" element={<Contributors />} />
 

@@ -3,12 +3,12 @@ import { useAppState } from "../contexts/AppContext";
 import { useAuthStates } from "../contexts/AuthContext";
 
 const PrivateRouter = () => {
-  const { userInfo } = useAuthStates();
+  const { userInfo, setActivate } = useAuthStates();
   const location = useLocation();
 
   if (userInfo === undefined) return null;
 
-  return userInfo ? (
+  return userInfo || setActivate ? (
     <Outlet />
   ) : (
     <Navigate to="/" replace state={{ from: location }} />
