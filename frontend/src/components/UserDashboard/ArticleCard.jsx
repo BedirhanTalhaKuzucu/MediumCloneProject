@@ -8,7 +8,6 @@ import { addSavedFunction } from "../../helpers/saveAndDeleteButtons";
 import { addClapFunction } from "../../helpers/clapsAndCommnets";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
-import { useNavigate } from "react-router-dom";
 
 
 const ArticleCard = ({ data }) => {
@@ -25,7 +24,6 @@ const ArticleCard = ({ data }) => {
   const [addSave, setaddSave] = useState(false);
   const [addClap, setAddClap] = useState(false);
   const [authUser, setauthUser] = useState("");
-  const navigate = useNavigate();
 
   const addClapHandle = () => {
     const tokenKey = authUser.key;
