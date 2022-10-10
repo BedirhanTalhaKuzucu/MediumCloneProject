@@ -19,8 +19,17 @@ from rest_framework.authtoken.models import Token
 
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
+        write_only=True,
         required=True,
         validators=[validators.UniqueValidator(queryset=User.objects.all())]
+    )
+    first_name= serializers.CharField(
+        write_only=True,
+        required=True,
+    )
+    last_name= serializers.CharField(
+        write_only=True,
+        required=True,
     )
     password = serializers.CharField(
         write_only=True,
@@ -34,6 +43,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         validators=[validate_password],
         style={"input_type": "password"}
     )
+
+    userInfo = serializers.SerializerMethodField()
     # username = serializers.CharField(
     #     required=False,
     #     # unique=False,
@@ -49,7 +60,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "password",
-            "password2"
+            "password2",
+            "userInfo",
         )
 
     def create(self, validated_data):
@@ -67,6 +79,23 @@ class RegisterSerializer(serializers.ModelSerializer):
                 {"password": "Password didn't match...."}
             )
         return data
+    
+    def get_userInfo(self, obj):
+        profileInfo = UserProfile.objects.filter(user=obj.id).first()
+
+        request = self.context.get('request')
+        img = profileInfo.profile_photo.url
+        img = request.build_absolute_uri(img)
+
+        context = {
+            'userId': obj.id,
+            "profileInfoId": profileInfo.id,
+            "image": img,
+            "first_name": obj.first_name,
+            "last_name": obj.last_name,
+            "email": obj.email,
+        }
+        return context
 
 
 class CustomTokenSerializer(serializers.ModelSerializer):
@@ -128,7 +157,7 @@ class FollowingSerializer(serializers.ModelSerializer):
 
     def get_followedDetails(self, obj):
         followedInfo = UserProfile.objects.filter(user=obj.followed).first()
-
+        userProfilId = followedInfo.id
         request = self.context.get('request')
         img = followedInfo.profile_photo.url
         img = request.build_absolute_uri(img)
@@ -144,6 +173,7 @@ class FollowingSerializer(serializers.ModelSerializer):
             "image": img,
             "email": email,
             "followedCount": followedCount,
+            "userProfilId" : userProfilId,
         }
         return context
 

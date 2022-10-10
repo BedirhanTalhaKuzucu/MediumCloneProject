@@ -8,8 +8,13 @@ import { addSavedFunction } from "../../helpers/saveAndDeleteButtons";
 import { addClapFunction } from "../../helpers/clapsAndCommnets";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router-dom";
+
 
 const ArticleCard = ({ data }) => {
+
+  const navigate = useNavigate();
+
   //!okuma süresini hesaplamak için:
   const text = data.content;
   const wpm = 190; // ortalama dakikada okunan kelime sayısı
@@ -93,7 +98,7 @@ const ArticleCard = ({ data }) => {
       </Helmet>
       <section className="authorInf">
         <img src={data.creatorInfo.user_img} alt="" className="pic" />
-        <div className="fullName">
+        <div onClick={() => navigate(`/writer/stories/${data.creatorInfo.userId}`)} className="fullName" >
           {data.creatorInfo.first_name} {data.creatorInfo.last_name}{" "}
         </div>
         <div className="createdDate">{data.publish_date.split("T")[0]} </div>

@@ -21,6 +21,7 @@ export const CardContainer = styled.div`
     }
     .fullName {
       margin-right: 1rem;
+      cursor: pointer;
     }
     .createdDate {
       color: lightgrey;

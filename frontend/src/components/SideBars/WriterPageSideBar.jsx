@@ -7,13 +7,13 @@ import {
 import UserProfile from "../UserDashboard/UDSideBarParts/UserProfile";
 
 
-const WriterPageSideBar = ({authorInfo}) => {
+const WriterPageSideBar = ({authorInfo, updateDetails }) => {
   // console.log(authorInfo)
   return (
     <SideBarContainerStyle>
       <UnlimitedButtonStyle>Get unlimited access</UnlimitedButtonStyle>
       <SearchBar />
-      <UserProfile  authorInfo ={authorInfo} />
+      <UserProfile updateDetails ={updateDetails } authorInfo ={authorInfo}  />
     </SideBarContainerStyle>
   );
 };

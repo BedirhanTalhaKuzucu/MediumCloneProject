@@ -146,7 +146,8 @@ export const writerDetails = (setAuthorDetail, setStoriesDetail, userId) => {
         user_img: result.profile_photo,
         short_bio: result.short_bio,
         followedCount: result.user.follower_user?.length,        
-        userId: result.user.id,
+        userProfilId: result.user.id,
+        userId : userId
       };
       setAuthorDetail(authorInfo);
       setStoriesDetail(result.user.user_stories)

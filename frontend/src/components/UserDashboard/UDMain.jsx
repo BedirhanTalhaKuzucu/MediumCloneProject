@@ -15,12 +15,12 @@ import { userDetails } from "../../helpers/userProfileInfo";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
 import { UserPageState } from "../../contexts/UserPageContext";
 
+
 const UDMain = () => {
   
-  // const [UserDetail, setUserDetail] = useState();
-  // const [userArticle, setUserArticle] = useState();
 
-  const {userArticle, setUserArticle, userDetail, setUserDetail} = UserPageState();
+  const { setUserArticle, userDetail, setUserDetail} = UserPageState();
+  
 
   const navigate = useNavigate();
 
@@ -74,6 +74,7 @@ const UDMain = () => {
                     },
                   }}
                   key={key}
+                  onClick={() => navigate(`/writer/stories/${item.followedDetails.userProfilId}`)}
                 >
                   <FollowingImg src={item.followedDetails.image} />
                 </Tooltip>
