@@ -3,31 +3,33 @@ import Images from "../../../assets/Images";
 import { UserFollowStyle } from "./styles/WhoToFollow.styles";
 import { useAppState } from "../../../contexts/AppContext";
 import { useState, useEffect } from "react";
-import { add_deleteFollowHandle } from "../../../helpers/saveAndDeleteButtons";
+import { add_deleteFollowHandle, controlFollowFunction } from "../../../helpers/saveAndDeleteButtons";
 import { UserPageState } from "../../../contexts/UserPageContext";
 import { followedUserStories } from "../../../helpers/stories";
+// import { controlFollowFunction } from "../../../helpers/saveAndDeleteButtons";
 
 
 const WhoToFollow = () => {
 
   const { users } = useAppState();
-  const [followOrFollowing, setfollowOrFollowing] = useState(false);
+ 
+  const [followedList, setfollowedList] = useState()
   const { followingStories, setFollowingStories, setoffsetforFollowing } = UserPageState();
 
-  useEffect( () => {
+  useEffect(() => {
 
-    if (users) {
-      let list = []
-      users.map(item => {
-        list = [...list, {id : item.id, follow: false}]
-      })
-      setfollowOrFollowing(list)
+    if (users.length > 0) {
+      let tokenKey = get_token();
+      console.log(users);
+      
+      controlFollowFunction(undefined, undefined, tokenKey, setfollowedList);
     }
+    
 
-  }, [ users ])
+  }, [users])
 
 
-  
+
 
   const get_token = () => {
     const get_session_user_info = JSON.parse(
@@ -37,48 +39,38 @@ const WhoToFollow = () => {
     return tokenKey;
   };
 
-  
 
-
-  const addFollowHandle = (data) => {
+  function addFollowHandle(data) {
     const tokenKey = get_token();
     let userId = data.user.id;
-    let index = users.indexOf(data)
 
+    if (followedList?.includes(data.user.id)) {
+      console.log(followedList?.includes(data.user.id) )
+      //for DELETE
+      add_deleteFollowHandle( true , tokenKey, userId);
 
-    if (followOrFollowing[index].follow) {
-      // //for DELETE
-      // add_deleteFollowHandle(followOrFollowing, tokenKey, userId);
-      // setfollowOrFollowing(false);
-      followOrFollowing[index].follow = false
-      setfollowOrFollowing(followOrFollowing);
-      console.log(followOrFollowing);
-      // // updateDetails();
-      // console.log(data.id );
-      // setFollowingStories( followingStories.filter((item) => item.creatorInfo.userId !== data.id ) )
+      setfollowedList(followedList.filter(item => item !== data.user.id ))
+      // updateDetails();
+      console.log(data.id );
+      setFollowingStories( followingStories.filter((item) => item.creatorInfo.userId !== data.id ) )
     } else {
-      // //for ADD
-      // add_deleteFollowHandle(followOrFollowing, tokenKey, userId, followedUserStories, setFollowingStories );
-      // setfollowOrFollowing(true);
-      let index = users.indexOf(data)
-      followOrFollowing[index].follow = true
-      setfollowOrFollowing(followOrFollowing);
-      console.log(followOrFollowing);
+      //for ADD
+      add_deleteFollowHandle(false, tokenKey, userId, followedUserStories, setFollowingStories );
 
+      setfollowedList([...followedList, data.user.id])
 
-
-
-      // // updateDetails();
-      // setoffsetforFollowing(5)
+      // updateDetails();
+      setoffsetforFollowing(5)
     }
-  };
+  }
+
 
   return (
     <UserFollowStyle>
       <p>Who to follow</p>
 
       {users ? (
-        users?.map((data) => {
+        users?.map((data, index) => {
           return (
             <div className="user" key={data.id}>
               <img src={data.profile_photo} alt="" />
@@ -91,9 +83,9 @@ const WhoToFollow = () => {
                     "A coffee obsessed, Netflix binge watching cat mama..."}
                 </div>
               </div>
-              <button className="btn btn-outline-success follow"  onClick = { () =>  addFollowHandle(data) } >
-                { 
-                  followOrFollowing[users.indexOf(data)]?.follow ? "following" :"follow"
+              <button className="btn btn-outline-success follow" onClick={() => addFollowHandle(data, index)} >
+                {
+                  followedList?.includes(data.user.id) ? "following" : "follow"
                 }
               </button>
             </div>
