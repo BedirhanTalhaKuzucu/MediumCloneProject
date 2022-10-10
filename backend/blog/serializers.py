@@ -111,7 +111,7 @@ class StorySerializer(serializers.ModelSerializer):
         )
 
     def get_tags(self, obj):
-        return obj.tags.all().values('tag_name')
+        return obj.tags.all().values('tag_name', 'id')
 
     def get_creatorInfo(self, obj):
 
@@ -182,7 +182,7 @@ class SearchBarUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'userImage', 'userProfilId' )
+        fields = ('id', 'first_name', 'last_name', 'userImage', 'userProfilId')
 
     def get_userImage(self, obj):
 
@@ -202,6 +202,7 @@ class SearchBarUserSerializer(serializers.ModelSerializer):
         userProfilId = UserProfile.objects.filter(user=obj.id).first()
         userProfilId = userProfilId.id
         return userProfilId
+
 
 class AddStoryClapSerializer(serializers.ModelSerializer):
     class Meta:

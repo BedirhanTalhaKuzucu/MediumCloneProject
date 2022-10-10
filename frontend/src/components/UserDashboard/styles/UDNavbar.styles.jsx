@@ -16,6 +16,8 @@ export const LeftSideBar = styled.nav`
 
   @media (max-width: 768px) {
     /* background-color: red; */
+    position: fixed;
+    top: 0;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;

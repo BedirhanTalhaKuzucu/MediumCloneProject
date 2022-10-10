@@ -16,7 +16,7 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
     name: "",
     img: "",
   });
-  const { followingStories, setFollowingStories, offsetforFollowing, setoffsetforFollowing } = UserPageState();
+  const { followingStories, setFollowingStories, setoffsetforFollowing } = UserPageState();
 
   useEffect(() => {
     sideBarInfoGet();
@@ -25,7 +25,7 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
       let tokenKey = get_token();
       controlFollowFunction(setfollowOrFollowing, userId, tokenKey);
     }
-    
+
   }, [authorInfo]);
 
   const get_token = () => {
@@ -45,11 +45,11 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
       add_deleteFollowHandle(followOrFollowing, tokenKey, userId);
       setfollowOrFollowing(false);
       updateDetails();
-      console.log(authorInfo.userId );
-      setFollowingStories( followingStories.filter((item) => item.creatorInfo.userId !== authorInfo.userId ) )
+      console.log(authorInfo.userId);
+      setFollowingStories(followingStories.filter((item) => item.creatorInfo.userId !== authorInfo.userId))
     } else {
       //for ADD
-      add_deleteFollowHandle(followOrFollowing, tokenKey, userId, followedUserStories, setFollowingStories );
+      add_deleteFollowHandle(followOrFollowing, tokenKey, userId, followedUserStories, setFollowingStories);
       setfollowOrFollowing(true);
       updateDetails();
       setoffsetforFollowing(5)
@@ -74,7 +74,7 @@ const UserProfile = ({ editOrFollowButton, authorInfo, updateDetails }) => {
       // userDetails(setcompanentInfoData, userId )
 
       setcompanentInfoData({
-        name: authorInfo.first_name+ " " + authorInfo.last_name,
+        name: authorInfo.first_name + " " + authorInfo.last_name,
         img: authorInfo.user_img,
         bio: authorInfo.short_bio,
         followedCount: authorInfo.followedCount,

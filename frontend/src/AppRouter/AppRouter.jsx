@@ -12,6 +12,7 @@ import NotFound from "../pages/NotFound";
 import Write from "../pages/Write";
 import StoryDetail from "../pages/StoryDetail";
 import UserStories from "../pages/UserStories";
+import StoryUpdate from "../pages/StoryUpdate";
 import Drafts from "../components/UserStoriesParts/Drafts";
 import Published from "../components/UserStoriesParts/Published";
 import UserLists from "../pages/UserLists";
@@ -39,6 +40,7 @@ function AppRouter() {
 
         {/* <Route path="/story/:id" element={<PrivateRouter />}> */}
         <Route path="/story/:id" element={<StoryDetail />} />
+        <Route path="/story/update/:id" element={<StoryUpdate />} />
         {/* </Route> */}
 
         <Route path="home/profile" element={<PrivateRouter />}>
@@ -66,10 +68,11 @@ function AppRouter() {
         </Route>
 
         {/* <Route path="writer/stories/:id" element={<PrivateRouter />}> */}
-          <Route path="writer/stories/:id" element={<WriterPage /> } />
+        <Route path="writer/stories/:id" element={<WriterPage />} />
         {/* </Route> */}
-
-        <Route path="tag/:id" element={<TagDetail />} />
+        <Route path="tag/:id" element={<PrivateRouter />}>
+          <Route path="" element={<TagDetail />} />
+        </Route>
         <Route path="write" element={<Write />} />
         <Route path="/contributors" element={<Contributors />} />
 
