@@ -41,9 +41,64 @@ export const createStory = (formData, values, resetForm, token, navigate) => {
     .then((response) => response.json())
     .then((result) => {
       resetForm({ values: "" });
-      // setformData("")
       console.log(result);
       navigate(`/story/${result.id}`);
+    })
+    .catch((error) => console.log("error", error));
+};
+
+export const updateStory = (
+  formData,
+  values,
+  resetForm,
+  token,
+  navigate,
+  storyId
+) => {
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Token ${token}`);
+
+  let formdata = new FormData();
+  formdata.append("title", formData.title);
+  formdata.append("content", formData.story);
+  values.image && formdata.append("image", values.image);
+  formdata.append("tag_name", values.tag_name);
+  formdata.append("user_id", values.user_id);
+  formdata.append("status", values.status);
+
+  let requestOptions = {
+    method: "PUT",
+    headers: myHeaders,
+    body: formdata,
+    redirect: "follow",
+  };
+
+  fetch(`http://127.0.0.1:8000/blog/stories/${storyId}/`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      resetForm({ values: "" });
+      console.log(result);
+      navigate(`/story/${storyId}`);
+    })
+    .catch((error) => console.log("error", error));
+};
+
+export const storyDeleteFunc = (tokenKey, storyId, navigate) => {
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Token ${tokenKey}`);
+  myHeaders.append("Content-Type", "application/json");
+
+  let requestOptions = {
+    method: "DELETE",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  fetch(`http://127.0.0.1:8000/blog/stories/${storyId}/`, requestOptions)
+    .then((response) => response.text())
+    .then((result) => {
+      console.log(result);
+      navigate("/me/stories");
     })
     .catch((error) => console.log("error", error));
 };
@@ -57,7 +112,6 @@ export const followedUserStories = (
   setoffset = "a",
   sethasMore = "a"
 ) => {
-
   let myHeaders = new Headers();
 
   myHeaders.append("Authorization", `Token ${token}`);
@@ -75,16 +129,24 @@ export const followedUserStories = (
     .then((response) => response.json())
     .then((result) => {
       console.log(followingStories);
+      console.log(result);
       if (setoffset === "a") {
         // console.log("deneme");
-        setfollowingStory(result.results);
-        console.log(result.results)
-        if (result.results.length === 0 ) { sethasMore(false);}
+        setfollowingStory(
+          result.results.filter((item) => item.status === "Published")
+        );
+        // console.log(result.results);
+        console.log(followingStories);
       } else {
-        setfollowingStory([...followingStories, ...result.results]);
-        if (result.results.length === 0 ) {
+        setfollowingStory([
+          ...followingStories,
+          ...result.results.filter((item) => item.status === "Published"),
+        ]);
+        console.log(followingStories);
+
+        if (result.results.length === 0) {
           sethasMore(false);
-        }else{
+        } else {
           setoffset(offset + 5);
         }
       }

@@ -4,6 +4,6 @@ export const DashboardContainer = styled.div`
   display: flex;
   /* background-color: red; */
   @media (max-width: 768px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 `;

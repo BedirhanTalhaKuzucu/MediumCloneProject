@@ -11,13 +11,17 @@ import { logInFunction } from "../helpers/userValidation";
 import { useNavigate } from "react-router-dom";
 
 function LogIn() {
-
-
   const [errorMesage, setErrorMesage] = useState(false);
   const navigate = useNavigate();
   const { setsettingPageInfo } = useAppState();
 
-  const {logInShow, setLogInShow, setFollowingStories, getToken } = useAuthStates();
+  const {
+    logInShow,
+    setLogInShow,
+    setFollowingStories,
+    getToken,
+    setActivate,
+  } = useAuthStates();
 
   const formik = useFormik({
     initialValues: {
@@ -35,7 +39,8 @@ function LogIn() {
         setErrorMesage,
         setFollowingStories,
         getToken,
-        setsettingPageInfo
+        setsettingPageInfo,
+        setActivate
       );
     },
   });
@@ -94,7 +99,7 @@ function LogIn() {
               isInvalid={
                 formik.touched.password
                   ? Boolean(formik.errors.password) ||
-                  Boolean(errorMesage.password)
+                    Boolean(errorMesage.password)
                   : false
               }
             />

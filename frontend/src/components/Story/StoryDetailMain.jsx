@@ -5,9 +5,23 @@ import { Tooltip } from "@mui/material";
 import MainFollowingTooltip from "../UserDashboard/MainFollowingTooltip";
 import CommentsModal from "./CommentsModal";
 import { Helmet } from "react-helmet";
+import { useAuthStates } from "../../contexts/AuthContext";
+import { storyDeleteFunc } from "../../helpers/stories";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const StoryDetailMain = ({ detaylar }) => {
   const [copied, setCopied] = useState(false);
+  const { userInfo } = useAuthStates();
+  const navigate = useNavigate();
+
+  const tokenKey = userInfo?.key;
+  const storyId = detaylar?.id;
+  // console.log(detaylar);
+
+  const userId = userInfo?.userInfo?.profileInfoId;
+  const storyCreaterId = detaylar?.creatorInfo?.userId;
+  // console.log(userId, storyCreaterId);
 
   const copyLink = () => {
     const el = document.createElement("input");
@@ -19,7 +33,28 @@ const StoryDetailMain = ({ detaylar }) => {
     setCopied(true);
   };
 
+  //!okuma süresini hesaplamak için:
+  const text = detaylar?.content;
+  const wpm = 190; // ortalama dakikada okunan kelime sayısı
+  const words = text?.trim().split(" ").length;
+  const time = Math.ceil(words / wpm);
+  //!
+
   useEffect(() => {}, [detaylar?.comments]);
+
+  const handleArticleDelete = () => {
+    storyDeleteFunc(tokenKey, storyId);
+    toast.success("Story successfully deleted!", {
+      style: {
+        background: "#333",
+        color: "#fff",
+      },
+    });
+    navigate("/me/stories");
+  };
+  const handleArticleUpdate = () => {
+    navigate(`/story/update/${storyId}`, { state: detaylar });
+  };
 
   return (
     <Main>
@@ -65,10 +100,7 @@ const StoryDetailMain = ({ detaylar }) => {
               <div className="me-3">
                 {detaylar ? detaylar.publish_date.split("T")[0] : " "}{" "}
               </div>
-              <div>3 min read</div>
-              {/* <button>
-                dinleme çubuğu
-              </button> */}
+              <div>{time} min read</div>
             </div>
           </div>
         </nav>
@@ -91,18 +123,38 @@ const StoryDetailMain = ({ detaylar }) => {
       </Header>
       <article className="my-5">
         {detaylar ? (
-          <div dangerouslySetInnerHTML={{ __html: detaylar.content }} />
+          <div className="d-flex flex-column justify-content-center align-items-center">
+            <h3 style={{ textTransform: "capitalize", marginBottom: "1.5rem" }}>
+              {detaylar.title}
+            </h3>
+            <img
+              src={detaylar.image}
+              alt=""
+              style={{ width: "75%", height: "75%" }}
+              className="mb-4"
+            />
+            <div dangerouslySetInnerHTML={{ __html: detaylar.content }} />
+          </div>
         ) : (
           ""
         )}
 
-        {/* { detaylar ? detaylar.content : "" } */}
-        {/* {htmlContet ? htmlContet.map(item =>  ( 
-          <>
-            {item.outerHTML}
-          </>  )) 
-          :
-          ""}  */}
+        {storyCreaterId === userId && (
+          <div className="buttons mt-5 mb-5 d-flex  justify-content-around">
+            <button
+              className="btn btn-outline-danger"
+              onClick={handleArticleDelete}
+            >
+              Delete
+            </button>
+            <button
+              className="btn btn-outline-info"
+              onClick={handleArticleUpdate}
+            >
+              Update
+            </button>
+          </div>
+        )}
 
         <ClapsRespond>
           <div className="icon">

@@ -25,6 +25,10 @@ export const SideBarContainerStyle = styled.main`
       border-radius: 50%;
     }
   }
+  @media (max-width: 768px) {
+    position: static;
+    margin-top: 3rem;
+  }
 `;
 
 export const UnlimitedButtonStyle = styled.button`

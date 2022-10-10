@@ -48,7 +48,7 @@ function Write() {
       >
         <Container>
           <Nav className="justify-content-start align-items-center ">
-            <Navbar.Brand as={NavLink} to="home">
+            <Navbar.Brand as={NavLink} to="/home">
               <img src={Images.logo} style={{ width: "10rem" }} alt="logo" />
             </Navbar.Brand>
             <small> Draft in FirstName LastName </small>

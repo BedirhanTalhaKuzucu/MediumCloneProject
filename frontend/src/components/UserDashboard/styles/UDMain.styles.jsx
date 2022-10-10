@@ -18,6 +18,9 @@ export const MainHeader = styled.header`
   flex-direction: column;
   justify-content: center;
   /* margin: 0 5rem; */
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const TopicsStyle = styled.nav`
