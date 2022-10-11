@@ -40,27 +40,8 @@ const SavedArticleCards = ({ data }) => {
     let userInfo = sessionStorage.getItem("user_info");
     userInfo = JSON.parse(userInfo);
     setauthUser(userInfo);
-    controlSavedArticleFunction(userInfo);
   }, []);
 
-
-
-  const controlSavedArticleFunction = (userInfo) => {
-
-    // let savedList = [];
-    // data.saved_users.map((item) => {
-    //   savedList.push( Number(item.userId) );
-    // });
-
-    // const userId = userInfo.userInfo.userId;
-
-    // // clapList.includes(userId)
-    // if (savedList.includes(userId)) {
-    //   setaddSave(true);
-    // } else {
-    //   setaddSave(false);
-    // }
-  };
 
 
 
