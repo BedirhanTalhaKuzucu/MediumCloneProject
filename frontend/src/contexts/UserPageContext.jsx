@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useMemo } from "react";
+import React, { useContext, useState, useMemo } from "react";
 
 
 const UserPageContext = React.createContext();
@@ -19,6 +19,10 @@ export function UserPageStateProvider({ children }) {
 
     const [userDetail, setUserDetail] = useState();
     const [userArticle, setUserArticle] = useState();
+    const [savedArticle, setSavedArticle] = useState([]);
+    const [offsetSavedArticle, setoffsetSavedArticle] = useState(5);
+
+
 
     const value = useMemo(
         () => ({
@@ -32,9 +36,13 @@ export function UserPageStateProvider({ children }) {
             userDetail, 
             setUserDetail,
             userArticle, 
-            setUserArticle
+            setUserArticle,
+            savedArticle, 
+            setSavedArticle,
+            offsetSavedArticle, 
+            setoffsetSavedArticle
         }),
-        [followingStories, topics, offsetforFollowing, userDetail, userArticle, ]
+        [followingStories, topics, offsetforFollowing, userDetail, userArticle, savedArticle, offsetSavedArticle]
     );
 
     return (

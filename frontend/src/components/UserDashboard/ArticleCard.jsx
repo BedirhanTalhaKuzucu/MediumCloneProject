@@ -11,7 +11,6 @@ import { Helmet } from "react-helmet";
 
 
 const ArticleCard = ({ data }) => {
-
   const navigate = useNavigate();
 
   //!okuma süresini hesaplamak için:

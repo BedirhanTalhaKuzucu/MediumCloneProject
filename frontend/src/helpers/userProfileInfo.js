@@ -128,7 +128,6 @@ export const userDetails = (
 };
 
 export const writerDetails = (setAuthorDetail, setStoriesDetail, userId) => {
-
   let myHeaders = new Headers();
 
   let requestOptions = {
@@ -145,30 +144,51 @@ export const writerDetails = (setAuthorDetail, setStoriesDetail, userId) => {
         last_name: result.user.last_name,
         user_img: result.profile_photo,
         short_bio: result.short_bio,
-        followedCount: result.user.follower_user?.length,        
+        followedCount: result.user.follower_user?.length,
         userProfilId: result.user.id,
-        userId : userId
+        userId: userId,
       };
       setAuthorDetail(authorInfo);
-      setStoriesDetail(result.user.user_stories)
+      setStoriesDetail(result.user.user_stories);
     })
     .catch((error) => console.log("error", error));
 };
 
-export const userDetailsForStories = (userId, setUserDetailForStories) => {
-  let myHeaders = new Headers();
+export const savedStories = (
+  token,
+  setSavedArticle,
+  savedArticle,
+  offsetSavedArticle = 0,
+  setoffsetSavedArticle,
+  sethasMore
+) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Token ${token}`);
 
-  let requestOptions = {
+  var requestOptions = {
     method: "GET",
     headers: myHeaders,
     redirect: "follow",
   };
 
-  fetch(`http://127.0.0.1:8000/auth/users/${userId}`, requestOptions)
+  fetch(`http://127.0.0.1:8000/blog/save/?limit=5&offset=${offsetSavedArticle}`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      setUserDetailForStories(result);
-      // console.log(result);
+      console.log(savedArticle)
+      if (savedArticle === undefined) {
+        setSavedArticle(result.results);
+
+        // console.log(result.results);
+      } else {
+        setSavedArticle([...savedArticle, ...result.results]);
+        console.log(savedArticle);
+
+        if (result.results.length === 0) {
+          sethasMore(false);
+        } else {
+          setoffsetSavedArticle(offsetSavedArticle + 5);
+        }
+      }
     })
     .catch((error) => console.log("error", error));
 };

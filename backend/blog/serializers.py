@@ -50,16 +50,37 @@ class StoryViewSerializer(serializers.ModelSerializer):
 class StorySaveSerializer(serializers.ModelSerializer):
     userId = serializers.CharField(source='user.id', read_only=True)
     title = serializers.CharField(source='story.title', read_only=True)
+    storyImage = serializers.ImageField(source='story.image', read_only=True)
     content = serializers.CharField(source='story.content', read_only=True)
-    publish_date = serializers.CharField(source='story.publish_date', read_only=True)
-    # tag_name = serializers.CharField(source='story.tag_name[0]')
-    # clap_count = serializers.CharField(source='story.clap_count')
-    # comment_count = serializers.CharField(source='story.comment_count')
-    # views_count = serializers.CharField(source='story.views_count')
-
+    creatorInfo = serializers.SerializerMethodField('get_creatorInfo')
     class Meta:
         model = SavedStories
-        fields = ('userId', 'story', 'id', 'title', 'content', 'publish_date' )
+        fields = ('userId', 'story', 'id', 'title', 'content', 'creatorInfo', 'storyImage' )
+
+    def get_creatorInfo(self, obj):
+
+        user_img = UserProfile.objects.filter(user=obj.story.user).first()
+        userProfilId = user_img.id
+        
+        short_bio = user_img.short_bio
+
+        request = self.context.get('request')
+        user_img = user_img.profile_photo.url
+        user_img = request.build_absolute_uri(user_img)
+
+        followedCount = Following.objects.filter(followed=obj.user).count()
+
+        context = {
+            "first_name": obj.story.user.first_name,
+            "last_name": obj.story.user.last_name,
+            "email": obj.story.user.email,
+            "user_img": user_img,
+            "short_bio": short_bio,
+            "followedCount": followedCount,
+            "userProfilId": userProfilId,
+            # "userProfilId": obj.user.id,
+        }
+        return context
 
     def create(self, validated_data):
         user = self.context.get("request").user
