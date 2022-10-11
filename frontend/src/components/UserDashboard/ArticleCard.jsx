@@ -8,11 +8,10 @@ import { addSavedFunction } from "../../helpers/saveAndDeleteButtons";
 import { addClapFunction } from "../../helpers/clapsAndCommnets";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
-
+import { UserPageState } from "../../contexts/UserPageContext";
 
 const ArticleCard = ({ data }) => {
   const navigate = useNavigate();
-
   //!okuma süresini hesaplamak için:
   const text = data.content;
   const wpm = 190; // ortalama dakikada okunan kelime sayısı
@@ -20,6 +19,7 @@ const ArticleCard = ({ data }) => {
   const time = Math.ceil(words / wpm);
   //!
 
+  const { setSavedArticle } = UserPageState();
   const [addSave, setaddSave] = useState(false);
   const [addClap, setAddClap] = useState(false);
   const [authUser, setauthUser] = useState("");
@@ -46,6 +46,7 @@ const ArticleCard = ({ data }) => {
       addSavedFunction(data.id, tokenKey, addSave);
       setaddSave(true);
     }
+    setSavedArticle([])
   };
 
   useEffect(() => {

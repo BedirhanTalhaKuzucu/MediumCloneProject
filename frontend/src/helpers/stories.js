@@ -129,10 +129,8 @@ export const followedUserStories = (
     .then((response) => response.json())
     .then((result) => {
       if (setoffset === "a") {
-        setfollowingStory(
-          result.results.filter((item) => item.status === "Published")
-        );
-        // console.log(result.results);
+        setfollowingStory(result.results.filter((item) => item.status === "Published") );
+        if (result.results.length === 0) { sethasMore(false);}
       } else {
         setfollowingStory([
           ...followingStories,

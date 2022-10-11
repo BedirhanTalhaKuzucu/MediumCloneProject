@@ -17,20 +17,24 @@ const SavedStories = () => {
 
   useEffect(() => {
     const token = userInfo?.key;
-    if (token) {
-      savedStories(token, setSavedArticle );
+    if (savedArticle?.length === 0) {
+      if (token) {
+        setoffsetSavedArticle(5)
+        savedStories(token, setSavedArticle, undefined, undefined, undefined, sethasMore);
+      }
     }
   }, [userInfo]);
 
   console.log(savedArticle)
 
-  const navigate = useNavigate();
+ 
+
+
 
   const nextList = () => {
     const token = userInfo?.key;
-
     if (token) {
-      savedStories(token, setSavedArticle, savedArticle, offsetSavedArticle, setoffsetSavedArticle,  sethasMore)
+      savedStories(token, setSavedArticle, savedArticle, offsetSavedArticle, setoffsetSavedArticle, sethasMore)
     }
   }
 
@@ -54,7 +58,7 @@ const SavedStories = () => {
     >
       {savedArticle ?
         savedArticle?.map((item, index) => {
-          return <SavedArticleCards key={index} data={item} />;
+          return <SavedArticleCards key={index} data={item}  />;
         })
         :
         ""

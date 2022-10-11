@@ -174,20 +174,21 @@ export const savedStories = (
   fetch(`http://127.0.0.1:8000/blog/save/?limit=5&offset=${offsetSavedArticle}`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log(savedArticle)
+
       if (savedArticle === undefined) {
-        setSavedArticle(result.results);
+          setSavedArticle(result.results);
+          if (result.results.length === 0) {
+            sethasMore(false);
+          } 
 
-        // console.log(result.results);
       } else {
-        setSavedArticle([...savedArticle, ...result.results]);
-        console.log(savedArticle);
+          setSavedArticle([...savedArticle, ...result.results]);
 
-        if (result.results.length === 0) {
-          sethasMore(false);
-        } else {
-          setoffsetSavedArticle(offsetSavedArticle + 5);
-        }
+          if (result.results.length === 0) {
+            sethasMore(false);
+          } else {
+            setoffsetSavedArticle(offsetSavedArticle + 5);
+          }
       }
     })
     .catch((error) => console.log("error", error));

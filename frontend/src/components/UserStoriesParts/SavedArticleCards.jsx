@@ -8,11 +8,12 @@ import { addSavedFunction } from "../../helpers/saveAndDeleteButtons";
 import { addClapFunction } from "../../helpers/clapsAndCommnets";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
-
+import { UserPageState } from "../../contexts/UserPageContext";
 
 const SavedArticleCards = ({ data }) => {
   // console.log(data)
   const navigate = useNavigate();
+  const { savedArticle, setSavedArticle } = UserPageState();
 
   //!okuma süresini hesaplamak için:
   const text = data.content;
@@ -21,21 +22,18 @@ const SavedArticleCards = ({ data }) => {
   const time = Math.ceil(words / wpm);
   //!
 
-  const [addSave, setaddSave] = useState(false);
+  const [addSave, setaddSave] = useState(true);
   const [authUser, setauthUser] = useState("");
 
- 
+  const deleteSavedArticle = (cardId) => {
+    setSavedArticle(savedArticle.filter(item => item.story !== cardId))
+  }
 
   const addSaveHandle = () => {
     const tokenKey = authUser.key;
+    addSavedFunction(data.story, tokenKey, addSave);
+    deleteSavedArticle(data.story)
 
-    if (addSave) {
-      addSavedFunction(data.id, tokenKey, addSave);
-      setaddSave(false);
-    } else {
-      addSavedFunction(data.id, tokenKey, addSave);
-      setaddSave(true);
-    }
   };
 
   useEffect(() => {
@@ -64,7 +62,7 @@ const SavedArticleCards = ({ data }) => {
     // }
   };
 
- 
+
 
   return (
     <CardContainer>
