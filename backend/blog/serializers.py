@@ -48,11 +48,10 @@ class StoryViewSerializer(serializers.ModelSerializer):
 
 
 class StorySaveSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='story.user.username')
-    title = serializers.CharField(source='story.title')
-    content = serializers.CharField(source='story.content')
-    publish_date = serializers.CharField(source='story.publish_date')
-    status = serializers.CharField(source='story.status')
+    userId = serializers.CharField(source='user.id', read_only=True)
+    title = serializers.CharField(source='story.title', read_only=True)
+    content = serializers.CharField(source='story.content', read_only=True)
+    publish_date = serializers.CharField(source='story.publish_date', read_only=True)
     # tag_name = serializers.CharField(source='story.tag_name[0]')
     # clap_count = serializers.CharField(source='story.clap_count')
     # comment_count = serializers.CharField(source='story.comment_count')
@@ -60,14 +59,14 @@ class StorySaveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SavedStories
-        fields = ('user', 'story', 'id', 'title', 'content', 'publish_date',
-                  'status')
+        fields = ('userId', 'story', 'id', 'title', 'content', 'publish_date' )
 
-    # def create(self, validated_data):
-    #     user = self.context.get("request").user
-    #     validated_data['user'] = user
-    #     saved = SavedStories.objects.create(**validated_data)
-    #     return saved
+    def create(self, validated_data):
+        user = self.context.get("request").user
+        validated_data['user'] = user
+        print(validated_data)
+        saved = SavedStories.objects.create(**validated_data)
+        return saved
 
 
 class StorySerializer(serializers.ModelSerializer):

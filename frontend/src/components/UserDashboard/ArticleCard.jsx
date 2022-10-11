@@ -74,11 +74,11 @@ const ArticleCard = ({ data }) => {
   };
 
   const controlSavedArticleFunction = (userInfo) => {
+
     let savedList = [];
     data.saved_users.map((item) => {
-      savedList.push(item.userId);
+      savedList.push( Number(item.userId) );
     });
-    // console.log(savedList)
 
     const userId = userInfo.userInfo.userId;
 
