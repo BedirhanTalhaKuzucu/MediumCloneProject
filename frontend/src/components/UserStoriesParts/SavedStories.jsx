@@ -1,17 +1,14 @@
 import React, { useEffect, useState, memo } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuthStates } from "../../contexts/AuthContext";
 import { UserPageState } from "../../contexts/UserPageContext";
 import { savedStories } from "../../helpers/userProfileInfo";
-import { SavedStyles } from "./styles/SavedStories.styles";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Images from "../../assets/Images";
-import ArticleCard from "../UserDashboard/ArticleCard";
 import SavedArticleCards from "./SavedArticleCards";
 const SavedStories = () => {
 
   const { userInfo } = useAuthStates();
-  const { savedArticle, setSavedArticle, offsetSavedArticle, setoffsetSavedArticle } = UserPageState();
+  const { savedArticle, setSavedArticle} = UserPageState();
   const [hasMore, sethasMore] = useState(true);
 
 
@@ -19,23 +16,16 @@ const SavedStories = () => {
     const token = userInfo?.key;
     if (savedArticle?.length === 0) {
       if (token) {
-        setoffsetSavedArticle(5)
-        savedStories(token, setSavedArticle, undefined, undefined, undefined, sethasMore);
+        savedStories(token, setSavedArticle,);
       }
     }
   }, [userInfo]);
 
-  console.log(savedArticle)
-
- 
 
 
 
   const nextList = () => {
-    const token = userInfo?.key;
-    if (token) {
-      savedStories(token, setSavedArticle, savedArticle, offsetSavedArticle, setoffsetSavedArticle, sethasMore)
-    }
+    sethasMore(false)
   }
 
   return (

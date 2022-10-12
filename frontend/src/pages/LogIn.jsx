@@ -3,6 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useAppState } from "../contexts/AppContext";
+import { UserPageState } from "../contexts/UserPageContext";
 import { useAuthStates } from "../contexts/AuthContext";
 import { useFormik } from "formik";
 import { validationSchemaLogIn } from "../helpers/formValidations";
@@ -14,6 +15,8 @@ function LogIn() {
   const [errorMesage, setErrorMesage] = useState(false);
   const navigate = useNavigate();
   const { setsettingPageInfo } = useAppState();
+  const {setSavedArticle } = UserPageState();
+
 
   const {
     logInShow,
@@ -40,7 +43,8 @@ function LogIn() {
         setFollowingStories,
         getToken,
         setsettingPageInfo,
-        setActivate
+        setActivate,
+        setSavedArticle
       );
     },
   });

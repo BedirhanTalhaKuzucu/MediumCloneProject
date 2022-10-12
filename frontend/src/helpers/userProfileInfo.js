@@ -157,10 +157,8 @@ export const writerDetails = (setAuthorDetail, setStoriesDetail, userId) => {
 export const savedStories = (
   token,
   setSavedArticle,
-  savedArticle,
   offsetSavedArticle = 0,
-  setoffsetSavedArticle,
-  sethasMore
+  
 ) => {
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Token ${token}`);
@@ -174,22 +172,23 @@ export const savedStories = (
   fetch(`http://127.0.0.1:8000/blog/save/?limit=5&offset=${offsetSavedArticle}`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
+      console.log(result);
+      setSavedArticle(result)
+      // if (savedArticle === undefined) {
+      //     setSavedArticle(result.results);
+      //     if (result.results.length === 0) {
+      //       sethasMore(false);
+      //     } 
 
-      if (savedArticle === undefined) {
-          setSavedArticle(result.results);
-          if (result.results.length === 0) {
-            sethasMore(false);
-          } 
+      // } else {
+      //     setSavedArticle([...savedArticle, ...result.results]);
 
-      } else {
-          setSavedArticle([...savedArticle, ...result.results]);
-
-          if (result.results.length === 0) {
-            sethasMore(false);
-          } else {
-            setoffsetSavedArticle(offsetSavedArticle + 5);
-          }
-      }
+      //     if (result.results.length === 0) {
+      //       sethasMore(false);
+      //     } else {
+      //       setoffsetSavedArticle(offsetSavedArticle + 5);
+      //     }
+      // }
     })
     .catch((error) => console.log("error", error));
 };

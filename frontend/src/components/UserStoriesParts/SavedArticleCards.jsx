@@ -2,11 +2,8 @@ import React, { useState, useEffect } from "react";
 import { CardContainer } from "../UserDashboard/styles/Following.styles";
 import Images from "../../assets/Images";
 import { Link, useNavigate } from "react-router-dom";
-import { IoIosHeartDislike } from "react-icons/io";
 import { BsBookmarkFill } from "react-icons/bs";
 import { addSavedFunction } from "../../helpers/saveAndDeleteButtons";
-import { addClapFunction } from "../../helpers/clapsAndCommnets";
-import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import { UserPageState } from "../../contexts/UserPageContext";
 

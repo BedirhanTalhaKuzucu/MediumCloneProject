@@ -108,6 +108,8 @@ class StorySaveListView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     http_method_names = ['get', 'post', 'delete', ]
     lookup_field = 'storyId'
+    pagination_class = None
+
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(
