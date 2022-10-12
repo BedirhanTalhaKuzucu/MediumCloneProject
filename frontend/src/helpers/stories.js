@@ -132,11 +132,20 @@ export const followedUserStories = (
         setfollowingStory(result.results.filter((item) => item.status === "Published") );
         if (result.results.length === 0) { sethasMore(false);}
       } else {
+          if (result.results.filter((item) => item.status === "Published").length === 0 && result.results.length !== 0 ) {
+            setoffset(offset + 5);
+            offset = offset +5
+            followedUserStories(setfollowingStory, token, offset, followingStories , setoffset , sethasMore )
+            return
+          }
+          
         setfollowingStory([
           ...followingStories,
           ...result.results.filter((item) => item.status === "Published"),
         ]);
-        console.log(followingStories);
+        console.log(followingStories, offset);
+        console.log(result.results.filter((item) => item.status === "Published"));
+        
 
         if (result.results.length === 0) {
           sethasMore(false);
