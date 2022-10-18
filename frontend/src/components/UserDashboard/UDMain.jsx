@@ -37,6 +37,7 @@ const UDMain = () => {
     userDetails(setUserDetail, userId, setUserArticle);
   }, []);
 
+
   return (
     <MainContainer id="pageTop">
       <MainHeader>

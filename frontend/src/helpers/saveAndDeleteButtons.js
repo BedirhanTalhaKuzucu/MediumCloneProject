@@ -3,15 +3,14 @@ export const addSavedFunction = (storyId, tokenKey, addSave) => {
   myHeaders.append("Authorization", `Token ${tokenKey}`);
   myHeaders.append("Content-Type", "application/json");
 
-  let raw = JSON.stringify({ story: storyId });
+  
 
   if (addSave) {
     console.log("delete");
-
+    console.log(storyId);
     var requestOptions = {
       method: "DELETE",
       headers: myHeaders,
-      // body: raw,
       redirect: "follow",
     };
 
@@ -20,7 +19,10 @@ export const addSavedFunction = (storyId, tokenKey, addSave) => {
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
   } else {
-    // console.log("add");
+
+    let raw = JSON.stringify({ 
+      "story": storyId
+    });
 
     let requestOptions = {
       method: "POST",
@@ -31,9 +33,9 @@ export const addSavedFunction = (storyId, tokenKey, addSave) => {
 
     fetch("http://127.0.0.1:8000/blog/save/", requestOptions)
       .then((response) => {
-        response.text();
+        console.log(response);
       })
-      .then((result) => console.log(result))
+      // .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
   }
 };
@@ -67,7 +69,6 @@ export const controlFollowFunction = (
 
 
       if (setfollowedList !== undefined) {
-        console.log(followedList)
         setfollowedList(followedList)
       } else {
         

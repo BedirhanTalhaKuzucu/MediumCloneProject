@@ -1,48 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState, memo } from "react";
 import { useAuthStates } from "../../contexts/AuthContext";
-import { userDetailsForStories } from "../../helpers/userProfileInfo";
-import { SavedStyles } from "./styles/SavedStories.styles";
-
+import { UserPageState } from "../../contexts/UserPageContext";
+import { savedStories } from "../../helpers/userProfileInfo";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Images from "../../assets/Images";
+import SavedArticleCards from "./SavedArticleCards";
 const SavedStories = () => {
+
   const { userInfo } = useAuthStates();
-  const [userDetailForStories, setUserDetailForStories] = useState();
+  const { savedArticle, setSavedArticle} = UserPageState();
+  const [hasMore, sethasMore] = useState(true);
+
 
   useEffect(() => {
-    const userId = userInfo?.userInfo?.profileInfoId;
-    userDetailsForStories(userId, setUserDetailForStories);
-    // console.log(userDetailForStories);
-  }, []);
-  const data = userDetailForStories?.user?.saved_stories;
-  // console.log(data);
-  data?.map((item) => console.log(item));
+    const token = userInfo?.key;
+    if (savedArticle?.length === 0) {
+      if (token) {
+        savedStories(token, setSavedArticle,);
+      }
+    }
+  }, [userInfo]);
 
-  const navigate = useNavigate();
+
+
+
+  const nextList = () => {
+    sethasMore(false)
+  }
 
   return (
-    <SavedStyles>
-      {data
-        ? data?.map((item) => {
-            return (
-              <div key={item.id}>
-                <div>{item.user}</div> <br />
-                <div
-                  onClick={() =>
-                    navigate(`/story/${item.id}`, {
-                      state: { data: data },
-                    })
-                  }
-                >
-                  {item?.title}
-                </div>
-                <div>{item.content}</div>
-                <hr />
-              </div>
-            );
-          })
-        : "data yok"}
-    </SavedStyles>
+    <InfiniteScroll
+      dataLength={savedArticle?.length} //This is important field to render the next data
+      next={() => { nextList() }}
+      hasMore={hasMore}
+      loader={
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img src={Images.loading} alt="loading gif" />
+        </div>
+      }
+      endMessage={<b>There are no more articles to show here..</b>}
+    >
+      {savedArticle ?
+        savedArticle?.map((item, index) => {
+          return <SavedArticleCards key={index} data={item}  />;
+        })
+        :
+        ""
+      }
+    </InfiniteScroll>
   );
 };
 
-export default SavedStories;
+export default memo(SavedStories);

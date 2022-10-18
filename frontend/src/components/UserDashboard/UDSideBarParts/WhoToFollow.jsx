@@ -6,28 +6,25 @@ import { useState, useEffect } from "react";
 import { add_deleteFollowHandle, controlFollowFunction } from "../../../helpers/saveAndDeleteButtons";
 import { UserPageState } from "../../../contexts/UserPageContext";
 import { followedUserStories } from "../../../helpers/stories";
-// import { controlFollowFunction } from "../../../helpers/saveAndDeleteButtons";
+import {  useNavigate } from "react-router-dom";
 
 
 const WhoToFollow = () => {
 
+  const navigate = useNavigate();
   const { users } = useAppState();
- 
+
   const [followedList, setfollowedList] = useState()
   const { followingStories, setFollowingStories, setoffsetforFollowing } = UserPageState();
 
   useEffect(() => {
-
     if (users.length > 0) {
       let tokenKey = get_token();
-      console.log(users);
-      
       controlFollowFunction(undefined, undefined, tokenKey, setfollowedList);
     }
-    
+
 
   }, [users])
-
 
 
 
@@ -45,21 +42,16 @@ const WhoToFollow = () => {
     let userId = data.user.id;
 
     if (followedList?.includes(data.user.id)) {
-      console.log(followedList?.includes(data.user.id) )
+      console.log(followedList?.includes(data.user.id))
       //for DELETE
-      add_deleteFollowHandle( true , tokenKey, userId);
-
-      setfollowedList(followedList.filter(item => item !== data.user.id ))
-      // updateDetails();
-      console.log(data.id );
-      setFollowingStories( followingStories.filter((item) => item.creatorInfo.userId !== data.id ) )
+      add_deleteFollowHandle(true, tokenKey, userId);
+      setfollowedList(followedList.filter(item => item !== data.user.id))
+      console.log(data.id);
+      setFollowingStories(followingStories.filter((item) => item.creatorInfo.userId !== data.id))
     } else {
       //for ADD
-      add_deleteFollowHandle(false, tokenKey, userId, followedUserStories, setFollowingStories );
-
+      add_deleteFollowHandle(false, tokenKey, userId, followedUserStories, setFollowingStories);
       setfollowedList([...followedList, data.user.id])
-
-      // updateDetails();
       setoffsetforFollowing(5)
     }
   }
@@ -75,7 +67,7 @@ const WhoToFollow = () => {
             <div className="user" key={data.id}>
               <img src={data.profile_photo} alt="" />
               <div className="name-shortBio">
-                <div className="name">
+                <div className="name" onClick={() => navigate(`/writer/stories/${data.id}`)}  >
                   {data.user.first_name + " " + data.user.last_name}
                 </div>
                 <div className="shortBio">
@@ -83,7 +75,8 @@ const WhoToFollow = () => {
                     "A coffee obsessed, Netflix binge watching cat mama..."}
                 </div>
               </div>
-              <button className="btn btn-outline-success follow" onClick={() => addFollowHandle(data, index)} >
+              <button className={followedList?.includes(data.user.id) ? "btn btn-success" : "btn btn-outline-success follow"}
+                onClick={() => addFollowHandle(data, index)} >
                 {
                   followedList?.includes(data.user.id) ? "following" : "follow"
                 }

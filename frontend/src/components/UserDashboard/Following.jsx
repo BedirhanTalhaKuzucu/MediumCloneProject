@@ -19,10 +19,8 @@ const Following = () => {
 
 
   useEffect(() => {
-
     const token = getToken()
     setTOKEN(token)
-
     if (followingStories?.length === 0) {
       setoffsetforFollowing(5)
       if (token) {

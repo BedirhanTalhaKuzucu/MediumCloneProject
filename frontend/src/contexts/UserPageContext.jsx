@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect, useMemo } from "react";
-
+import React, { useContext, useState, useMemo, useEffect } from "react";
+import { savedStories } from "../helpers/userProfileInfo";
 
 const UserPageContext = React.createContext();
 
@@ -19,6 +19,20 @@ export function UserPageStateProvider({ children }) {
 
     const [userDetail, setUserDetail] = useState();
     const [userArticle, setUserArticle] = useState();
+    const [savedArticle, setSavedArticle] = useState([]);
+
+    useEffect(() => {
+        if (savedArticle.length === 0) {
+            const get_session_user_info = JSON.parse( sessionStorage.getItem("user_info"));
+            if (get_session_user_info) {
+                const token = get_session_user_info?.key;
+                savedStories(token, setSavedArticle);
+            } }
+        
+    }, [])
+    
+
+
 
     const value = useMemo(
         () => ({
@@ -32,9 +46,12 @@ export function UserPageStateProvider({ children }) {
             userDetail, 
             setUserDetail,
             userArticle, 
-            setUserArticle
+            setUserArticle,
+            savedArticle, 
+            setSavedArticle,
+            
         }),
-        [followingStories, topics, offsetforFollowing, userDetail, userArticle, ]
+        [followingStories, topics, offsetforFollowing, userDetail, userArticle, savedArticle]
     );
 
     return (

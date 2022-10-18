@@ -24,6 +24,7 @@ export const UserFollowStyle = styled.div`
       font-weight: bold;
       margin: 0 1rem;
       margin-bottom: 5px;
+      cursor: pointer;
     }
     .shortBio {
       font-size: 13px;

@@ -1,5 +1,5 @@
 import { followedUserStories } from "./stories";
-import { settingUserInfo } from "./userProfileInfo";
+import { settingUserInfo, savedStories } from "./userProfileInfo";
 
 export const signUpFunction = (values, resetForm, setErrorMesage, navigate, setsettingPageInfo ) => {
   let myHeaders = new Headers();
@@ -53,7 +53,8 @@ export const logInFunction = (
   setFollowingStories,
   getToken,
   setsettingPageInfo,
-  setActivate
+  setActivate,
+  setSavedArticle
 ) => {
   let myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -86,6 +87,7 @@ export const logInFunction = (
           const userId = user_info.userInfo.userId;
           followedUserStories(setFollowingStories, token);
           settingUserInfo(setsettingPageInfo, token, userId);
+          savedStories( token, setSavedArticle )
           setActivate(true);
           resetForm({ values: "" });
           navigate("home");

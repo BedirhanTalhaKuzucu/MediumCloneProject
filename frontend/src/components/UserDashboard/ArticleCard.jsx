@@ -8,12 +8,10 @@ import { addSavedFunction } from "../../helpers/saveAndDeleteButtons";
 import { addClapFunction } from "../../helpers/clapsAndCommnets";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
-
+import { UserPageState } from "../../contexts/UserPageContext";
 
 const ArticleCard = ({ data }) => {
-
   const navigate = useNavigate();
-
   //!okuma süresini hesaplamak için:
   const text = data.content;
   const wpm = 190; // ortalama dakikada okunan kelime sayısı
@@ -21,6 +19,7 @@ const ArticleCard = ({ data }) => {
   const time = Math.ceil(words / wpm);
   //!
 
+  const { setSavedArticle, savedArticle } = UserPageState();
   const [addSave, setaddSave] = useState(false);
   const [addClap, setAddClap] = useState(false);
   const [authUser, setauthUser] = useState("");
@@ -43,10 +42,29 @@ const ArticleCard = ({ data }) => {
     if (addSave) {
       addSavedFunction(data.id, tokenKey, addSave);
       setaddSave(false);
+      setSavedArticle(savedArticle.filter(item => item.story !== data.id))
     } else {
       addSavedFunction(data.id, tokenKey, addSave);
       setaddSave(true);
+      console.log(data.creatorInfo.first_name);
+      let newSaved = {
+        story : data.id,
+        content: data.content,
+        storyImage : data.image,
+        title : data.title,
+        creatorInfo : {
+          email: data.creatorInfo.email,
+          first_name: data.creatorInfo.first_name,
+          followedCount:  data.creatorInfo.followedCount,
+          last_name: data.creatorInfo.last_name,
+          short_bio: data.creatorInfo.short_bio,
+          userProfilId: data.creatorInfo.userId,
+          user_img: data.creatorInfo.user_img
+        }
+      }
+      setSavedArticle([...savedArticle, newSaved ])
     }
+    // setSavedArticle([])
   };
 
   useEffect(() => {
@@ -74,20 +92,18 @@ const ArticleCard = ({ data }) => {
   };
 
   const controlSavedArticleFunction = (userInfo) => {
+    
     let savedList = [];
-    data.saved_users.map((item) => {
-      savedList.push(item.userId);
+    savedArticle.map((item) => {
+      savedList.push( item.story );
     });
-    // console.log(savedList)
-
-    const userId = userInfo.userInfo.userId;
-
-    // clapList.includes(userId)
-    if (savedList.includes(userId)) {
+    
+    if (savedList.includes(data.id)) {
       setaddSave(true);
     } else {
       setaddSave(false);
     }
+
   };
 
   const tagDetailFunc = () => {
