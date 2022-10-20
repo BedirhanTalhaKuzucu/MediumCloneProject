@@ -149,7 +149,8 @@ export const writerDetails = (setAuthorDetail, setStoriesDetail, userId) => {
         userId: userId,
       };
       setAuthorDetail(authorInfo);
-      setStoriesDetail(result.user.user_stories);
+      console.log(result.user); 
+      setStoriesDetail(result.user.user_stories?.filter((item) => item.status === "Published"));
     })
     .catch((error) => console.log("error", error));
 };

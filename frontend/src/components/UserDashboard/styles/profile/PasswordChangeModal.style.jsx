@@ -14,3 +14,5 @@ export const ModalStyle = styled.div`
     opacity: 0;
   }
 `;
+
+
