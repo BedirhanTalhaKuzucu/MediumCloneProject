@@ -70,6 +70,7 @@ function AppRouter() {
         {/* <Route path="writer/stories/:id" element={<PrivateRouter />}> */}
         <Route path="writer/stories/:id" element={<WriterPage />} />
         {/* </Route> */}
+
         <Route path="tag/:id" element={<PrivateRouter />}>
           <Route path="" element={<TagDetail />} />
         </Route>
@@ -82,6 +83,5 @@ function AppRouter() {
   );
 }
 
-// export default AppRouter;
 
 export default memo(AppRouter);

@@ -2,8 +2,8 @@ from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .pagination import SearchBarLimitPagination
-from .serializers import CommentsSerializer, StorySerializer, SearchBarStorySerializer, SearchBarTagSerializer, SearchBarUserSerializer, StorySaveSerializer, AddStoryClapSerializer, TagsSerializer
-from .models import Comment, Story, Tag, SavedStories, StoryClap
+from .serializers import AddDeleteTagFollowSerializer, CommentsSerializer, StorySerializer, SearchBarStorySerializer, SearchBarTagSerializer, SearchBarUserSerializer, StorySaveSerializer, AddStoryClapSerializer, StoryTagSerializer, TagFollowerSerializer, TagsSerializer
+from .models import Comment, Story, StoryTag, Tag, SavedStories, StoryClap, TagFollower
 from rest_framework.generics import get_object_or_404
 from rest_framework.exceptions import ValidationError
 from rest_framework import permissions
@@ -162,18 +162,11 @@ class TagListView(viewsets.ReadOnlyModelViewSet):
         return super().paginate_queryset(queryset)
 
 
-# class SaveStoryListView(generics.ListAPIView):
-#     queryset = Story.objects.all()
-#     serializer_class = StorySerializer
+class FollowStorysTagView(generics.CreateAPIView):
+    queryset = TagFollower.objects.all()
+    serializer_class = AddDeleteTagFollowSerializer
+    permission_classes = (IsAuthenticated,)
 
-#     def list(self, request, *args, **kwargs):
-#         queryset = self.filter_queryset(Story.objects.filter(user=))
 
-#         page = self.paginate_queryset(queryset)
-#         if page is not None:
-#             serializer = self.get_serializer(page, many=True)
-#             return self.get_paginated_response(serializer.data)
 
-#         serializer = self.get_serializer(queryset, many=True)
-#         return Response(serializer.data)
-    # permission_classes = (IsAuthorOrReadOnly,)
+

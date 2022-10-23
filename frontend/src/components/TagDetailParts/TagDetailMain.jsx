@@ -1,13 +1,23 @@
-import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Images from "../../assets/Images";
 import ArticleCard from "../UserDashboard/ArticleCard";
 import { MainStyle } from "./styles/TagDetailMain.styles";
+import { followTag } from "../../helpers/tags";
+import { useAuthStates } from "../../contexts/AuthContext";
+import { useEffect, useState } from "react";
 
-const TagDetailMain = ({tagDetails}) => {
+
+const TagDetailMain = ({tagDetails, tagId}) => {
   console.log(tagDetails)
   let data = tagDetails;
   const navigate = useNavigate();
+  const [token, settoken] = useState()
+  const { getToken } = useAuthStates();
+
+  useEffect(() => {
+    const gToken = getToken()
+    settoken(gToken)
+  }, [])
   
   return (
     <MainStyle>
@@ -17,7 +27,7 @@ const TagDetailMain = ({tagDetails}) => {
           <h1>{data.tag_name}</h1>
         </div>
         <div>
-          <button className="btn btn-outline-success">following</button>
+          <button className="btn btn-outline-success" onClick={ () => followTag(token, tagId ) } > following</button>
           <button
             className="btn btn-outline-success"
             onClick={() => navigate("/write")}

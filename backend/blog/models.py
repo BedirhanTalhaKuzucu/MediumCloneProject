@@ -40,12 +40,6 @@ class Story(models.Model):
     class Meta:
         verbose_name_plural = "Stories"
 
-    # def comment_count(self):
-    #     return self.comment_set.all().count()
-
-    # def comments(self):
-    #     return self.comment_set.all()
-
 
 class TagFollower(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
