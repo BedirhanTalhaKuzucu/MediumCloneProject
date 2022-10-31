@@ -167,6 +167,18 @@ class FollowStorysTagView(generics.CreateAPIView):
     serializer_class = AddDeleteTagFollowSerializer
     permission_classes = (IsAuthenticated,)
 
+class DeleteFollowTagView(generics.DestroyAPIView):
+    queryset = TagFollower.objects.all()
+    serializer_class = AddDeleteTagFollowSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def destroy(self, request, *args, **kwargs):
+        tagId = request.data["tag"]
+        user = self.request.user
+        instance = TagFollower.objects.get(user=user, tag= tagId  )
+        instance.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 
 
