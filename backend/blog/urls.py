@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import CommentsDetail, DeleteClapStoryView, AddClapStoryView, StoryList, CommentCreate, FollowingStoriesList, SearchBarView, StorySaveListView, TagListView
+from .views import CommentsDetail, DeleteClapStoryView, AddClapStoryView, DeleteFollowTagView, FollowStorysTagView, StoryList, CommentCreate, FollowingStoriesList, SearchBarView, StorySaveListView, TagListView
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -17,7 +17,6 @@ urlpatterns = [
     path('stories/search', SearchBarView.as_view()),
     path('stories/addclap', AddClapStoryView.as_view()),
     path('stories/deleteclap', DeleteClapStoryView.as_view()),
-    # path('tags', TagListView.as_view()),
-    # path('stories/save/<int:id>/', SaveStoryListView.as_view(), name='save-story'),
-
+    path('stories/tagfollow', FollowStorysTagView.as_view()),
+    path('stories/tagunfollow', DeleteFollowTagView.as_view()),
 ]

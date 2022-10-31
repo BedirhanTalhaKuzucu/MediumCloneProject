@@ -73,15 +73,18 @@ export const scroolGetData = (
     .then((response) => response.json())
     .then((lastData) => {
       console.log(data);
-
-      setData([
-        ...data.filter((item) => item.status === "Published"),
-        ...lastData.results.filter((item) => item.status === "Published"),
-      ]);
-      if (lastData.results.length === 0) {
-        sethasMore(false);
-      } else {
+      if ( lastData.results.filter((item) => item.status === "Published").length === 0 && lastData.results.length !== 0 ) {
         setoffset(offset + 5);
+        offset = offset + 5;
+        scroolGetData(setData, data, sethasMore, offset , setoffset);
+        return;
+      } else {
+        if (lastData.results.length === 0) {
+          sethasMore(false);
+        } else {
+          setData([...data,  ...lastData.results.filter((item) => item.status === "Published")]);
+          setoffset(offset + 5);
+        }
       }
     })
     .catch((error) => console.log("error", error));

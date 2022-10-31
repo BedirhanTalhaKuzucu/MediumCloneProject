@@ -14,12 +14,11 @@ const TagDetail = () => {
     TagDetailsGet(setTagDetails, id);
   }, [id]);
 
-  console.log(id);
 
   return (
     <div className="d-flex">
       <UDNavbar />
-      <TagDetailMain tagDetails={tagDetails} />
+      <TagDetailMain tagDetails={tagDetails} tagId = {id} />
       <TagDetailSideBar tagDetails={tagDetails} />
     </div>
   );

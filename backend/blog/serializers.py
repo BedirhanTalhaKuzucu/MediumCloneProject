@@ -257,6 +257,19 @@ class TagFollowerSerializer(serializers.ModelSerializer):
         # }
         return user_img
 
+class AddDeleteTagFollowSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TagFollower
+        fields = ('tag',)
+
+    def create(self, validated_data):
+        user = self.context.get("request").user
+        validated_data['user'] = user
+        tagFollowed = TagFollower.objects.create(**validated_data)
+        return tagFollowed
+
+    
 
 class StoryTagSerializer(serializers.ModelSerializer):
     class Meta:

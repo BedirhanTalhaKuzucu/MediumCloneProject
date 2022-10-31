@@ -32,3 +32,46 @@ export const TagDetailsGet = (setTagDetails, id) => {
     })
     .catch((error) => console.log("error", error));
 };
+
+export const followTag = (token, tagId) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Token ${token}`);
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    tag: `${tagId}`,
+  });
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch("http://127.0.0.1:8000/blog/stories/tagfollow", requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.log("error", error));
+};
+
+export const unfollowTag = (token, tagId) => {
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Token ${token}`);
+  myHeaders.append("Content-Type", "application/json");
+  
+
+  let raw = JSON.stringify({tag: `${tagId}`,});
+
+  let requestOptions = {
+    method: "DELETE",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch("http://127.0.0.1:8000/blog/stories/tagunfollow", requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.log("error", error));
+};
