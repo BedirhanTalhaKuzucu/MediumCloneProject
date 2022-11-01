@@ -15,6 +15,7 @@ function App() {
         <AppStateProvider>
           <UserPageStateProvider>
             <Helmet>
+              {/* <p>deneme</p> */}
               <title>Medium Clone</title>
               <meta name="description" content="App Description" />
               <meta name="theme-color" content="#008f68" />
