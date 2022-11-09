@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "corsheaders",
     'django_extensions',
     'django.contrib.sites',
-
+    "debug_toolbar",
     # apps
     'users',
     'blog',
@@ -53,6 +53,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+]
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+INTERNAL_IPS = [ 
+    "127.0.0.1", 
 ]
 
 ROOT_URLCONF = 'main.urls'
@@ -184,3 +196,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+DEBUG = True
+
+ALLOWED_HOSTS = ['*']
