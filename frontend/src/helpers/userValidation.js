@@ -1,7 +1,13 @@
 import { followedUserStories } from "./stories";
 import { settingUserInfo, savedStories } from "./userProfileInfo";
 
-export const signUpFunction = (values, resetForm, setErrorMesage, navigate, setsettingPageInfo ) => {
+export const signUpFunction = (
+  values,
+  resetForm,
+  setErrorMesage,
+  navigate,
+  setsettingPageInfo
+) => {
   let myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -87,7 +93,7 @@ export const logInFunction = (
           const userId = user_info.userInfo.userId;
           followedUserStories(setFollowingStories, token);
           settingUserInfo(setsettingPageInfo, token, userId);
-          savedStories( token, setSavedArticle )
+          savedStories(token, setSavedArticle);
           setActivate(true);
           resetForm({ values: "" });
           navigate("home");
@@ -124,6 +130,7 @@ export const LogOutFunction = (get_user_info, navigate, setActivate) => {
     .then((result) => {
       console.log(result);
       setActivate(false);
+      sessionStorage.clear();
     })
     .catch((error) => console.log("error", error));
 
